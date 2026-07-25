@@ -199,8 +199,19 @@
   .head-cta { border-radius: 999px; }
   .g-card { border-radius: 14px; }
   .faq-item { border-radius: 12px; }
-  .consult input, .consult textarea, .consult button { border-radius: 10px; }
+  .consult input, .consult textarea, .consult button, .consult select { border-radius: 10px; }
   .consult button:hover { background: var(--accent-deep); }
+  .consult select {
+    border: 0; outline: none; padding: 12px 14px; font-size: 14.5px; font-family: inherit;
+    width: 100%; background: #fff; color: var(--ink); appearance: auto;
+  }
+  .consult select:invalid { color: #757b78; }
+  .consult .file-label {
+    display: block; background: rgba(255, 255, 255, .08); border: 1px dashed rgba(255, 255, 255, .35);
+    border-radius: 10px; padding: 12px 14px; font-size: 13.5px; color: #cdd6d2; cursor: pointer;
+  }
+  .consult .file-label span { display: block; margin-bottom: 8px; }
+  .consult .file-label input[type="file"] { color: #cdd6d2; font-size: 13px; width: 100%; }
   section.guide h2 { border-left: 0; padding-left: 0; }
   section.guide h2::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-right: 10px; }
 </style>
@@ -271,15 +282,35 @@
   <div class="wrap">
     <h2>세금이 복잡하다면, 전문가에게</h2>
     <p class="sub">가상자산·해외주식에 밝은 세무사에게 상담을 연결해 드립니다. 신청은 무료입니다.</p>
-    <form action="https://formsubmit.co/checksoyoung@gmail.com" method="POST">
+    <form action="https://formsubmit.co/checksoyoung@gmail.com" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_subject" value="[택스22] 세무사 상담 신청">
       <input type="hidden" name="_captcha" value="false">
       <input type="text" name="이름" placeholder="이름 (닉네임도 괜찮아요)" required>
       <input type="email" name="이메일" placeholder="회신받을 이메일" required>
-      <textarea name="상담내용" placeholder="상담이 필요한 내용을 간단히 적어주세요. (예: 해외거래소 수익 신고, 의제취득가액 증빙 등)" required></textarea>
+      <input type="tel" name="연락처" placeholder="연락처 (선택 — 전화 상담 원할 때만)">
+      <select name="상담분야" required>
+        <option value="" disabled selected>상담 분야를 선택하세요</option>
+        <option>코인 세금 (2027 과세 대비)</option>
+        <option>해외거래소 · CARF · 해외금융계좌 신고</option>
+        <option>해외주식 양도소득세</option>
+        <option>취득가 증빙 · 자금 출처 소명</option>
+        <option>기타</option>
+      </select>
+      <select name="자산규모">
+        <option value="" disabled selected>대략적인 투자 규모 (선택)</option>
+        <option>5천만원 미만</option>
+        <option>5천만원 ~ 3억원</option>
+        <option>3억원 ~ 10억원</option>
+        <option>10억원 이상</option>
+      </select>
+      <textarea name="상담내용" placeholder="상담이 필요한 내용을 간단히 적어주세요. (예: 바이낸스 수익 신고를 어떻게 해야 할지 모르겠어요)" required></textarea>
+      <label class="file-label">
+        <span>📎 스크린샷 첨부 (선택) — 거래내역·손익 화면 캡처 등</span>
+        <input type="file" name="첨부" accept="image/*">
+      </label>
       <button type="submit">상담 신청하기</button>
     </form>
-    <p class="note">신청 내용은 상담 연결 목적으로만 사용됩니다.</p>
+    <p class="note">신청 내용과 첨부 파일은 상담 연결 목적으로만 사용됩니다. 첨부는 이미지 파일 10MB 이하를 권장합니다.</p>
   </div>
 </div>
 
