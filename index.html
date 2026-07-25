@@ -212,6 +212,12 @@
   }
   .consult .file-label span { display: block; margin-bottom: 8px; }
   .consult .file-label input[type="file"] { color: #cdd6d2; font-size: 13px; width: 100%; }
+  .consult .agree-label {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 13px; color: #cdd6d2; cursor: pointer; line-height: 1.55;
+  }
+  .consult .agree-label input { width: 15px; height: 15px; margin-top: 3px; accent-color: var(--accent); flex-shrink: 0; }
+  .consult .agree-label a { color: #7fe0c2; }
   section.guide h2 { border-left: 0; padding-left: 0; }
   section.guide h2::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-right: 10px; }
 </style>
@@ -308,6 +314,10 @@
         <span>📎 스크린샷 첨부 (선택) — 거래내역·손익 화면 캡처 등</span>
         <input type="file" name="첨부" accept="image/*">
       </label>
+      <label class="agree-label">
+        <input type="checkbox" required>
+        <span><a href="/privacy.html" target="_blank" rel="noopener">개인정보 수집·이용</a> 및 상담 연결을 위한 <a href="/privacy.html#privacy" target="_blank" rel="noopener">세무 전문가 제3자 제공</a>에 동의합니다. (필수)</span>
+      </label>
       <button type="submit">상담 신청하기</button>
     </form>
     <p class="note">신청 내용과 첨부 파일은 상담 연결 목적으로만 사용됩니다. 첨부는 이미지 파일 10MB 이하를 권장합니다.</p>
@@ -317,6 +327,7 @@
 <footer>
   <div class="foot-inner">
     <p>© 택스22 (tax22.kr) — 코인·해외주식 세금 계산기</p>
+    <p style="margin-top:4px;"><a href="/privacy.html">개인정보처리방침</a> · <a href="/privacy.html#terms">이용약관</a></p>
     <p style="margin-top:4px;">본 사이트는 일반 정보를 제공하며 세무 대리 또는 자문 서비스가 아닙니다.</p>
   </div>
 </footer>
