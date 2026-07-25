@@ -14,7 +14,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
-<meta name="theme-color" content="#2b50ff">
+<meta name="theme-color" content="#0bab7c">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="택스22">
 <script type="application/ld+json">
@@ -59,9 +59,9 @@
 </script>
 <style>
   :root {
-    --bg: #fafafa; --surface: #fff; --ink: #17181c; --ink-soft: #55575e;
-    --ink-faint: #9a9ca3; --line: #e8e8ec; --accent: #2b50ff; --accent-soft: #eef1ff;
-    --red: #d92b3a;
+    --bg: #f3f5f4; --surface: #fff; --ink: #14211c; --ink-soft: #4f5b56;
+    --ink-faint: #93a09a; --line: #e2e8e5; --accent: #0bab7c; --accent-deep: #068f66;
+    --accent-soft: #e6f7f0; --red: #d92b3a;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -185,6 +185,24 @@
     .hero h1 { font-size: 23px; }
     .g-grid { grid-template-columns: 1fr; }
   }
+
+  /* ---- 택스22 v2: 라운드 + 에메랄드 ---- */
+  .calc { border-radius: 18px; overflow: hidden; box-shadow: 0 6px 24px rgba(20, 33, 28, .06); border: 0; }
+  .mode { border-radius: 12px; overflow: hidden; }
+  .row { border-radius: 14px; }
+  .in { border-radius: 10px; overflow: hidden; }
+  .btn-add { border-radius: 12px; border-color: #bfe8d9; background: #effaf5; }
+  .btn-calc { border-radius: 12px; }
+  .btn-calc:hover { background: var(--accent-deep); }
+  .result { border-radius: 12px; overflow: hidden; }
+  .msg { border-radius: 10px; color: #1d5c48; }
+  .head-cta { border-radius: 999px; }
+  .g-card { border-radius: 14px; }
+  .faq-item { border-radius: 12px; }
+  .consult input, .consult textarea, .consult button { border-radius: 10px; }
+  .consult button:hover { background: var(--accent-deep); }
+  section.guide h2 { border-left: 0; padding-left: 0; }
+  section.guide h2::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-right: 10px; }
 </style>
 </head>
 <body>
@@ -268,7 +286,6 @@
 <footer>
   <div class="foot-inner">
     <p>© 택스22 (tax22.kr) — 코인·해외주식 세금 계산기</p>
-    <p style="margin-top:4px;">더 알아보기: <a href="https://realofreal.tistory.com" target="_blank" rel="noopener">2027 코인 과세 총정리 · CARF 해외거래소 신고 가이드</a></p>
     <p style="margin-top:4px;">본 사이트는 일반 정보를 제공하며 세무 대리 또는 자문 서비스가 아닙니다.</p>
   </div>
 </footer>
