@@ -120,7 +120,8 @@
 
   @media (max-width: 560px) {
     .hero h1 { font-size: 21px; }
-    .gnav { gap: 10px; font-size: 12.5px; }
+    .gnav { gap: 10px; font-size: 12.5px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .gnav::-webkit-scrollbar { display: none; }
     .head-cta { display: none; }
   }
 </style>
@@ -135,6 +136,7 @@
       <a href="/gift.html">증여세</a>
       <a href="/finance.html" class="on">금융소득</a>
       <a href="/pension.html">연금·IRP</a>
+      <a href="/scam.html">사기 대응</a>
     </nav>
     <a class="head-cta" href="/#consult">전문가 상담</a>
   </div>
