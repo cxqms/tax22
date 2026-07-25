@@ -146,6 +146,35 @@
   .msg { display: none; margin-top: 14px; padding: 12px 14px; background: var(--accent-soft); font-size: 13.5px; color: #35406e; }
   .disclaimer { font-size: 11.5px; color: var(--ink-faint); margin-top: 14px; line-height: 1.5; }
 
+  /* 계산기 허브 */
+  .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tool-card {
+    display: block; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 18px 20px; transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .tool-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(20,33,28,.08); border-color: var(--accent); }
+  .tool-card .ico { font-size: 22px; }
+  .tool-card b { display: block; font-size: 15px; margin: 8px 0 3px; }
+  .tool-card p { font-size: 12.5px; color: var(--ink-soft); }
+  .tool-card.ghost { opacity: .55; pointer-events: none; border-style: dashed; }
+  .tool-card.ghost .badge {
+    display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--ink-faint);
+    border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: 2px;
+  }
+
+  /* 가이드 리스트 */
+  .post-list-item {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .post-list-item:hover { border-color: var(--accent); }
+  .post-list-item b { font-size: 14.5px; font-weight: 700; }
+  .post-list-item span.tag {
+    flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--accent);
+    background: var(--accent-soft); border-radius: 999px; padding: 3px 10px;
+  }
+
   /* 가이드/FAQ */
   section.guide { margin: 40px 0; }
   section.guide h2 {
@@ -294,6 +323,54 @@
   </section>
 
   <section class="guide">
+    <h2>전체 계산기</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/">
+        <span class="ico">🪙</span>
+        <b>코인·해외주식 세금</b>
+        <p>손익통산 · 의제취득가액 · 250만원 공제</p>
+      </a>
+      <a class="tool-card" href="/gift.html">
+        <span class="ico">🎁</span>
+        <b>증여세</b>
+        <p>관계별 공제 · 10년 합산 · 혼인출산 공제</p>
+      </a>
+      <a class="tool-card" href="/finance.html">
+        <span class="ico">💰</span>
+        <b>금융소득종합과세</b>
+        <p>이자·배당 2천만원 초과 시 추가 세금</p>
+      </a>
+      <a class="tool-card" href="/pension.html">
+        <span class="ico">🏦</span>
+        <b>연금저축·IRP 세액공제</b>
+        <p>연말정산 환급액 · 한도 900만원</p>
+      </a>
+      <div class="tool-card ghost">
+        <span class="ico">🏠</span>
+        <b>상속세<span class="badge">준비 중</span></b>
+        <p>공제·세율 자동 계산</p>
+      </div>
+      <div class="tool-card ghost">
+        <span class="ico">📊</span>
+        <b>셀퍼럴 수수료<span class="badge">준비 중</span></b>
+        <p>거래소별 수수료 환급 비교</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <h2>가이드 &amp; 읽을거리</h2>
+    <a class="post-list-item" href="/scam.html">
+      <b>리딩방·코인 투자 사기 대응 가이드 — 지급정지부터 회수까지</b>
+      <span class="tag">긴급 가이드</span>
+    </a>
+    <a class="post-list-item" href="https://realofreal.tistory.com/entry/2026%EB%85%84-%EC%B5%9C%EC%8B%A0-2027-%EC%BD%94%EC%9D%B8-%EA%B3%BC%EC%84%B8-%EC%B4%9D%EC%A0%95%EB%A6%AC%EF%BD%9C250%EB%A7%8C%EC%9B%90-%EA%B3%B5%EC%A0%9C%C2%B7%EC%84%B8%EC%9C%A8-22%C2%B7%EC%97%B0%EB%A7%90-%EC%A0%88%EC%84%B8-%EC%A0%84%EB%9E%B5" target="_blank" rel="noopener">
+      <b>2027 코인 과세 총정리 — 250만원 공제·22%·연말 절세 전략</b>
+      <span class="tag">세금</span>
+    </a>
+  </section>
+
+  <section class="guide">
     <h2>자주 묻는 질문</h2>
     <details class="faq-item"><summary>코인 세금은 언제부터 내나요?</summary><p>2027년 1월 1일 거래분부터 과세됩니다. 연간 수익 250만원 초과분에 22%가 부과되며, 첫 신고는 2028년 5월입니다.</p></details>
     <details class="faq-item"><summary>의제취득가액이 뭔가요?</summary><p>2027년 이전부터 보유한 코인은 실제 취득가와 2026년 12월 31일 시가 중 큰 금액을 취득가로 인정합니다. 과세 시행 전에 오른 수익에는 세금이 붙지 않습니다. 계산기에서 "2027년 이전부터 보유"를 체크하면 자동 적용됩니다.</p></details>
@@ -348,9 +425,11 @@
 
 <footer>
   <div class="foot-inner">
-    <p>© 택스22 (tax22.kr) — 코인·해외주식 세금 계산기</p>
-    <p style="margin-top:4px;"><a href="/privacy.html">개인정보처리방침</a> · <a href="/privacy.html#terms">이용약관</a></p>
-    <p style="margin-top:4px;">본 사이트는 일반 정보를 제공하며 세무 대리 또는 자문 서비스가 아닙니다.</p>
+    <p style="font-weight:700;color:var(--ink-soft);">택스22 — 투자자의 세금·법률 문제 해결 포털</p>
+    <p style="margin-top:8px;">계산기: <a href="/">코인·주식</a> · <a href="/gift.html">증여세</a> · <a href="/finance.html">금융소득</a> · <a href="/pension.html">연금·IRP</a> &nbsp;|&nbsp; 가이드: <a href="/scam.html">사기 대응</a></p>
+    <p style="margin-top:8px;"><a href="/privacy.html">개인정보처리방침</a> · <a href="/privacy.html#terms">이용약관</a> · 문의: contact@tax22.kr</p>
+    <p style="margin-top:8px;">본 사이트는 일반 정보를 제공하며 세무 대리 또는 법률 자문 서비스가 아닙니다. 계산 결과는 참고용이며, 실제 세액·법적 판단은 전문가와 확인하시기 바랍니다.</p>
+    <p style="margin-top:4px;">© 2026 택스22 (tax22.kr) All rights reserved.</p>
   </div>
 </footer>
 
