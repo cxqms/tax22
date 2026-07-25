@@ -80,10 +80,12 @@
   }
   .head-inner {
     max-width: 720px; margin: 0 auto; padding: 0 20px; height: 58px;
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; gap: 18px;
   }
   .logo { font-size: 20px; font-weight: 900; letter-spacing: -0.02em; }
   .logo em { font-style: normal; color: var(--accent); }
+  .gnav { display: flex; gap: 14px; margin-right: auto; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); }
+  .gnav a.on { color: var(--accent); }
   .head-cta {
     font-size: 13px; font-weight: 700; color: #fff; background: var(--ink);
     padding: 8px 16px;
@@ -186,6 +188,8 @@
   @media (max-width: 560px) {
     .hero h1 { font-size: 23px; }
     .g-grid { grid-template-columns: 1fr; }
+    .gnav { gap: 10px; font-size: 12.5px; }
+    .head-cta { display: none; }
   }
 
   /* ---- 택스22 v2: 라운드 + 에메랄드 ---- */
@@ -234,8 +238,13 @@
 
 <header>
   <div class="head-inner">
-    <div class="logo">택스<em>22</em></div>
-    <a class="head-cta" href="#consult">세무사 상담 신청</a>
+    <a class="logo" href="/">택스<em>22</em></a>
+    <nav class="gnav">
+      <a href="/" class="on">코인·주식</a>
+      <a href="/gift.html">증여세</a>
+      <a href="/finance.html">금융소득</a>
+    </nav>
+    <a class="head-cta" href="#consult">전문가 상담</a>
   </div>
 </header>
 
@@ -308,6 +317,8 @@
         <option>해외거래소 · CARF · 해외금융계좌 신고</option>
         <option>해외주식 양도소득세</option>
         <option>취득가 증빙 · 자금 출처 소명</option>
+        <option>증여 · 상속 절세</option>
+        <option>투자 사기 피해 (리딩방·코인 사기 등)</option>
         <option>기타</option>
       </select>
       <select name="자산규모">
