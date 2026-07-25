@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>해외거래소 코인, 국세청이 다 봅니다 — CARF·해외금융계좌 5억 신고 총정리 | 택스22</title>
+<meta name="description" content="2026년부터 바이낸스 등 해외거래소 거래 정보가 CARF로 국세청과 공유됩니다. 보고 대상, 해외금융계좌 5억 신고, 개인 지갑 문제, 지금 해둘 일 4가지를 정리했습니다.">
+<meta property="og:title" content="해외거래소 코인, 국세청이 다 봅니다 — CARF 총정리">
+<meta property="og:description" content="2026년 거래분부터 수집, 2027년부터 국가 간 자동 교환. 해외거래소 이용자가 지금 해둘 일.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tax22.kr/blog/carf/">
+<link rel="canonical" href="https://tax22.kr/blog/carf/">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<meta name="theme-color" content="#0bab7c">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "해외거래소 코인, 국세청이 다 봅니다 — CARF 정보교환·해외금융계좌 5억 신고 총정리",
+  "datePublished": "2026-07-26",
+  "dateModified": "2026-07-26",
+  "author": { "@type": "Organization", "name": "택스22" },
+  "publisher": { "@type": "Organization", "name": "택스22" },
+  "mainEntityOfPage": "https://tax22.kr/blog/carf/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "바이낸스도 진짜 한국 국세청에 보고하나요?", "acceptedAnswer": { "@type": "Answer", "text": "바이낸스를 포함한 글로벌 거래소들은 CARF 참여국 규정에 따라 이용자 거래 정보를 보고하게 됩니다. 2026년 거래분이 수집되어 2027년부터 국가 간 교환이 시작됩니다." } },
+    { "@type": "Question", "name": "해외금융계좌 신고 기준 5억원은 코인만 계산하나요?", "acceptedAnswer": { "@type": "Answer", "text": "아닙니다. 해외 주식, 예금 등 다른 해외금융계좌와 합산한 금액입니다. 코인 3억원과 해외 주식 3억원을 보유했다면 신고 대상입니다." } },
+    { "@type": "Question", "name": "개인 지갑으로 옮기면 안 보이지 않나요?", "acceptedAnswer": { "@type": "Answer", "text": "개인 지갑은 CARF의 직접 보고 대상이 아니지만, 현금화하려면 결국 거래소를 거쳐야 하고 그 기록은 전부 남습니다. 출처를 소명하지 못하는 자금은 오히려 더 큰 의심을 받을 수 있습니다." } }
+  ]
+}
+</script>
+<style>
+  :root {
+    --bg: #f3f5f4; --surface: #fff; --ink: #14211c; --ink-soft: #4f5b56;
+    --ink-faint: #93a09a; --line: #e2e8e5; --accent: #0bab7c; --accent-deep: #068f66;
+    --accent-soft: #e6f7f0; --red: #d92b3a; --red-soft: #fdecee;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.75;
+    -webkit-font-smoothing: antialiased; word-break: keep-all;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+  .head-inner {
+    max-width: 720px; margin: 0 auto; padding: 0 20px; height: 58px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .logo { font-size: 20px; font-weight: 900; letter-spacing: -0.02em; }
+  .logo em { font-style: normal; color: var(--accent); }
+  .gnav { display: flex; gap: 14px; margin-right: auto; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); }
+  .gnav a.on { color: var(--accent); }
+  .head-cta { font-size: 13px; font-weight: 700; color: #fff; background: var(--ink); padding: 8px 16px; border-radius: 999px; white-space: nowrap; }
+  .head-cta:hover { background: var(--accent); }
+
+  article { padding: 36px 0 10px; }
+  .post-meta { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 10px; }
+  .post-meta .tag {
+    display: inline-block; font-size: 11px; font-weight: 700; color: var(--accent);
+    background: var(--accent-soft); border-radius: 999px; padding: 2px 10px; margin-right: 8px;
+  }
+  article h1 { font-size: 25px; line-height: 1.4; letter-spacing: -0.02em; margin-bottom: 20px; }
+  article h2 { font-size: 19.5px; letter-spacing: -0.02em; margin: 34px 0 10px; }
+  article h2::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); margin-right: 9px; vertical-align: 2px; }
+  article p { font-size: 15px; color: #33403a; margin: 11px 0; }
+  article ul, article ol { padding-left: 22px; margin: 11px 0; }
+  article li { font-size: 14.5px; color: #33403a; margin: 6px 0; }
+  .callout { background: var(--accent-soft); border-radius: 10px; padding: 13px 17px; font-size: 13.5px; color: #1d5c48; margin: 14px 0; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 17px 20px; margin: 14px 0; }
+  .card b.t { display: block; font-size: 14.5px; margin-bottom: 6px; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13.5px; background: var(--surface); }
+  th { background: var(--accent-soft); font-weight: 700; }
+  th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; }
+  .banner {
+    border: 2px solid var(--accent); border-radius: 14px; padding: 16px 20px;
+    margin: 24px 0; background: var(--accent-soft); display: block;
+  }
+  .banner b { display: block; font-size: 15px; margin-bottom: 3px; }
+  .banner p { font-size: 13px; color: #1d5c48; margin: 0 0 10px; }
+  .banner span.btn { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; font-size: 13.5px; padding: 9px 18px; border-radius: 9px; }
+  .faq-item { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; }
+  .faq-item summary { padding: 13px 18px; font-size: 14.5px; font-weight: 700; cursor: pointer; list-style: none; }
+  .faq-item summary::before { content: "Q. "; color: var(--accent); }
+  .faq-item p { padding: 0 18px 13px; font-size: 14px; color: var(--ink-soft); }
+  .cta-consult { background: #10201a; color: #fff; border-radius: 16px; padding: 26px 28px; margin: 36px 0; text-align: center; }
+  .cta-consult b { display: block; font-size: 18px; margin-bottom: 6px; }
+  .cta-consult p { font-size: 13.5px; color: #b9bbc4; margin-bottom: 16px; }
+  .cta-consult a { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; font-size: 14px; padding: 11px 22px; border-radius: 10px; }
+  .disclaimer { font-size: 11.5px; color: var(--ink-faint); margin: 20px 0 40px; line-height: 1.5; }
+  footer { border-top: 1px solid var(--line); background: var(--surface); }
+  .foot-inner { max-width: 720px; margin: 0 auto; padding: 22px 20px; font-size: 12.5px; color: var(--ink-faint); }
+  .foot-inner a { text-decoration: underline; text-underline-offset: 2px; }
+  @media (max-width: 560px) {
+    article h1 { font-size: 21px; }
+    .gnav { gap: 10px; font-size: 12.5px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .gnav::-webkit-scrollbar { display: none; }
+    .head-cta { display: none; }
+    table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <a class="logo" href="/">택스<em>22</em></a>
+    <nav class="gnav">
+      <a href="/">코인·주식</a>
+      <a href="/gift/">증여세</a>
+      <a href="/finance/">금융소득</a>
+      <a href="/pension/">연금·IRP</a>
+      <a href="/scam/">사기 대응</a>
+      <a href="/blog/" class="on">블로그</a>
+    </nav>
+    <a class="head-cta" href="/#consult">전문가 상담</a>
+  </div>
+</header>
+
+<div class="wrap">
+<article>
+
+  <p class="post-meta"><span class="tag">코인 세금</span>2026. 7. 26 · 택스22</p>
+  <h1>해외거래소 코인, 국세청이 다 봅니다<br>— CARF 정보교환·해외금융계좌 5억 신고 총정리</h1>
+
+  <p>"바이낸스에서 거래하면 국세청이 모른다"는 말, 아직도 믿는 분들이 있습니다. 결론부터 말하면 이제는 틀린 이야기입니다.</p>
+  <p>올해 1월 1일부터 OECD 주도의 암호화자산 자동정보교환 체계, 이른바 CARF가 시행됐습니다. 해외거래소의 거래 내역이 국가 간에 자동으로 공유되는 시스템이 이미 돌아가기 시작했다는 뜻입니다.</p>
+  <div class="callout">💡 작성 기준: 2026년 7월. 제도 세부 사항은 시행 과정에서 바뀔 수 있으므로, 신고 전에는 국세청 공식 안내를 함께 확인하시기 바랍니다.</div>
+
+  <h2>CARF가 뭐길래</h2>
+  <p>CARF(Crypto-Asset Reporting Framework)는 OECD가 만든 암호화자산 거래정보 자동교환 체계입니다. 은행 계좌 정보를 국가 간에 교환하던 기존 시스템(CRS)의 코인 버전이라고 생각하면 쉽습니다.</p>
+  <table>
+    <tr><th>구분</th><th>내용</th></tr>
+    <tr><td>시행</td><td>2026년 1월 1일 거래분부터 정보 수집</td></tr>
+    <tr><td>참여</td><td>한국 포함 전 세계 48개국</td></tr>
+    <tr><td>첫 정보교환</td><td>2027년, 국가 간 자동 교환 시작</td></tr>
+  </table>
+  <p>흐름은 이렇습니다. 참여국에 있는 거래소가 한국인 이용자의 거래 정보를 자국 과세당국에 보고하고, 그 정보가 2027년부터 한국 국세청으로 자동으로 넘어옵니다. 바이낸스, 바이비트, OKX 같은 글로벌 거래소들이 여기에 포함됩니다.</p>
+  <p>시점이 절묘합니다. 2027년은 가상자산 과세가 시작되는 해입니다. 과세가 시작되는 해에 해외 거래 정보까지 손에 들어오는 구조가 완성되는 셈입니다.</p>
+
+  <h2>어떤 정보가 넘어가나</h2>
+  <p>보고 대상 거래는 사실상 거래소에서 일어나는 모든 것입니다.</p>
+  <ul>
+    <li>코인과 법정화폐 간 교환 (매수·매도)</li>
+    <li>코인과 코인 간 교환 (스왑 포함)</li>
+    <li>코인의 이전 (입출금)</li>
+  </ul>
+  <p>넘어가는 정보에는 암호화자산의 명칭, 연간 거래 건수, 거래 수량, 거래액 등이 포함됩니다. "어떤 코인을 1년에 몇 번, 얼마어치 거래했는지"가 통째로 공유된다고 보면 됩니다.</p>
+
+  <h2>국내 거래소에서도 이미 시작됐다</h2>
+  <p>해외만의 이야기가 아닙니다. 업비트, 빗썸 등 국내 5대 거래소는 올해 1월부터 해외 납세의무 본인확인서를 의무적으로 수집하고 있습니다. 갑자기 거래소 앱에서 "해외 납세의무 확인" 알림을 받았다면 이것 때문입니다.</p>
+  <p>한국에만 납세의무가 있는 대부분의 이용자는 간단한 확인으로 끝나지만, 해외 거주 경험이 있거나 해외 납세의무가 있는 경우 TIN(납세자번호) 등 증빙 제출을 요구받을 수 있습니다.</p>
+
+  <h2>해외금융계좌 신고 — 5억 넘으면 무조건</h2>
+  <p>CARF와 별개로, 이미 시행 중인 제도가 하나 더 있습니다. 해외금융계좌 신고입니다.</p>
+  <div class="card">
+    <b class="t">해외금융계좌 신고 핵심</b>
+    <ul>
+      <li>기준: 해외 계좌 잔액 합계가 <b>매월 말일 중 하루라도 5억원 초과</b></li>
+      <li>대상: 해외거래소 계정 + 해외 지갑사업자에 개설한 지갑 (코인 포함)</li>
+      <li>신고: 다음 해 6월, 관할 세무서</li>
+      <li>미신고 과태료: 미신고 금액의 10~20% (한도 20억원)</li>
+      <li>미신고 금액 50억원 초과 시: 명단 공개 + 2년 이하 징역 또는 벌금 가능</li>
+    </ul>
+  </div>
+  <p>포인트는 "매월 말일 중 하루라도"입니다. 연말 잔액만 보는 게 아니라 매달 말일 기준으로 체크하기 때문에, 불장에 잠깐 5억을 넘겼다가 내려온 경우도 신고 대상이 될 수 있습니다.</p>
+
+  <h2>개인 지갑으로 옮기면 안 보이지 않나?</h2>
+  <p>메타마스크 같은 개인 지갑(셀프 커스터디)은 CARF의 직접 보고 대상이 아닙니다. 하지만 안심하기는 이릅니다.</p>
+  <p>코인을 현금화하려면 결국 거래소를 거쳐야 하고, 거래소에 들어오고 나가는 기록은 전부 남습니다. 국세청 입장에서는 "거래소에서 나간 코인이 어디서 다시 들어왔는지"를 맞춰볼 수 있다는 뜻입니다. 출처를 소명하지 못하는 자금은 오히려 더 큰 의심을 받을 수 있습니다.</p>
+
+  <h2>지금 해둘 일 4가지</h2>
+  <ol>
+    <li><b>해외거래소 거래내역 전부 다운로드</b> — 이용 중인 거래소에서 연도별 거래내역과 입출금 기록을 내려받아 보관하세요. 나중에 소명이 필요할 때 이 자료가 본인을 지켜줍니다.</li>
+    <li><b>매월 말일 잔액 체크 습관</b> — 해외 계좌 합산 5억원 근처라면 매달 말일 잔액을 기록해 두세요.</li>
+    <li><b>거래소 본인확인 요청에 제때 응하기</b> — 미루면 거래 제한이 걸릴 수 있습니다.</li>
+    <li><b>2027년 과세 대비와 묶어서 준비</b> — 해외거래소 보유분도 의제취득가액 적용을 받으려면 연말 기준 보유 증빙이 필요합니다.</li>
+  </ol>
+
+  <a class="banner" href="/">
+    <b>💰 내 코인 세금, 직접 계산해보세요</b>
+    <p>250만원 공제·세율 22%·의제취득가액·손익통산까지 자동 적용되는 무료 계산기</p>
+    <span class="btn">택스22 계산기 열기 →</span>
+  </a>
+
+  <h2>자주 묻는 질문</h2>
+  <details class="faq-item"><summary>바이낸스도 진짜 한국 국세청에 보고하나요?</summary><p>바이낸스를 포함한 글로벌 거래소들은 CARF 참여국 규정에 따라 이용자 거래 정보를 보고하게 됩니다. 2026년 거래분이 수집되어 2027년부터 국가 간 교환이 시작됩니다.</p></details>
+  <details class="faq-item"><summary>5억 기준은 코인만 계산하나요?</summary><p>아닙니다. 해외 주식, 예금 등 다른 해외금융계좌와 합산한 금액입니다. 코인 3억 + 해외 주식 3억이면 신고 대상입니다.</p></details>
+  <details class="faq-item"><summary>예전 거래도 소급해서 보고되나요?</summary><p>CARF 보고 대상은 2026년 거래분부터입니다. 다만 해외금융계좌 신고 제도는 그 이전부터 시행 중이었으므로, 과거에 5억을 넘긴 적이 있다면 별개로 확인이 필요합니다.</p></details>
+  <details class="faq-item"><summary>신고 대상인데 놓쳤으면 어떻게 하나요?</summary><p>기한 후 신고 제도가 있고, 자진 신고 시 과태료가 감경될 수 있습니다. 금액이 크다면 세무사와 상담 후 빠르게 정리하는 것이 안전합니다.</p></details>
+
+  <h2>마무리</h2>
+  <ul>
+    <li>2026년 거래분부터 해외거래소 정보가 수집되고, 2027년부터 국세청과 자동 공유됩니다</li>
+    <li>해외 계좌 합산 5억원 초과는 CARF와 별개로 지금도 신고 의무가 있습니다</li>
+    <li>개인 지갑도 거래소를 거치는 순간 기록이 남습니다</li>
+    <li>"안 걸리겠지"가 아니라 "다 보인다"를 전제로 기록을 정리해 두는 것이 최선입니다</li>
+  </ul>
+  <p>가상자산 과세 제도 전체가 궁금하다면 <a href="https://realofreal.tistory.com/entry/2026%EB%85%84-%EC%B5%9C%EC%8B%A0-2027-%EC%BD%94%EC%9D%B8-%EA%B3%BC%EC%84%B8-%EC%B4%9D%EC%A0%95%EB%A6%AC%EF%BD%9C250%EB%A7%8C%EC%9B%90-%EA%B3%B5%EC%A0%9C%C2%B7%EC%84%B8%EC%9C%A8-22%C2%B7%EC%97%B0%EB%A7%90-%EC%A0%88%EC%84%B8-%EC%A0%84%EB%9E%B5" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">2027 코인 과세 총정리</a> 글을 함께 읽어보시기 바랍니다.</p>
+
+  <div class="cta-consult">
+    <b>해외거래소 신고, 혼자 판단하기 어렵다면</b>
+    <p>CARF·해외금융계좌 신고에 밝은 세무사에게 상담을 연결해 드립니다. 신청은 무료입니다.</p>
+    <a href="/#consult">세무사 상담 신청하기 →</a>
+  </div>
+
+  <p class="disclaimer">※ 본 글은 일반 정보 제공을 목적으로 하며 세무 자문이 아닙니다. 개별 사안은 세무 전문가와 상담하시기 바랍니다.</p>
+
+</article>
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <p style="font-weight:700;color:var(--ink-soft);">택스22 — 투자자의 세금·법률 문제 해결 포털</p>
+    <p style="margin-top:8px;">계산기: <a href="/">코인·주식</a> · <a href="/gift/">증여세</a> · <a href="/finance/">금융소득</a> · <a href="/pension/">연금·IRP</a> &nbsp;|&nbsp; 가이드: <a href="/scam/">사기 대응</a> · <a href="/blog/">블로그</a></p>
+    <p style="margin-top:8px;"><a href="/privacy/">개인정보처리방침</a> · <a href="/privacy/#terms">이용약관</a> · 문의: contact@tax22.kr</p>
+    <p style="margin-top:8px;">본 사이트는 일반 정보를 제공하며 세무 대리 또는 법률 자문 서비스가 아닙니다.</p>
+    <p style="margin-top:4px;">© 2026 택스22 (tax22.kr) All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  navigator.serviceWorker.register("/sw.js");
+}
+</script>
+</body>
+</html>
