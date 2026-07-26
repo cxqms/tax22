@@ -262,7 +262,7 @@
   }
 
   async function fetchETH(addr) {
-    var endpoints = ["https://ethereum-rpc.publicnode.com", "https://eth.llamarpc.com", "https://cloudflare-eth.com"];
+    var endpoints = ["https://eth.drpc.org", "https://1rpc.io/eth"];
     for (var i = 0; i < endpoints.length; i++) {
       try {
         var r = await fetch(endpoints[i], {
@@ -276,7 +276,12 @@
         }
       } catch (e) { /* 다음 엔드포인트 시도 */ }
     }
-    throw new Error("eth");
+    /* 최종 폴백: Blockscout (10진수 wei 문자열) */
+    var r2 = await fetch("https://eth.blockscout.com/api?module=account&action=balance&address=" + addr);
+    if (!r2.ok) throw new Error("eth");
+    var d2 = await r2.json();
+    if (!d2 || d2.status !== "1") throw new Error("eth");
+    return [{ chain: "Ethereum", symbol: "ETH", qty: parseInt(d2.result, 10) / 1e18, gecko: "ethereum" }];
   }
 
   async function fetchSOL(addr) {
