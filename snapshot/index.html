@@ -285,11 +285,20 @@
   }
 
   async function fetchSOL(addr) {
-    var rpc = function (method, params) {
-      return fetch("https://api.mainnet-beta.solana.com", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: method, params: params })
-      }).then(function (r) { if (!r.ok) throw new Error("sol"); return r.json(); });
+    var SOL_EPS = ["https://solana-rpc.publicnode.com", "https://api.mainnet-beta.solana.com"];
+    var rpc = async function (method, params) {
+      for (var i = 0; i < SOL_EPS.length; i++) {
+        try {
+          var r = await fetch(SOL_EPS[i], {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: method, params: params })
+          });
+          if (!r.ok) continue;
+          var d = await r.json();
+          if (d && d.result !== undefined) return d;
+        } catch (e) { /* 다음 엔드포인트 */ }
+      }
+      throw new Error("sol");
     };
     var out = [];
     var bal = await rpc("getBalance", [addr]);
