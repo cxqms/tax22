@@ -362,15 +362,15 @@
   <section class="guide">
     <h2>가이드 &amp; 읽을거리 <a href="/blog/" style="font-size:13px;font-weight:600;color:var(--accent);margin-left:8px;">전체 보기 →</a></h2>
     <a class="post-list-item" href="/blog/carf/">
-      <b>해외거래소 코인, 국세청이 다 봅니다 — CARF·5억 신고 총정리</b>
+      <b>해외거래소 코인, 국세청이 다 봅니다: CARF·5억 신고 총정리</b>
       <span class="tag">코인 세금</span>
     </a>
     <a class="post-list-item" href="/blog/scam/">
-      <b>리딩방·코인 투자 사기 대응 가이드 — 지급정지부터 회수까지</b>
+      <b>리딩방·코인 투자 사기 대응 가이드: 지급정지부터 회수까지</b>
       <span class="tag">긴급 가이드</span>
     </a>
     <a class="post-list-item" href="https://realofreal.tistory.com/entry/2026%EB%85%84-%EC%B5%9C%EC%8B%A0-2027-%EC%BD%94%EC%9D%B8-%EA%B3%BC%EC%84%B8-%EC%B4%9D%EC%A0%95%EB%A6%AC%EF%BD%9C250%EB%A7%8C%EC%9B%90-%EA%B3%B5%EC%A0%9C%C2%B7%EC%84%B8%EC%9C%A8-22%C2%B7%EC%97%B0%EB%A7%90-%EC%A0%88%EC%84%B8-%EC%A0%84%EB%9E%B5" target="_blank" rel="noopener">
-      <b>2027 코인 과세 총정리 — 250만원 공제·22%·연말 절세 전략</b>
+      <b>2027 코인 과세 총정리: 250만원 공제·22%·연말 절세 전략</b>
       <span class="tag">세금</span>
     </a>
   </section>
@@ -395,7 +395,7 @@
       <input type="hidden" name="_captcha" value="false">
       <input type="text" name="이름" placeholder="이름 (닉네임도 괜찮아요)" required>
       <input type="email" name="이메일" placeholder="회신받을 이메일" required>
-      <input type="tel" name="연락처" placeholder="연락처 (선택 — 전화 상담 원할 때만)">
+      <input type="tel" name="연락처" placeholder="연락처 (선택: 전화 상담 원할 때만)">
       <select name="상담분야" required>
         <option value="" disabled selected>상담 분야를 선택하세요</option>
         <option>코인 세금 (2027 과세 대비)</option>
@@ -415,7 +415,7 @@
       </select>
       <textarea name="상담내용" placeholder="상담이 필요한 내용을 간단히 적어주세요. (예: 바이낸스 수익 신고를 어떻게 해야 할지 모르겠어요)" required></textarea>
       <label class="file-label">
-        <span>📎 스크린샷 첨부 (선택) — 거래내역·손익 화면 캡처 등</span>
+        <span>📎 스크린샷 첨부 (선택): 거래내역·손익 화면 캡처 등</span>
         <input type="file" name="첨부" accept="image/*">
       </label>
       <label class="agree-label">
@@ -572,7 +572,7 @@
     var setR = function (id, v) { document.getElementById(id).textContent = v; };
 
     if (total <= 0) {
-      msg.textContent = "손익통산 결과 " + fmt(total) + "원 — 납부할 세금이 없습니다.";
+      msg.textContent = "손익통산 결과 " + fmt(total) + "원: 납부할 세금이 없습니다.";
       msg.style.display = "block";
       setR("r-income", fmt(total) + "원"); setR("r-taxbase", "0원");
       setR("r-split", "0원 + 0원"); setR("r-total", "0원");
@@ -589,7 +589,7 @@
     result.style.display = "block";
 
     if (taxbase === 0) {
-      msg.textContent = "소득 " + fmt(total) + "원 — 기본공제 250만원 이내라서 납부할 세금이 없습니다.";
+      msg.textContent = "소득 " + fmt(total) + "원: 기본공제 250만원 이내라서 납부할 세금이 없습니다.";
       msg.style.display = "block";
     }
   });
