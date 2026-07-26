@@ -262,13 +262,21 @@
   }
 
   async function fetchETH(addr) {
-    var r = await fetch("https://cloudflare-eth.com", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_getBalance", params: [addr, "latest"] })
-    });
-    if (!r.ok) throw new Error("eth");
-    var d = await r.json();
-    return [{ chain: "Ethereum", symbol: "ETH", qty: parseInt(d.result, 16) / 1e18, gecko: "ethereum" }];
+    var endpoints = ["https://ethereum-rpc.publicnode.com", "https://eth.llamarpc.com", "https://cloudflare-eth.com"];
+    for (var i = 0; i < endpoints.length; i++) {
+      try {
+        var r = await fetch(endpoints[i], {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_getBalance", params: [addr, "latest"] })
+        });
+        if (!r.ok) continue;
+        var d = await r.json();
+        if (d && typeof d.result === "string") {
+          return [{ chain: "Ethereum", symbol: "ETH", qty: parseInt(d.result, 16) / 1e18, gecko: "ethereum" }];
+        }
+      } catch (e) { /* 다음 엔드포인트 시도 */ }
+    }
+    throw new Error("eth");
   }
 
   async function fetchSOL(addr) {
