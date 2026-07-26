@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지갑 보유 증빙 스냅샷 – 의제취득가액 대비 무료 도구 | 택스22</title>
+<meta name="description" content="지갑 주소만 입력하면 보유 자산과 평가액을 조회해 날짜가 박힌 증빙 리포트로 저장합니다. 2027년 코인 과세의 의제취득가액 증빙을 준비하세요. 비트코인·이더리움·솔라나 지원.">
+<meta property="og:title" content="지갑 보유 증빙 스냅샷 | 택스22">
+<meta property="og:description" content="지갑 주소 입력 → 보유 자산 조회 → 날짜 박힌 증빙 리포트 저장. 2027 과세 대비 무료 도구.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tax22.kr/snapshot/">
+<link rel="canonical" href="https://tax22.kr/snapshot/">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<meta name="theme-color" content="#0bab7c">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "택스22 지갑 보유 증빙 스냅샷",
+  "url": "https://tax22.kr/snapshot/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" }
+}
+</script>
+<style>
+  :root {
+    --bg: #f3f5f4; --surface: #fff; --ink: #14211c; --ink-soft: #4f5b56;
+    --ink-faint: #93a09a; --line: #e2e8e5; --accent: #0bab7c; --accent-deep: #068f66;
+    --accent-soft: #e6f7f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.65;
+    -webkit-font-smoothing: antialiased; word-break: keep-all;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+  .head-inner {
+    max-width: 720px; margin: 0 auto; padding: 0 20px; height: 58px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .logo { font-size: 20px; font-weight: 900; letter-spacing: -0.02em; }
+  .logo em { font-style: normal; color: var(--accent); }
+  .gnav { display: flex; gap: 14px; margin-right: auto; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); }
+  .gnav a.on { color: var(--accent); }
+  .head-cta { font-size: 13px; font-weight: 700; color: #fff; background: var(--ink); padding: 8px 16px; border-radius: 999px; white-space: nowrap; }
+  .head-cta:hover { background: var(--accent); }
+
+  .hero { text-align: center; padding: 40px 0 8px; }
+  .hero h1 { font-size: 26px; line-height: 1.4; letter-spacing: -0.02em; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { margin-top: 8px; font-size: 14.5px; color: var(--ink-soft); }
+
+  .why {
+    background: var(--accent-soft); border-radius: 14px; padding: 16px 20px;
+    margin: 22px 0; font-size: 13.5px; color: #1d5c48;
+  }
+  .why b { color: var(--accent-deep); }
+
+  .calc { background: var(--surface); margin: 22px 0; border-radius: 18px; overflow: hidden; box-shadow: 0 6px 24px rgba(20,33,28,.06); }
+  .calc-head { background: #10201a; color: #fff; padding: 14px 20px; font-size: 16px; font-weight: 800; }
+  .calc-head span { display: block; font-size: 12px; font-weight: 400; color: #b9bbc4; margin-top: 2px; }
+  .calc-body { padding: 20px; }
+  label.f { display: block; font-size: 12.5px; font-weight: 700; margin-bottom: 5px; }
+  .addr-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .addr-row input {
+    flex: 1; border: 1px solid var(--line); border-radius: 10px; outline: none;
+    padding: 11px 12px; font-size: 13.5px; min-width: 0; font-family: "SF Mono", Menlo, monospace;
+  }
+  .addr-row input:focus { border-color: var(--accent); }
+  .addr-row button {
+    border: 1px solid var(--line); background: var(--surface); border-radius: 10px;
+    padding: 0 14px; font-size: 13px; color: var(--ink-faint); cursor: pointer; font-family: inherit;
+  }
+  .btn-add {
+    width: 100%; border: 1px dashed #bfe8d9; background: #effaf5; color: var(--accent); border-radius: 12px;
+    font-size: 13.5px; font-weight: 700; padding: 10px 0; cursor: pointer; margin-bottom: 14px; font-family: inherit;
+  }
+  .btn-calc {
+    width: 100%; border: 0; background: var(--accent); color: #fff; border-radius: 12px;
+    font-size: 15px; font-weight: 800; padding: 13px 0; cursor: pointer; font-family: inherit;
+  }
+  .btn-calc:hover { background: var(--accent-deep); }
+  .btn-calc:disabled { opacity: .6; cursor: wait; }
+  .hint { font-size: 11.5px; color: var(--ink-faint); margin: 8px 0 0; }
+  .msg { display: none; margin-top: 14px; padding: 12px 14px; background: #fff7e6; border-radius: 10px; font-size: 13.5px; color: #7a5a12; }
+
+  /* 리포트 */
+  #report { display: none; margin: 24px 0; }
+  .report-box { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 26px 28px; }
+  .report-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--ink); padding-bottom: 12px; margin-bottom: 14px; }
+  .report-head b { font-size: 18px; }
+  .report-head span { font-size: 12px; color: var(--ink-faint); }
+  .report-meta { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 14px; line-height: 1.7; }
+  .report-meta code { font-family: "SF Mono", Menlo, monospace; font-size: 11.5px; background: var(--bg); padding: 1px 6px; border-radius: 4px; word-break: break-all; }
+  table.assets { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  table.assets th { background: var(--accent-soft); font-weight: 700; }
+  table.assets th, table.assets td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; }
+  table.assets td.num, table.assets th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .total-line { display: flex; justify-content: space-between; padding: 13px 4px 0; font-size: 15.5px; font-weight: 800; }
+  .total-line span:last-child { color: var(--accent); }
+  .report-note { font-size: 11px; color: var(--ink-faint); margin-top: 14px; line-height: 1.6; }
+  .report-actions { display: flex; gap: 10px; margin-top: 16px; }
+  .report-actions button {
+    flex: 1; border: 0; border-radius: 10px; padding: 12px 0; font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+  }
+  .btn-print { background: var(--ink); color: #fff; }
+  .btn-print:hover { background: var(--accent); }
+
+  section.guide { margin: 38px 0; }
+  section.guide h2 { font-size: 19px; letter-spacing: -0.02em; margin-bottom: 12px; }
+  section.guide h2::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-right: 10px; }
+  .faq-item { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; }
+  .faq-item summary { padding: 13px 18px; font-size: 14.5px; font-weight: 700; cursor: pointer; list-style: none; }
+  .faq-item summary::before { content: "Q. "; color: var(--accent); }
+  .faq-item p { padding: 0 18px 13px; font-size: 14px; color: var(--ink-soft); }
+
+  footer { border-top: 1px solid var(--line); background: var(--surface); }
+  .foot-inner { max-width: 720px; margin: 0 auto; padding: 22px 20px; font-size: 12.5px; color: var(--ink-faint); }
+  .foot-inner a { text-decoration: underline; text-underline-offset: 2px; }
+
+  @media (max-width: 560px) {
+    .hero h1 { font-size: 21px; }
+    .gnav { gap: 10px; font-size: 12.5px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .gnav::-webkit-scrollbar { display: none; }
+    .head-cta { display: none; }
+    table.assets { display: block; overflow-x: auto; }
+  }
+
+  @media print {
+    header, .hero, .why, .calc, section.guide, footer, .report-actions { display: none !important; }
+    body { background: #fff; }
+    #report { display: block !important; margin: 0; }
+    .report-box { border: 0; box-shadow: none; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <a class="logo" href="/">택스<em>22</em></a>
+    <nav class="gnav">
+      <a href="/">코인·주식</a>
+      <a href="/gift/">증여세</a>
+      <a href="/inherit/">상속세</a>
+      <a href="/finance/">금융소득</a>
+      <a href="/pension/">연금·IRP</a>
+      <a href="/snapshot/" class="on">지갑 스냅샷</a>
+      <a href="/blog/">블로그</a>
+    </nav>
+    <a class="head-cta" href="/#consult">전문가 상담</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h1>지갑 보유 증빙, <em>지금</em> 남겨두세요</h1>
+    <p>지갑 주소 입력 → 보유 자산 조회 → 날짜 박힌 증빙 리포트 저장</p>
+  </div>
+
+  <div class="why">
+    <b>왜 필요한가요?</b> 2027년 코인 과세에서 기존 보유분은 의제취득가액(실제 취득가 vs 2026년 12월 31일 시가 중 큰 값)이 적용됩니다. 그런데 <b>보유 사실의 입증 책임은 본인에게 있습니다.</b> 증빙이 없으면 양도가액의 50%만 필요경비로 인정받는 최악의 경우도 생깁니다. 이 도구로 보유 현황을 날짜와 함께 기록해 두세요. 특히 <b>2026년 12월 31일</b>에는 꼭.
+  </div>
+
+  <div class="calc">
+    <div class="calc-head">지갑 보유 스냅샷<span>비트코인 · 이더리움 · 솔라나(+SPL 토큰) 지원</span></div>
+    <div class="calc-body">
+      <label class="f">지갑 주소 (체인 자동 인식)</label>
+      <div id="addrs">
+        <div class="addr-row">
+          <input type="text" class="addr" placeholder="bc1... / 0x... / 솔라나 주소" spellcheck="false">
+          <button type="button" class="del">✕</button>
+        </div>
+      </div>
+      <button type="button" class="btn-add" id="add">＋ 지갑 추가</button>
+      <button type="button" class="btn-calc" id="run">보유 자산 조회하기</button>
+      <p class="hint">주소는 서버에 저장되지 않으며, 조회는 브라우저에서 공개 블록체인 데이터로 직접 이루어집니다. 이더리움은 현재 ETH 잔액만 지원합니다(토큰은 추후 지원).</p>
+      <p class="msg" id="msg"></p>
+    </div>
+  </div>
+
+  <div id="report">
+    <div class="report-box" id="report-box">
+      <div class="report-head"><b>택스22 보유 자산 스냅샷</b><span>tax22.kr/snapshot</span></div>
+      <div class="report-meta" id="report-meta"></div>
+      <table class="assets">
+        <thead><tr><th>체인</th><th>자산</th><th class="num">수량</th><th class="num">시세 (KRW)</th><th class="num">평가액 (KRW)</th></tr></thead>
+        <tbody id="report-rows"></tbody>
+      </table>
+      <div class="total-line"><span>합계 평가액</span><span id="report-total">-</span></div>
+      <p class="report-note">
+        · 시세 출처: CoinGecko (조회 시각 기준) · 잔액 출처: 각 체인 공개 노드/블록 탐색기<br>
+        · 본 리포트는 조회 시점의 온체인 보유 현황 참고자료이며, 법적 효력을 보증하지 않습니다. 거래소 보유분은 포함되지 않으니 거래소 잔고 화면을 별도로 캡처해 두세요.<br>
+        · 생성: 택스22 (tax22.kr) — 무료 도구
+      </p>
+      <div class="report-actions">
+        <button type="button" class="btn-print" onclick="window.print()">🖨 인쇄 / PDF로 저장</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="guide">
+    <h2>자주 묻는 질문</h2>
+    <details class="faq-item"><summary>이 리포트만 있으면 증빙이 되나요?</summary><p>단독으로 법적 효력이 보장되는 것은 아니고, 여러 증빙 중 하나입니다. 거래소 잔고 캡처, 거래내역 다운로드와 함께 보관하면 보유 사실을 뒷받침하는 자료가 됩니다. 온체인 잔액은 블록체인에 영구 기록되므로 나중에 같은 주소로 다시 검증할 수도 있습니다.</p></details>
+    <details class="faq-item"><summary>주소를 입력하면 위험하지 않나요?</summary><p>지갑 주소는 공개 정보라 주소만으로는 자산을 옮길 수 없습니다. 조회는 브라우저에서 공개 데이터로 직접 이루어지며 택스22 서버로 전송·저장되지 않습니다. 단, 시드 문구나 개인키는 어디에도 입력하면 안 됩니다.</p></details>
+    <details class="faq-item"><summary>거래소에 있는 코인은 어떻게 증빙하나요?</summary><p>거래소 보유분은 온체인 조회가 불가능합니다. 거래소 앱의 잔고 화면을 날짜가 보이게 캡처하고, 거래내역을 파일로 내려받아 보관하세요. 특히 2026년 12월 31일 기준 자료가 중요합니다.</p></details>
+  </section>
+
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <p style="font-weight:700;color:var(--ink-soft);">택스22 — 투자자의 세금·법률 문제 해결 포털</p>
+    <p style="margin-top:8px;">계산기: <a href="/">코인·주식</a> · <a href="/gift/">증여세</a> · <a href="/inherit/">상속세</a> · <a href="/finance/">금융소득</a> · <a href="/pension/">연금·IRP</a> · <a href="/snapshot/">지갑 스냅샷</a> &nbsp;|&nbsp; 가이드: <a href="/blog/scam/">사기 대응</a> · <a href="/blog/">블로그</a></p>
+    <p style="margin-top:8px;"><a href="/privacy/">개인정보처리방침</a> · <a href="/privacy/#terms">이용약관</a> · <a href="/partners/">파트너 광고 안내</a> · 문의: contact@tax22.kr</p>
+    <p style="margin-top:8px;">본 사이트는 일반 정보를 제공하며 세무 대리 또는 법률 자문 서비스가 아닙니다.</p>
+    <p style="margin-top:4px;">© 2026 택스22 (tax22.kr) All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var fmt = function (n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); };
+  var fmtQty = function (n) {
+    if (n >= 1000) return fmt(n);
+    return parseFloat(n.toFixed(8)).toString();
+  };
+
+  document.getElementById("add").addEventListener("click", function () {
+    var row = document.createElement("div");
+    row.className = "addr-row";
+    row.innerHTML = '<input type="text" class="addr" placeholder="bc1... / 0x... / 솔라나 주소" spellcheck="false"><button type="button" class="del">✕</button>';
+    document.getElementById("addrs").appendChild(row);
+  });
+  document.getElementById("addrs").addEventListener("click", function (e) {
+    if (e.target.className === "del" && document.querySelectorAll(".addr-row").length > 1) {
+      e.target.parentNode.remove();
+    }
+  });
+
+  function detectChain(a) {
+    if (/^0x[0-9a-fA-F]{40}$/.test(a)) return "eth";
+    if (/^(bc1|[13])[a-zA-HJ-NP-Z0-9]{20,80}$/.test(a)) return "btc";
+    if (/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(a)) return "sol";
+    return null;
+  }
+
+  async function fetchBTC(addr) {
+    var r = await fetch("https://blockstream.info/api/address/" + addr);
+    if (!r.ok) throw new Error("btc");
+    var d = await r.json();
+    var sats = d.chain_stats.funded_txo_sum - d.chain_stats.spent_txo_sum;
+    return [{ chain: "Bitcoin", symbol: "BTC", qty: sats / 1e8, gecko: "bitcoin" }];
+  }
+
+  async function fetchETH(addr) {
+    var r = await fetch("https://cloudflare-eth.com", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_getBalance", params: [addr, "latest"] })
+    });
+    if (!r.ok) throw new Error("eth");
+    var d = await r.json();
+    return [{ chain: "Ethereum", symbol: "ETH", qty: parseInt(d.result, 16) / 1e18, gecko: "ethereum" }];
+  }
+
+  async function fetchSOL(addr) {
+    var rpc = function (method, params) {
+      return fetch("https://api.mainnet-beta.solana.com", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: method, params: params })
+      }).then(function (r) { if (!r.ok) throw new Error("sol"); return r.json(); });
+    };
+    var out = [];
+    var bal = await rpc("getBalance", [addr]);
+    out.push({ chain: "Solana", symbol: "SOL", qty: bal.result.value / 1e9, gecko: "solana" });
+    try {
+      var tok = await rpc("getTokenAccountsByOwner", [addr, { programId: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" }, { encoding: "jsonParsed" }]);
+      (tok.result.value || []).forEach(function (t) {
+        var info = t.account.data.parsed.info;
+        var amt = info.tokenAmount.uiAmount;
+        if (amt && amt > 0) {
+          out.push({ chain: "Solana", symbol: "SPL " + info.mint.slice(0, 4) + "…" + info.mint.slice(-4), qty: amt, gecko: null, mint: info.mint });
+        }
+      });
+    } catch (e) { /* SPL 조회 실패는 무시 */ }
+    return out;
+  }
+
+  async function fetchPrices(ids) {
+    if (!ids.length) return {};
+    var r = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=" + ids.join(",") + "&vs_currencies=krw");
+    if (!r.ok) return {};
+    return r.json();
+  }
+
+  document.getElementById("run").addEventListener("click", async function () {
+    var btn = this;
+    var msg = document.getElementById("msg");
+    msg.style.display = "none";
+    document.getElementById("report").style.display = "none";
+
+    var addrs = [];
+    document.querySelectorAll(".addr").forEach(function (i) {
+      var v = i.value.trim();
+      if (v) addrs.push(v);
+    });
+    if (!addrs.length) { msg.textContent = "지갑 주소를 입력해 주세요."; msg.style.display = "block"; return; }
+
+    btn.disabled = true; btn.textContent = "조회 중... (최대 30초)";
+    var assets = [], errors = [];
+
+    for (var i = 0; i < addrs.length; i++) {
+      var a = addrs[i], chain = detectChain(a);
+      try {
+        if (chain === "btc") assets.push({ addr: a, items: await fetchBTC(a) });
+        else if (chain === "eth") assets.push({ addr: a, items: await fetchETH(a) });
+        else if (chain === "sol") assets.push({ addr: a, items: await fetchSOL(a) });
+        else errors.push(a.slice(0, 12) + "… : 지원하지 않는 주소 형식입니다");
+      } catch (e) {
+        errors.push(a.slice(0, 12) + "… : 조회에 실패했습니다 (잠시 후 재시도)");
+      }
+    }
+
+    var geckoIds = [];
+    assets.forEach(function (g) { g.items.forEach(function (it) { if (it.gecko && geckoIds.indexOf(it.gecko) < 0) geckoIds.push(it.gecko); }); });
+    var prices = {};
+    try { prices = await fetchPrices(geckoIds); } catch (e) {}
+
+    var rows = "", total = 0, hasAny = false;
+    assets.forEach(function (g) {
+      g.items.forEach(function (it) {
+        if (it.qty <= 0) return;
+        hasAny = true;
+        var price = it.gecko && prices[it.gecko] ? prices[it.gecko].krw : null;
+        var value = price ? it.qty * price : null;
+        if (value) total += value;
+        rows += "<tr><td>" + it.chain + "</td><td>" + it.symbol + "</td><td class='num'>" + fmtQty(it.qty) + "</td><td class='num'>" + (price ? fmt(price) + "원" : "-") + "</td><td class='num'>" + (value ? fmt(value) + "원" : "-") + "</td></tr>";
+      });
+    });
+
+    btn.disabled = false; btn.textContent = "보유 자산 조회하기";
+
+    if (!hasAny && !errors.length) {
+      msg.textContent = "조회된 보유 자산이 없습니다. 주소를 확인해 주세요.";
+      msg.style.display = "block"; return;
+    }
+    if (errors.length) {
+      msg.textContent = "⚠️ " + errors.join(" / ");
+      msg.style.display = "block";
+    }
+    if (!hasAny) return;
+
+    var now = new Date();
+    var kst = now.toLocaleString("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    document.getElementById("report-meta").innerHTML =
+      "<b>조회 시각:</b> " + kst + " (KST)<br><b>조회 지갑:</b><br>" +
+      assets.map(function (g) { return "<code>" + g.addr + "</code>"; }).join("<br>");
+    document.getElementById("report-rows").innerHTML = rows;
+    document.getElementById("report-total").textContent = fmt(total) + "원" + (rows.indexOf("'-'") > -1 ? " (시세 미확인 자산 제외)" : "");
+    document.getElementById("report").style.display = "block";
+    document.getElementById("report").scrollIntoView({ behavior: "smooth" });
+  });
+})();
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  navigator.serviceWorker.register("/sw.js");
+}
+</script>
+</body>
+</html>

@@ -1,5 +1,5 @@
-var CACHE = "tax22-v7";
-var ASSETS = ["/", "/index.html", "/gift/", "/finance/", "/pension/", "/blog/scam/", "/inherit/", "/manifest.json", "/icon-192.png", "/icon-512.png"];
+var CACHE = "tax22-v8";
+var ASSETS = ["/", "/index.html", "/gift/", "/finance/", "/pension/", "/blog/scam/", "/inherit/", "/snapshot/", "/manifest.json", "/icon-192.png", "/icon-512.png"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(ASSETS); }));
