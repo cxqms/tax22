@@ -113,6 +113,30 @@
   .btn-print { background: var(--ink); color: #fff; }
   .btn-print:hover { background: var(--accent); }
 
+  /* 증빙 체크리스트 */
+  .cl-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .cl-bar { flex: 1; height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+  .cl-bar span { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 999px; transition: width .25s ease; }
+  .cl-count { font-size: 13px; font-weight: 700; color: var(--ink-soft); white-space: nowrap; }
+  .cl-item {
+    display: flex; gap: 14px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 16px 18px; margin-bottom: 10px; cursor: pointer;
+    transition: border-color .15s ease;
+  }
+  .cl-item:hover { border-color: var(--accent); }
+  .cl-item input { width: 20px; height: 20px; accent-color: var(--accent); flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+  .cl-item.done { background: var(--accent-soft); border-color: var(--accent); }
+  .cl-item b { display: block; font-size: 14.5px; margin-bottom: 3px; }
+  .cl-item.done b { color: var(--accent-deep); }
+  .cl-item p { font-size: 13px; color: var(--ink-soft); }
+  .cl-done-msg {
+    display: none; background: #10201a; color: #fff; border-radius: 14px;
+    padding: 20px 24px; text-align: center; margin-top: 14px;
+  }
+  .cl-done-msg b { display: block; font-size: 16px; margin-bottom: 5px; color: #7fe0c2; }
+  .cl-done-msg p { font-size: 13px; color: #b9bbc4; margin-bottom: 12px; }
+  .cl-done-msg a { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; font-size: 13.5px; padding: 10px 20px; border-radius: 10px; }
+
   section.guide { margin: 38px 0; }
   section.guide h2 { font-size: 19px; letter-spacing: -0.02em; margin-bottom: 12px; }
   section.guide h2::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-right: 10px; }
@@ -206,6 +230,42 @@
       </div>
     </div>
   </div>
+
+  <section class="guide" id="checklist">
+    <h2>연말 증빙 체크리스트</h2>
+    <p style="font-size:14px;color:var(--ink-soft);margin:-4px 0 14px;">스냅샷 하나로는 부족합니다. 아래 4가지를 모두 챙겨야 2027년 과세에서 내 취득가를 지킬 수 있습니다. 체크 상태는 이 브라우저에 저장됩니다.</p>
+    <div class="cl-progress"><div class="cl-bar"><span id="cl-fill"></span></div><span class="cl-count" id="cl-count">0 / 4 완료</span></div>
+
+    <label class="cl-item" data-key="cl-snapshot">
+      <input type="checkbox">
+      <span><b>① 온체인 지갑 스냅샷 저장</b>
+      <p>위 도구로 지갑별 보유 자산을 조회하고 "인쇄/PDF로 저장"까지. 지갑이 여러 개면 전부 한 번에 조회하세요.</p></span>
+    </label>
+
+    <label class="cl-item" data-key="cl-exchange">
+      <input type="checkbox">
+      <span><b>② 거래소 잔고 화면 캡처</b>
+      <p>업비트·빗썸·해외거래소 앱의 보유 자산 화면을 날짜가 보이게 캡처. 거래소 보유분은 온체인 조회가 안 되므로 이게 핵심 증빙입니다.</p></span>
+    </label>
+
+    <label class="cl-item" data-key="cl-history">
+      <input type="checkbox">
+      <span><b>③ 거래내역·입출금 내역 다운로드</b>
+      <p>거래소별 연간 거래내역 파일을 내려받아 보관. 실제 취득가를 증명하는 자료이며, 증빙이 없으면 양도가액의 50%만 필요경비로 인정될 수 있습니다.</p></span>
+    </label>
+
+    <label class="cl-item" data-key="cl-ownership">
+      <input type="checkbox">
+      <span><b>④ 지갑 소유권 연결고리 확보</b>
+      <p>거래소에서 내 지갑으로 출금한 기록(출금 내역)을 보관. "이 지갑이 내 것"임을 증명하는 자료로, 온체인 스냅샷과 세트일 때 힘을 발휘합니다.</p></span>
+    </label>
+
+    <div class="cl-done-msg" id="cl-done">
+      <b>🎉 증빙 준비 완료!</b>
+      <p>기록은 다 갖췄습니다. 이제 절세 전략이 궁금하다면 전문가에게 물어보세요.</p>
+      <a href="/#consult">세무사 상담 신청하기 →</a>
+    </div>
+  </section>
 
   <section class="guide">
     <h2>자주 묻는 질문</h2>
@@ -391,6 +451,33 @@
     document.getElementById("report").scrollIntoView({ behavior: "smooth" });
   });
 })();
+
+/* 증빙 체크리스트: 상태 저장 + 진행도 */
+(function () {
+  var items = document.querySelectorAll(".cl-item");
+  function sync() {
+    var done = 0;
+    items.forEach(function (it) {
+      var on = it.querySelector("input").checked;
+      it.classList.toggle("done", on);
+      if (on) done++;
+    });
+    document.getElementById("cl-fill").style.width = (done / items.length * 100) + "%";
+    document.getElementById("cl-count").textContent = done + " / " + items.length + " 완료";
+    document.getElementById("cl-done").style.display = done === items.length ? "block" : "none";
+  }
+  items.forEach(function (it) {
+    var key = "tax22-" + it.dataset.key;
+    var input = it.querySelector("input");
+    try { input.checked = localStorage.getItem(key) === "1"; } catch (e) {}
+    input.addEventListener("change", function () {
+      try { localStorage.setItem(key, input.checked ? "1" : "0"); } catch (e) {}
+      sync();
+    });
+  });
+  sync();
+})();
+
 if ("serviceWorker" in navigator && location.protocol === "https:") {
   navigator.serviceWorker.register("/sw.js");
 }
