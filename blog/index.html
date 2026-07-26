@@ -45,16 +45,6 @@
   .hero p { margin-top: 8px; font-size: 14.5px; color: var(--ink-soft); }
 
   .posts { margin: 28px 0 40px; }
-  .post-card { display: flex; gap: 20px; padding: 14px; align-items: center; }
-  .pc-thumb { width: 200px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
-  .pc-body { min-width: 0; padding: 6px 8px 6px 0; }
-  .post-card b { margin: 7px 0 8px; }
-  .post-card p { line-height: 1.65; }
-  @media (max-width: 560px) {
-    .post-card { flex-direction: column; padding: 0 0 18px; gap: 0; align-items: stretch; }
-    .pc-thumb { width: 100%; border-radius: 14px 14px 0 0; }
-    .pc-body { padding: 12px 18px 0; }
-  }
   .post-card {
     display: block; background: var(--surface); border: 1px solid var(--line);
     border-radius: 14px; padding: 20px 22px; margin-bottom: 12px;
@@ -79,6 +69,18 @@
     .gnav { gap: 10px; font-size: 12.5px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
     .gnav::-webkit-scrollbar { display: none; }
     .head-cta { display: none; }
+  }
+
+  /* 썸네일 카드 레이아웃 (원본 규칙 오버라이드 — 반드시 뒤에 위치) */
+  .post-card { display: flex; gap: 20px; padding: 14px; align-items: center; }
+  .pc-thumb { width: 200px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+  .pc-body { min-width: 0; padding: 6px 8px 6px 0; }
+  .post-card b { margin: 7px 0 8px; }
+  .post-card p { line-height: 1.65; }
+  @media (max-width: 560px) {
+    .post-card { flex-direction: column; padding: 0 0 18px; gap: 0; align-items: stretch; }
+    .pc-thumb { width: 100%; border-radius: 14px 14px 0 0; }
+    .pc-body { padding: 12px 18px 0; }
   }
 </style>
 </head>
