@@ -1,4 +1,4 @@
-var CACHE = "tax22-v8";
+var CACHE = "tax22-v9";
 var ASSETS = ["/", "/index.html", "/gift/", "/finance/", "/pension/", "/blog/scam/", "/inherit/", "/snapshot/", "/manifest.json", "/icon-192.png", "/icon-512.png"];
 
 self.addEventListener("install", function (e) {
@@ -17,8 +17,9 @@ self.addEventListener("activate", function (e) {
 
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET") return;
+  var req = e.request.mode === "navigate" ? new Request(e.request.url, { cache: "no-cache" }) : e.request;
   e.respondWith(
-    fetch(e.request)
+    fetch(req)
       .then(function (res) {
         var copy = res.clone();
         caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
