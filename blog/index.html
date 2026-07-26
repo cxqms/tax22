@@ -45,6 +45,16 @@
   .hero p { margin-top: 8px; font-size: 14.5px; color: var(--ink-soft); }
 
   .posts { margin: 28px 0 40px; }
+  .post-card { display: flex; gap: 20px; padding: 14px; align-items: center; }
+  .pc-thumb { width: 200px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+  .pc-body { min-width: 0; padding: 6px 8px 6px 0; }
+  .post-card b { margin: 7px 0 8px; }
+  .post-card p { line-height: 1.65; }
+  @media (max-width: 560px) {
+    .post-card { flex-direction: column; padding: 0 0 18px; gap: 0; align-items: stretch; }
+    .pc-thumb { width: 100%; border-radius: 14px 14px 0 0; }
+    .pc-body { padding: 12px 18px 0; }
+  }
   .post-card {
     display: block; background: var(--surface); border: 1px solid var(--line);
     border-radius: 14px; padding: 20px 22px; margin-bottom: 12px;
@@ -100,52 +110,76 @@
   <div class="posts">
 
     <a class="post-card" href="/blog/carf/">
+      <img class="pc-thumb" src="/img/thumb-carf.jpg" alt="" loading="lazy">
+      <div class="pc-body">
       <span class="meta"><span class="tag">코인 세금</span>2026. 7. 26</span>
       <b>해외거래소 코인, 국세청이 다 봅니다: CARF 정보교환·해외금융계좌 5억 신고 총정리</b>
       <p>바이낸스 거래도 이제 국세청과 공유됩니다. 2026년부터 시작된 CARF와 해외금융계좌 신고 의무, 지금 해둘 일 4가지를 정리했습니다.</p>
+    </div>
     </a>
 
     <a class="post-card" href="/blog/scam/">
+      <img class="pc-thumb" src="/img/thumb-scam.jpg" alt="" loading="lazy">
+      <div class="pc-body">
       <span class="meta"><span class="tag">사기 대응</span>2026. 7. 26</span>
       <b>리딩방·코인 투자 사기 대응 가이드: 지급정지부터 회수까지</b>
       <p>투자 사기를 당했다면 처음 24시간이 전부입니다. 지급정지, 신고, 증거 확보, 코인 추적, 회수 절차를 순서대로 정리했습니다.</p>
+    </div>
     </a>
 
     <a class="post-card" href="/blog/qna-binance/">
+      <img class="pc-thumb" src="/img/thumb-qna-binance.jpg" alt="" loading="lazy">
+      <div class="pc-body">
       <span class="meta"><span class="tag">Q&amp;A</span>2026. 7. 26</span>
       <b>바이낸스에서 번 돈, 지금도 신고해야 하나요?</b>
       <p>매매차익 신고는 아직 없지만, 해외금융계좌 5억 신고와 CARF 정보 공유는 이미 시행 중입니다.</p>
+    </div>
     </a>
 
     <a class="post-card" href="/blog/qna-kimp/">
+      <img class="pc-thumb" src="/img/thumb-qna-kimp.jpg" alt="" loading="lazy">
+      <div class="pc-body">
       <span class="meta"><span class="tag">Q&amp;A</span>2026. 7. 26</span>
       <b>김프(김치프리미엄) 차익거래, 세금 문제 없나요?</b>
       <p>세금보다 먼저 걸리는 것은 외국환거래법입니다. 송금 목적 허위 기재의 리스크를 정리했습니다.</p>
+    </div>
     </a>
 
     <a class="post-card" href="/blog/qna-gift-sell/">
+      <img class="pc-thumb" src="/img/thumb-qna-gift-sell.jpg" alt="" loading="lazy">
+      <div class="pc-body">
       <span class="meta"><span class="tag">Q&amp;A</span>2026. 7. 26</span>
       <b>배우자에게 코인 증여하고 바로 팔면 절세된다던데, 진짜인가요?</b>
       <p>구조는 합법이지만 조건이 있습니다. 매도대금을 돌려받으면 가장증여로 부인됩니다.</p>
+    </div>
     </a>
 
     <a class="post-card" href="/blog/qna-airdrop/">
+      <img class="pc-thumb" src="/img/thumb-qna-airdrop.jpg" alt="" loading="lazy">
+      <div class="pc-body">
       <span class="meta"><span class="tag">Q&amp;A</span>2026. 7. 26</span>
       <b>에어드랍이나 스테이킹 보상에도 세금이 붙나요?</b>
       <p>양도소득 과세 기준은 미확정, 무상 수령은 증여세 이슈가 있을 수 있습니다. 기록부터 남기세요.</p>
+    </div>
     </a>
 
     <a class="post-card" href="/blog/qna-loss/">
+      <img class="pc-thumb" src="/img/thumb-qna-loss.jpg" alt="" loading="lazy">
+      <div class="pc-body">
       <span class="meta"><span class="tag">Q&amp;A</span>2026. 7. 26</span>
       <b>코인 손실만 났는데, 세금 관련해서 뭘 해야 하나요?</b>
       <p>핵심은 손절 타이밍입니다. 2026년 손실과 2027년 손실의 가치가 완전히 다릅니다.</p>
+    </div>
     </a>
 
     <a class="post-card" href="https://realofreal.tistory.com/entry/2026%EB%85%84-%EC%B5%9C%EC%8B%A0-2027-%EC%BD%94%EC%9D%B8-%EA%B3%BC%EC%84%B8-%EC%B4%9D%EC%A0%95%EB%A6%AC%EF%BD%9C250%EB%A7%8C%EC%9B%90-%EA%B3%B5%EC%A0%9C%C2%B7%EC%84%B8%EC%9C%A8-22%C2%B7%EC%97%B0%EB%A7%90-%EC%A0%88%EC%84%B8-%EC%A0%84%EB%9E%B5" target="_blank" rel="noopener">
+      <img class="pc-thumb" src="/img/thumb-tax2027.jpg" alt="" loading="lazy">
+      <div class="pc-body">
       <span class="meta"><span class="tag">코인 세금</span>2026. 7. 26</span>
       <b>2027 코인 과세 총정리: 250만원 공제·세율 22%·연말 절세 전략</b>
       <p>3번 미뤄진 코인 세금이 진짜로 옵니다. 의제취득가액부터 연말 전에 해둘 절세 전략 4가지까지.</p>
       <span class="ext">↗ 파트너 블로그(크립토세상에서 살아남기)에서 읽기</span>
+    </div>
     </a>
 
   </div>
