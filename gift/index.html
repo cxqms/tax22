@@ -135,6 +135,26 @@
     .gnav::-webkit-scrollbar { display: none; }
     .head-cta { display: none; }
   }
+
+  /* 드롭다운 내비 */
+  .dd { position: relative; }
+  .dd-btn {
+    border: 0; background: none; font-family: inherit; font-size: 13.5px; font-weight: 600;
+    color: var(--ink-soft); cursor: pointer; padding: 0; white-space: nowrap;
+  }
+  .dd-btn:hover, .dd-btn.on, .dd.open .dd-btn { color: var(--accent); }
+  .dd-menu {
+    display: none; position: absolute; top: calc(100% + 16px); left: -12px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(20,33,28,.14); padding: 8px; min-width: 176px; z-index: 60;
+  }
+  .dd.open .dd-menu { display: block; }
+  .dd-menu a { display: block; padding: 9px 12px; border-radius: 8px; font-size: 13.5px; color: var(--ink-soft); }
+  .dd-menu a:hover { background: var(--accent-soft); color: var(--accent-deep); }
+  .dd-menu a.on { color: var(--accent); font-weight: 700; }
+  @media (max-width: 560px) {
+    .dd-menu { position: fixed; left: 16px; right: 16px; top: 62px; }
+  }
 </style>
 </head>
 <body>
@@ -143,11 +163,16 @@
   <div class="head-inner">
     <a class="logo" href="/">택스<em>22</em></a>
     <nav class="gnav">
-      <a href="/">코인·주식</a>
-      <a href="/gift/" class="on">증여세</a>
-      <a href="/inherit/">상속세</a>
-      <a href="/finance/">금융소득</a>
-      <a href="/pension/">연금·IRP</a>
+      <div class="dd">
+        <button class="dd-btn on" type="button">세금 계산기 ▾</button>
+        <div class="dd-menu">
+        <a href="/">코인·해외주식</a>
+        <a href="/gift/" class="on">증여세</a>
+        <a href="/inherit/">상속세</a>
+        <a href="/finance/">금융소득종합과세</a>
+        <a href="/pension/">연금저축·IRP</a>
+        </div>
+      </div>
       <a href="/snapshot/">지갑 스냅샷</a>
       <a href="/blog/">블로그</a>
     </nav>
@@ -357,6 +382,17 @@
 if ("serviceWorker" in navigator && location.protocol === "https:") {
   navigator.serviceWorker.register("/sw.js");
 }
+</script>
+<script>
+(function () {
+  var dd = document.querySelector(".dd");
+  if (!dd) return;
+  dd.querySelector(".dd-btn").addEventListener("click", function (e) {
+    e.stopPropagation();
+    dd.classList.toggle("open");
+  });
+  document.addEventListener("click", function () { dd.classList.remove("open"); });
+})();
 </script>
 </body>
 </html>
