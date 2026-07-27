@@ -151,6 +151,23 @@
   @media (max-width: 560px) {
     .dd-menu { position: fixed; left: 16px; right: 16px; top: 62px; }
   }
+
+  /* UX 인핸스먼트 */
+  .krw-hint { font-size: 11px; color: var(--ink-faint); white-space: nowrap; padding-right: 4px; }
+  .enh { padding: 12px 14px 14px; border-top: 1px solid var(--line); background: var(--surface); }
+  .enh-row { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 4px; }
+  .enh-row b { color: var(--ink); }
+  .enh-bar { display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--accent-soft); margin: 7px 0 4px; }
+  .enh-bar .seg-tax { background: #e0655f; }
+  .enh-bar .seg-net { background: var(--accent); }
+  .enh-legend { display: flex; gap: 14px; font-size: 11px; color: var(--ink-faint); }
+  .enh-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; font-style: normal; }
+  .copy-btn {
+    margin-top: 12px; width: 100%; border: 1px solid var(--line); background: var(--surface);
+    border-radius: 10px; padding: 10px 0; font-family: inherit; font-size: 13px; font-weight: 700;
+    color: var(--ink-soft); cursor: pointer;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -358,6 +375,88 @@ if ("serviceWorker" in navigator && location.protocol === "https:") {
     dd.classList.toggle("open");
   });
   document.addEventListener("click", function () { dd.classList.remove("open"); });
+})();
+</script>
+<script>
+/* UX 인핸스먼트: 한글 환산 + 실효세율 바 + 결과 복사 + 엔터 계산 */
+(function () {
+  var CFG = {"btn": "p-calc", "result": "p-result", "tax": "p-r-total", "base": "el:p-r-target", "netLabel": null, "rateLabel": "공제 대상 대비 환급 비율", "refund": true};
+  function num(t) { return parseInt(String(t || "").replace(/[^0-9]/g, ""), 10) || 0; }
+  function fmt(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+  function krw(v) {
+    if (v < 10000) return "";
+    var man = Math.round(v / 10000), eok = Math.floor(man / 10000), jo = Math.floor(eok / 10000);
+    var rest;
+    if (jo > 0) { rest = eok % 10000; return fmt(jo) + "조" + (rest ? " " + fmt(rest) + "억" : ""); }
+    if (eok > 0) { rest = man % 10000; return fmt(eok) + "억" + (rest ? " " + fmt(rest) + "만" : ""); }
+    return fmt(man) + "만";
+  }
+  /* 한글 환산 힌트 (동적 행 포함, 위임) */
+  document.addEventListener("input", function (e) {
+    var inp = e.target;
+    if (!inp.matches || !inp.matches('input[inputmode="numeric"]')) return;
+    var box = inp.closest(".in");
+    if (!box) return;
+    var hint = box.querySelector(".krw-hint");
+    if (!hint) {
+      hint = document.createElement("span");
+      hint.className = "krw-hint";
+      box.insertBefore(hint, inp.nextSibling);
+    }
+    hint.textContent = krw(num(inp.value));
+  });
+  /* 엔터로 계산 */
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && e.target.matches && e.target.matches('input[inputmode="numeric"]')) {
+      e.preventDefault();
+      var b = document.getElementById(CFG.btn);
+      if (b) b.click();
+    }
+  });
+  /* 결과 인핸스먼트 (원래 핸들러 뒤에 실행) */
+  var btn = document.getElementById(CFG.btn);
+  if (!btn) return;
+  btn.addEventListener("click", function () {
+    setTimeout(function () {
+      var result = document.getElementById(CFG.result);
+      if (!result || result.style.display === "none") return;
+      var tax = num(document.getElementById(CFG.tax).textContent);
+      var base = CFG.base.indexOf("in:") === 0
+        ? num(document.getElementById(CFG.base.slice(3)).value)
+        : num(document.getElementById(CFG.base.slice(3)).textContent);
+      if (base <= 0) return;
+      var rate = Math.min(100, tax / base * 100);
+      var enh = result.querySelector(".enh");
+      if (!enh) { enh = document.createElement("div"); enh.className = "enh"; result.appendChild(enh); }
+      var html = "";
+      if (CFG.refund) {
+        html += '<div class="enh-row"><span>' + CFG.rateLabel + '</span><b>' + rate.toFixed(1) + '%</b></div>' +
+                '<div class="enh-bar"><div class="seg-net" style="width:' + rate + '%"></div></div>' +
+                '<div class="enh-legend"><span><i style="background:var(--accent)"></i>돌려받는 몫</span></div>';
+      } else {
+        var net = base - tax;
+        html += '<div class="enh-row"><span>' + CFG.rateLabel + '</span><b>' + rate.toFixed(1) + '%</b></div>' +
+                '<div class="enh-row"><span>' + CFG.netLabel + '</span><b>' + fmt(net) + '원</b></div>' +
+                '<div class="enh-bar"><div class="seg-tax" style="width:' + rate + '%"></div><div class="seg-net" style="width:' + (100 - rate) + '%"></div></div>' +
+                '<div class="enh-legend"><span><i style="background:#e0655f"></i>세금</span><span><i style="background:var(--accent)"></i>' + CFG.netLabel + '</span></div>';
+      }
+      html += '<button type="button" class="copy-btn">📋 결과 복사하기</button>';
+      enh.innerHTML = html;
+      enh.querySelector(".copy-btn").addEventListener("click", function () {
+        var lines = ["[택스22 계산 결과]"];
+        result.querySelectorAll(".r-line, .r-total").forEach(function (r) {
+          var t = r.textContent.replace(/\s+/g, " ").trim();
+          if (t) lines.push(t);
+        });
+        lines.push("", "직접 계산해보기: https://tax22.kr" + location.pathname);
+        var b2 = this;
+        navigator.clipboard.writeText(lines.join("\n")).then(function () {
+          b2.textContent = "✅ 복사 완료";
+          setTimeout(function () { b2.textContent = "📋 결과 복사하기"; }, 1600);
+        });
+      });
+    }, 0);
+  });
 })();
 </script>
 </body>
