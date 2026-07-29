@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>코인 채굴 수익에도 세금이 붙나요? | 택스22 Q&A</title>
+<meta name="description" content="채굴 소득의 과세 구분, 2027년 이후 취득가 문제, 전기료 경비 처리까지. 채굴러가 지금 기록해야 할 것들을 정리했습니다.">
+<meta property="og:title" content="코인 채굴 수익에도 세금이 붙나요? | 택스22 Q&A">
+<meta property="og:description" content="채굴 소득의 과세 구분, 2027년 이후 취득가 문제, 전기료 경비 처리까지. 채굴러가 지금 기록해야 할 것들을 정리했습니다.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://tax22.kr/blog/qna-mining/">
+<meta property="og:image" content="https://tax22.kr/img/thumb-qna-mining.jpg">
+<link rel="canonical" href="https://tax22.kr/blog/qna-mining/">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<meta name="theme-color" content="#0bab7c">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "QAPage",
+  "mainEntity": {
+    "@type": "Question",
+    "name": "코인 채굴이나 노드 운영 수익에도 세금이 붙나요?",
+    "answerCount": 1,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "사업 규모로 반복하면 지금도 사업소득으로 과세될 수 있고, 2027년부터는 채굴한 코인을 팔 때 양도차익 과세가 적용됩니다. 채굴 시점의 시세와 전기료 기록이 나중의 세금을 좌우합니다."
+    }
+  }
+}
+</script>
+<style>
+  :root {
+    --bg: #f3f5f4; --surface: #fff; --ink: #14211c; --ink-soft: #4f5b56;
+    --ink-faint: #93a09a; --line: #e2e8e5; --accent: #0bab7c; --accent-deep: #068f66;
+    --accent-soft: #e6f7f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.75;
+    -webkit-font-smoothing: antialiased; word-break: keep-all;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+  .head-inner { max-width: 720px; margin: 0 auto; padding: 0 20px; height: 58px; display: flex; align-items: center; gap: 18px; }
+  .logo { font-size: 20px; font-weight: 900; letter-spacing: -0.02em; }
+  .logo em { font-style: normal; color: var(--accent); }
+  .gnav { display: flex; gap: 14px; margin-right: auto; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); }
+  .gnav a.on { color: var(--accent); }
+  .head-cta { font-size: 13px; font-weight: 700; color: #fff; background: var(--ink); padding: 8px 16px; border-radius: 999px; white-space: nowrap; }
+  article { padding: 36px 0 10px; }
+  .post-meta { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 10px; }
+  .post-meta .tag { display: inline-block; font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 2px 10px; margin-right: 8px; }
+  article h1 { font-size: 24px; line-height: 1.42; letter-spacing: -0.02em; margin-bottom: 18px; }
+  article h1::before { content: "Q. "; color: var(--accent); }
+  .short-answer { background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin-bottom: 24px; }
+  .short-answer b { display: block; font-size: 13px; color: var(--accent-deep); margin-bottom: 4px; }
+  .short-answer p { font-size: 15px; color: #1d3f33; font-weight: 600; }
+  article h2 { font-size: 18.5px; letter-spacing: -0.02em; margin: 30px 0 8px; }
+  article h2::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); margin-right: 9px; vertical-align: 2px; }
+  article p { font-size: 15px; color: #33403a; margin: 10px 0; }
+  article ul, article ol { padding-left: 22px; margin: 10px 0; }
+  article li { font-size: 14.5px; color: #33403a; margin: 6px 0; }
+  article table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13.5px; background: var(--surface); }
+  article th { background: var(--accent-soft); font-weight: 700; }
+  article th, article td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; }
+  .warn { background: #fff7e6; border-radius: 10px; padding: 12px 16px; font-size: 13.5px; color: #7a5a12; margin: 14px 0; }
+  .banner { border: 2px solid var(--accent); border-radius: 14px; padding: 16px 20px; margin: 24px 0; background: var(--accent-soft); display: block; }
+  .banner b { display: block; font-size: 15px; margin-bottom: 3px; }
+  .banner p { font-size: 13px; color: #1d5c48; margin: 0 0 10px; }
+  .banner span.btn { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; font-size: 13.5px; padding: 9px 18px; border-radius: 9px; }
+  .cta-consult { background: #10201a; color: #fff; border-radius: 16px; padding: 24px 26px; margin: 32px 0; text-align: center; }
+  .cta-consult b { display: block; font-size: 17px; margin-bottom: 6px; }
+  .cta-consult p { font-size: 13.5px; color: #b9bbc4; margin-bottom: 14px; }
+  .cta-consult a { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; font-size: 14px; padding: 11px 22px; border-radius: 10px; }
+  .disclaimer { font-size: 11.5px; color: var(--ink-faint); margin: 18px 0 40px; line-height: 1.5; }
+  footer { border-top: 1px solid var(--line); background: var(--surface); }
+  .foot-inner { max-width: 720px; margin: 0 auto; padding: 22px 20px; font-size: 12.5px; color: var(--ink-faint); }
+  .foot-inner a { text-decoration: underline; text-underline-offset: 2px; }
+  @media (max-width: 560px) {
+    article h1 { font-size: 20px; }
+    .gnav { gap: 10px; font-size: 12.5px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .gnav::-webkit-scrollbar { display: none; }
+    .head-cta { display: none; }
+    article table { display: block; overflow-x: auto; }
+  }
+
+  /* 가독성·이미지 */
+  article p { line-height: 1.9; margin: 16px 0; }
+  article li { line-height: 1.8; margin: 9px 0; }
+  article h2 { margin-top: 42px; }
+  .hero-img { width: 100%; border-radius: 14px; margin: 10px 0 22px; display: block; }
+
+  /* 드롭다운 내비 */
+  .dd { position: relative; }
+  .dd-btn {
+    border: 0; background: none; font-family: inherit; font-size: 13.5px; font-weight: 600;
+    color: var(--ink-soft); cursor: pointer; padding: 0; white-space: nowrap;
+  }
+  .dd-btn:hover, .dd-btn.on, .dd.open .dd-btn { color: var(--accent); }
+  .dd-menu {
+    display: none; position: absolute; top: calc(100% + 16px); left: -12px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(20,33,28,.14); padding: 8px; min-width: 176px; z-index: 60;
+  }
+  .dd.open .dd-menu { display: block; }
+  .dd-menu a { display: block; padding: 9px 12px; border-radius: 8px; font-size: 13.5px; color: var(--ink-soft); }
+  .dd-menu a:hover { background: var(--accent-soft); color: var(--accent-deep); }
+  .dd-menu a.on { color: var(--accent); font-weight: 700; }
+  @media (max-width: 560px) {
+    .dd-menu { position: fixed; left: 16px; right: 16px; top: 62px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <a class="logo" href="/">택스<em>22</em></a>
+    <nav class="gnav">
+      <div class="dd">
+        <button class="dd-btn" type="button">세금 계산기 ▾</button>
+        <div class="dd-menu">
+        <a href="/">코인·해외주식</a>
+        <a href="/gift/">증여세</a>
+        <a href="/inherit/">상속세</a>
+        <a href="/finance/">금융소득종합과세</a>
+        <a href="/pension/">연금저축·IRP</a>
+        </div>
+      </div>
+      <a href="/snapshot/">지갑 스냅샷</a>
+      <a href="/blog/" class="on">블로그</a>
+    </nav>
+    <a class="head-cta" href="/#consult">전문가 상담</a>
+  </div>
+</header>
+
+<div class="wrap">
+<article>
+  <p class="post-meta"><span class="tag">Q&A</span>2026. 7. 27 · 택스22</p>
+  <h1>코인 채굴이나 노드 운영 수익에도 세금이 붙나요?</h1>
+  <img class="hero-img" src="/img/thumb-qna-mining.jpg" alt="코인 채굴이나 노드 운영 수익에도 세금이 붙나요? 썸네일">
+  <div class="short-answer"><b>한 줄 답변</b><p>사업 규모로 반복하면 지금도 사업소득으로 과세될 수 있고, 2027년부터는 채굴한 코인을 팔 때 양도차익 과세가 적용됩니다. 채굴 시점의 시세와 전기료 기록이 나중의 세금을 좌우합니다.</p></div>
+  <h2>지금(2026년)은 어떤가요?</h2>
+  <ul>
+    <li>개인이 취미 수준으로 채굴해 파는 차익은 현재 비과세 틀 안에 있습니다</li>
+    <li>다만 장비를 갖추고 반복적·계속적으로 채굴한다면 <b>사업소득으로 볼 여지</b>가 있습니다. 사업소득이면 유예와 무관하게 지금도 과세 대상이 될 수 있고, 규모가 크다면 사업자등록 문제까지 걸립니다</li>
+    <li>"취미냐 사업이냐"의 경계는 규모, 반복성, 설비 투자로 판단되며 명확한 선이 없어 회색지대입니다</li>
+  </ul>
+  <h2>2027년부터: 취득가가 쟁점</h2>
+  <ul>
+    <li>채굴로 얻은 코인을 팔면 양도차익에 과세되는데, 문제는 <b>취득가를 얼마로 볼 것인가</b>입니다. 채굴 시점의 시가로 보는 방식이 유력하게 논의되지만 세부 기준은 고시를 기다려야 합니다</li>
+    <li>전기료, 장비비 같은 비용을 필요경비로 어디까지 인정할지도 아직 확정 전입니다</li>
+    <li>기준이 어떻게 정해지든, <b>기록이 없는 사람은 최악의 계산법을 적용받게 됩니다</b></li>
+  </ul>
+  <h2>지금 기록해야 할 것</h2>
+  <ol>
+    <li>채굴 수령 내역: 일자, 수량, 코인 종류, 수령 지갑 주소</li>
+    <li>수령 시점의 원화 시세 (월 단위 정리로도 충분합니다)</li>
+    <li>비용 증빙: 전기료 고지서, 장비 구매 영수증, 풀 수수료 내역</li>
+  </ol>
+  <a class="banner" href="/snapshot/">
+    <b>📸 채굴 지갑 보유 현황부터 기록해두세요</b>
+    <p>지갑 주소만 넣으면 날짜 박힌 리포트로 저장됩니다.</p>
+    <span class="btn">지갑 스냅샷 열기 →</span>
+  </a>
+
+  <div class="cta-consult">
+    <b>내 상황은 좀 다른 것 같다면</b>
+    <p>구체적인 상황을 남겨주시면 분야에 맞는 전문가 상담으로 연결해 드립니다. 신청은 무료입니다.</p>
+    <a href="/#consult">전문가 상담 신청하기 →</a>
+  </div>
+  <p class="disclaimer">※ 본 글은 일반 정보 제공을 목적으로 하며 세무·법률 자문이 아닙니다. 작성 기준: 2026년 7월. 세법 개정에 따라 내용이 달라질 수 있습니다.</p>
+</article>
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <p style="font-weight:700;color:var(--ink-soft);">택스22, 투자자의 세금·법률 문제 해결 포털</p>
+    <p style="margin-top:8px;">계산기: <a href="/">코인·주식</a> · <a href="/gift/">증여세</a> · <a href="/inherit/">상속세</a> · <a href="/finance/">금융소득</a> · <a href="/pension/">연금·IRP</a> · <a href="/snapshot/">지갑 스냅샷</a> &nbsp;|&nbsp; 가이드: <a href="/blog/scam/">사기 대응</a> · <a href="/blog/">블로그</a></p>
+    <p style="margin-top:8px;"><a href="/privacy/">개인정보처리방침</a> · <a href="/privacy/#terms">이용약관</a> · <a href="/partners/">파트너 광고 안내</a> · 문의: contact@tax22.kr</p>
+    <p style="margin-top:8px;">본 사이트는 일반 정보를 제공하며 세무 대리 또는 법률 자문 서비스가 아닙니다.</p>
+    <p style="margin-top:4px;">© 2026 택스22 (tax22.kr) All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  navigator.serviceWorker.register("/sw.js");
+}
+</script>
+<script>
+(function () {
+  var dd = document.querySelector(".dd");
+  if (!dd) return;
+  dd.querySelector(".dd-btn").addEventListener("click", function (e) {
+    e.stopPropagation();
+    dd.classList.toggle("open");
+  });
+  document.addEventListener("click", function () { dd.classList.remove("open"); });
+})();
+</script>
+</body>
+</html>
