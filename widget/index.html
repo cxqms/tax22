@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>코인 세금 계산기 퍼가기 — 택스22 | 블로그·홈페이지 무료 위젯</title>
+<meta name="description" content="2027 코인 세금 계산기를 내 블로그나 홈페이지에 무료로 넣으세요. 코드 한 줄 복사하면 끝. 티스토리·워드프레스·홈페이지 지원, 네이버 블로그용 배너도 제공합니다.">
+<meta property="og:title" content="코인 세금 계산기 퍼가기 — 택스22">
+<meta property="og:description" content="내 블로그에 코인 세금 계산기를 무료로 넣으세요. 코드 복사 한 번이면 끝.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tax22.kr/widget/">
+<meta property="og:image" content="https://tax22.kr/img/thumb-og.jpg">
+<link rel="canonical" href="https://tax22.kr/widget/">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<meta name="theme-color" content="#0bab7c">
+<style>
+  :root { --bg:#f3f5f4; --surface:#fff; --ink:#14211c; --ink-soft:#4f5b56; --ink-faint:#93a09a; --line:#e2e8e5; --accent:#0bab7c; --accent-deep:#068f66; --accent-soft:#e6f7f0; --dark:#10201a; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",sans-serif; background:var(--bg); color:var(--ink); line-height:1.65; -webkit-font-smoothing:antialiased; word-break:keep-all; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:720px; margin:0 auto; padding:0 20px; }
+  header { background:var(--surface); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+  .head-inner { max-width:720px; margin:0 auto; padding:0 20px; height:58px; display:flex; align-items:center; gap:18px; }
+  .logo { font-size:20px; font-weight:900; letter-spacing:-0.02em; }
+  .logo em { font-style:normal; color:var(--accent); }
+  .head-label { font-size:13px; font-weight:700; color:var(--ink-faint); margin-right:auto; }
+  .head-cta { font-size:13px; font-weight:700; color:#fff; background:var(--accent); padding:8px 16px; border-radius:999px; white-space:nowrap; }
+  .hero { background:var(--dark); color:#fff; text-align:center; padding:48px 20px 42px; }
+  .hero .badge { display:inline-block; font-size:12px; font-weight:700; color:#7fe0c2; border:1px solid rgba(127,224,194,.4); border-radius:999px; padding:4px 14px; margin-bottom:16px; }
+  .hero h1 { font-size:28px; line-height:1.4; letter-spacing:-0.02em; }
+  .hero h1 em { font-style:normal; color:#7fe0c2; }
+  .hero p { margin:12px auto 0; font-size:14.5px; color:#b9bbc4; max-width:520px; }
+  section { margin:40px 0; }
+  section h2 { font-size:21px; letter-spacing:-0.02em; margin-bottom:6px; }
+  section .sub { font-size:14px; color:var(--ink-soft); margin-bottom:16px; }
+  .preview { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; }
+  .preview iframe { width:100%; height:420px; border:0; }
+  .code { background:var(--dark); color:#d7e3dd; border-radius:14px; padding:16px; position:relative; }
+  .code pre { font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:12.5px; line-height:1.55; white-space:pre-wrap; word-break:break-all; }
+  .code .cp { position:absolute; top:12px; right:12px; font:inherit; font-size:12px; font-weight:800; color:#fff; background:var(--accent); border:0; border-radius:999px; padding:6px 14px; cursor:pointer; }
+  .code .cp:hover { background:var(--accent-deep); }
+  .steps { display:grid; gap:10px; }
+  .step { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px 18px; display:flex; gap:14px; }
+  .step .n { flex:none; width:30px; height:30px; border-radius:50%; background:var(--accent-soft); color:var(--accent-deep); font-weight:900; display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .step b { display:block; font-size:15px; margin-bottom:2px; }
+  .step p { font-size:13.5px; color:var(--ink-soft); }
+  .plat { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .plat div { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 14px; font-size:13.5px; }
+  .plat b { display:block; font-size:14px; }
+  .ok { color:var(--accent-deep); } .no { color:#c2410c; }
+  .rule { background:var(--accent-soft); border-left:4px solid var(--accent); border-radius:0 12px 12px 0; padding:14px 18px; font-size:14px; }
+  .rule li { margin-left:18px; margin-top:4px; }
+  .banner-prev { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; text-align:center; }
+  .banner-prev img { max-width:100%; border-radius:12px; }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding:28px 0 40px; font-size:12.5px; color:var(--ink-faint); }
+  .foot-inner { max-width:720px; margin:0 auto; padding:0 20px; }
+  footer a { color:var(--ink-soft); }
+  @media (max-width:520px) { .plat { grid-template-columns:1fr; } .hero h1 { font-size:24px; } .preview iframe { height:440px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <a class="logo" href="/">택스<em>22</em></a>
+    <span class="head-label">계산기 퍼가기</span>
+    <a class="head-cta" href="#code">코드 복사</a>
+  </div>
+</header>
+
+<div class="hero">
+  <span class="badge">무료 · 가입 없음 · 코드 한 줄</span>
+  <h1>내 블로그에<br><em>코인 세금 계산기</em>를 넣으세요</h1>
+  <p>코인 세금 글을 쓰고 계신가요? 독자가 글 안에서 바로 세금을 계산할 수 있게 하면 체류 시간과 신뢰가 함께 올라갑니다. 코드 복사 한 번이면 끝납니다.</p>
+</div>
+
+<div class="wrap">
+
+<section>
+  <h2>미리보기</h2>
+  <p class="sub">실제로 블로그에 들어가는 모습입니다. 직접 눌러보세요.</p>
+  <div class="preview"><iframe src="/embed/" title="코인 세금 계산기 위젯 미리보기" loading="lazy"></iframe></div>
+</section>
+
+<section id="code">
+  <h2>① 계산기 위젯 코드</h2>
+  <p class="sub">티스토리 · 워드프레스 · 블로그스팟 · 자체 홈페이지용. HTML 편집 모드에서 붙여넣으세요.</p>
+  <div class="code">
+    <button class="cp" data-for="c1">복사</button>
+<pre id="c1">&lt;iframe src="https://tax22.kr/embed/" width="100%" height="420" style="border:0;max-width:560px;display:block;margin:0 auto" title="코인 세금 계산기" loading="lazy"&gt;&lt;/iframe&gt;
+&lt;p style="text-align:center;font-size:13px;margin-top:6px"&gt;계산기 제공: &lt;a href="https://tax22.kr/" target="_blank" rel="noopener"&gt;택스22 코인 세금 계산기&lt;/a&gt;&lt;/p&gt;</pre>
+  </div>
+</section>
+
+<section>
+  <h2>② 배너 버전 (네이버 블로그 · 카페용)</h2>
+  <p class="sub">네이버는 iframe을 막아서 위젯이 안 들어갑니다. 대신 이미지 배너에 링크를 걸어 쓰세요. 이미지를 저장해 올린 뒤 링크를 연결해도 됩니다.</p>
+  <div class="banner-prev"><a href="/"><img src="/img/thumb-og.jpg" alt="코인·주식 세금, 3초 만에 계산하세요 — 택스22"></a></div>
+  <div class="code" style="margin-top:10px;">
+    <button class="cp" data-for="c2">복사</button>
+<pre id="c2">&lt;a href="https://tax22.kr/" target="_blank" rel="noopener"&gt;&lt;img src="https://tax22.kr/img/thumb-og.jpg" alt="코인 세금 계산기 — 택스22" style="max-width:100%;border-radius:12px"&gt;&lt;/a&gt;</pre>
+  </div>
+</section>
+
+<section>
+  <h2>붙이는 방법</h2>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><div><b>위 코드를 복사합니다</b><p>복사 버튼을 누르면 클립보드에 들어갑니다.</p></div></div>
+    <div class="step"><span class="n">2</span><div><b>글 편집기를 HTML 모드로 바꿉니다</b><p>티스토리는 편집기 우측 상단 "기본모드 ▾ → HTML", 워드프레스는 "사용자 정의 HTML" 블록입니다.</p></div></div>
+    <div class="step"><span class="n">3</span><div><b>원하는 위치에 붙여넣고 발행합니다</b><p>세금 계산법을 설명한 문단 바로 아래가 가장 효과적입니다. 높이는 height 값으로 조절할 수 있습니다.</p></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>어디에 넣을 수 있나요?</h2>
+  <div class="plat">
+    <div><b class="ok">✅ 티스토리</b>HTML 모드에서 위젯 코드 그대로</div>
+    <div><b class="ok">✅ 워드프레스</b>사용자 정의 HTML 블록</div>
+    <div><b class="ok">✅ 블로그스팟 · 자체 홈페이지</b>HTML 어디든</div>
+    <div><b class="no">⚠️ 네이버 블로그 · 카페</b>iframe 불가 → ② 배너 버전 사용</div>
+  </div>
+</section>
+
+<section>
+  <h2>사용 조건</h2>
+  <div class="rule">
+    누구나 무료로 쓸 수 있습니다. 상업용 블로그도 괜찮습니다. 다만 아래 두 가지만 지켜주세요.
+    <ul>
+      <li>위젯 아래의 "계산기 제공: 택스22" 출처 링크는 지워지지 않게 유지해 주세요</li>
+      <li>위젯 내용을 수정하거나 다른 서비스인 것처럼 표시하지 말아 주세요</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>자주 묻는 질문</h2>
+  <div class="steps">
+    <div class="step"><span class="n">Q</span><div><b>계산 기준이 뭔가요?</b><p>2027년 시행 예정인 가상자산 소득 과세 기준입니다. 연 250만 원 기본공제 후 22%(소득세 20% + 지방소득세 2%)를 적용합니다. 세법이 바뀌면 위젯도 자동으로 갱신됩니다. 따로 코드를 바꿀 필요가 없습니다.</p></div></div>
+    <div class="step"><span class="n">Q</span><div><b>의제취득가액이나 해외주식 계산은 안 되나요?</b><p>위젯은 가볍게 만들기 위해 핵심만 담았습니다. 위젯 하단 링크로 전체 계산기에 연결되어 독자가 더 자세히 계산할 수 있습니다.</p></div></div>
+    <div class="step"><span class="n">Q</span><div><b>내 블로그가 느려지지 않나요?</b><p>위젯은 외부 라이브러리 없이 20KB 미만이고 lazy 로딩이라 본문 로딩에 영향이 없습니다.</p></div></div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <p style="font-weight:700;color:var(--ink-soft);">택스22 — 투자자의 세금·법률 문제 해결 포털</p>
+    <p style="margin-top:8px;"><a href="/">홈</a> · <a href="/blog/">블로그</a> · <a href="/partners/">파트너스</a> · <a href="/privacy/">개인정보처리방침</a> · 문의: contact@tax22.kr</p>
+    <p style="margin-top:4px;">© 2026 택스22 (tax22.kr) All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.cp').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.dataset.for).textContent;
+    function done(){b.textContent='복사됨 ✓';setTimeout(function(){b.textContent='복사';},1800);}
+    if(navigator.clipboard){navigator.clipboard.writeText(t).then(done);}
+    else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();done();}
+  });
+});
+</script>
+</body>
+</html>
