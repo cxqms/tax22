@@ -114,6 +114,13 @@
   @media (max-width: 560px) {
     .dd-menu { position: fixed; left: 16px; right: 16px; top: 62px; }
   }
+  /* 상단 시세 티커 */
+  .ticker { background: var(--surface); border-bottom: 1px solid var(--line); font-size: 12px; color: var(--ink-soft); }
+  .ticker-inner { max-width: 720px; margin: 0 auto; padding: 6px 20px; display: flex; gap: 14px; align-items: center; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  .ticker-inner::-webkit-scrollbar { display: none; }
+  .ticker b { color: var(--ink); font-weight: 700; }
+  .ticker .up { color: #c2410c; font-weight: 700; } .ticker .dn { color: var(--accent-deep); font-weight: 700; }
+  .ticker .src { color: var(--ink-faint); margin-left: auto; }
 </style>
 </head>
 <body>
@@ -138,6 +145,16 @@
     <a class="head-cta" href="/#consult">전문가 상담</a>
   </div>
 </header>
+<div class="ticker" id="ticker" hidden>
+  <div class="ticker-inner">
+    <span>BTC <b id="tk-btc">-</b></span>
+    <span>ETH <b id="tk-eth">-</b></span>
+    <span>USDT <b id="tk-usdt">-</b></span>
+    <span>김프 <span id="tk-kimp">-</span></span>
+    <span class="src" id="tk-src">업비트 기준</span>
+  </div>
+</div>
+
 
 <div class="wrap">
 <article>
@@ -202,6 +219,30 @@ if ("serviceWorker" in navigator && location.protocol === "https:") {
     dd.classList.toggle("open");
   });
   document.addEventListener("click", function () { dd.classList.remove("open"); });
+})();
+</script>
+<script>
+/* 상단 시세 티커: 업비트(국내) + CoinGecko(글로벌) → 김프 */
+(function () {
+  function fmt(n) { return Math.round(n).toLocaleString("ko-KR") + "원"; }
+  function set(id, v) { var el = document.getElementById(id); if (el) el.innerHTML = v; }
+  fetch("https://api.upbit.com/v1/ticker?markets=KRW-BTC,KRW-ETH,KRW-USDT")
+    .then(function (r) { return r.json(); })
+    .then(function (t) {
+      var m = {}; t.forEach(function (x) { m[x.market] = x.trade_price; });
+      if (!m["KRW-BTC"]) return;
+      set("tk-btc", fmt(m["KRW-BTC"])); set("tk-eth", fmt(m["KRW-ETH"])); set("tk-usdt", fmt(m["KRW-USDT"]));
+      var now = new Date();
+      set("tk-src", "업비트 " + now.toLocaleTimeString("ko-KR", { timeZone: "Asia/Seoul", hour: "2-digit", minute: "2-digit" }) + " 기준");
+      document.getElementById("ticker").hidden = false;
+      return fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=krw")
+        .then(function (r) { return r.json(); })
+        .then(function (g) {
+          if (!g.bitcoin || !g.bitcoin.krw) return;
+          var k = (m["KRW-BTC"] / g.bitcoin.krw - 1) * 100;
+          set("tk-kimp", "<span class='" + (k > 0 ? "up" : "dn") + "'>" + (k > 0 ? "+" : "") + k.toFixed(2) + "%</span>");
+        }).catch(function () {});
+    }).catch(function () {});
 })();
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ed375af45534d76b112dee2960a17b6"}'></script><!-- End Cloudflare Web Analytics -->
