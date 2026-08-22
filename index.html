@@ -59,7 +59,7 @@
     {
       "@type": "Question",
       "name": "해외주식 양도소득세는 어떻게 계산하나요?",
-      "acceptedAnswer": { "@type": "Answer", "text": "연간 양도차익에서 기본공제 250만원을 뺀 금액에 22%가 부과됩니다. 같은 해의 수익과 손실은 합산(손익통산)됩니다. 신고는 다음 해 5월입니다." }
+      "acceptedAnswer": { "@type": "Answer", "text": "연간 양도차익에서 기본공제 250만원을 뺀 금액에 22%가 부과됩니다. 양도가액과 취득가액은 각각 결제일 기준환율로 원화 환산하고, 같은 해의 수익과 손실은 합산(손익통산)됩니다. 신고는 다음 해 5월입니다." }
     },
     {
       "@type": "Question",
@@ -393,14 +393,14 @@
         <div class="assume" id="r-assume"></div>
       </div>
       <p class="msg" id="msg"></p>
-      <p class="disclaimer">※ 간이 예상 세액 계산기입니다. 취득가액(총평균법) 산정과 교환거래 환산은 입력자 책임이며, 코인은 2027년 시행 예정 기준(기타소득 분리과세), 해외주식은 현행 양도소득세 기준이며, 실제 세액은 증빙·거래 유형 등에 따라 달라질 수 있습니다. 정확한 세액은 세무 전문가와 확인하세요.</p>
+      <p class="disclaimer">※ 간이 예상 세액 계산기입니다. 취득가액 산정(코인 총평균법·해외주식 선입선출법)과 외화·교환거래의 원화 환산은 입력자 책임이며, 코인은 2027년 시행 예정 기준(기타소득 분리과세), 해외주식은 현행 양도소득세 기준이며, 실제 세액은 증빙·거래 유형 등에 따라 달라질 수 있습니다. 정확한 세액은 세무 전문가와 확인하세요.</p>
     </div>
   </div>
 
   <section class="guide">
     <h2>30초 요약</h2>
     <div class="g-grid">
-      <div class="g-card"><b>세율 22%</b><p>코인(2027~)과 해외주식 모두 소득세 20% + 지방소득세 2%. 다른 소득과 합산되지 않는 분리과세입니다.</p></div>
+      <div class="g-card"><b>세율 22%</b><p>코인(2027~)과 해외주식 모두 소득세 20% + 지방소득세 2%. 다른 소득과 합산되지 않습니다(코인은 분리과세, 해외주식은 분류과세).</p></div>
       <div class="g-card"><b>기본공제 250만원</b><p>연간 수익 250만원까지는 세금이 없습니다. 초과분에만 22%가 붙습니다.</p></div>
       <div class="g-card"><b>손익통산</b><p>같은 해의 수익과 손실은 합산됩니다. 손실 거래도 빠짐없이 계산에 넣어야 세금이 줄어듭니다.</p></div>
       <div class="g-card"><b>직접 신고</b><p>원천징수가 아닙니다. 다음 해 5월에 본인이 직접 신고·납부해야 합니다.</p></div>
@@ -552,15 +552,15 @@
         '<input class="r-name" type="text" placeholder="' + (mode === "coin" ? "코인 이름 (예: BTC)" : "종목 이름 (예: TSLA)") + '">' +
         '<button type="button" class="row-del">삭제 ✕</button>' +
       '</div>' +
-      '<label class="f">총 양도가액 (원화 매도 + 코인 간 교환·대여 대가)</label>' +
+      '<label class="f l-sell">총 양도가액 (원화 매도 + 코인 간 교환·대여 대가)</label>' +
       '<div class="in"><input class="r-sell num" type="text" inputmode="numeric" placeholder="예: 40,000,000"><span>원</span></div>' +
-      '<p class="hint">코인을 USDT·다른 코인으로 바꾼 것도 양도입니다. 원화 매도뿐 아니라 교환·대여 대가를 원화로 환산해 합산하세요.</p>' +
+      '<p class="hint h-sell">코인을 USDT·다른 코인으로 바꾼 것도 양도입니다. 원화 매도뿐 아니라 교환·대여 대가를 원화로 환산해 합산하세요.</p>' +
       '<div class="r-buy-block">' +
-        '<label class="f">양도한 수량에 해당하는 취득가액 (총평균법)</label>' +
+        '<label class="f l-buy">양도한 수량에 해당하는 취득가액 (총평균법)</label>' +
         '<div class="in"><input class="r-buy num" type="text" inputmode="numeric" placeholder="예: 30,000,000"><span>원</span></div>' +
-        '<p class="hint">산 금액 전체가 아니라 <b>이번에 판 수량만큼</b>의 취득가액입니다. 아직 보유 중인 코인의 취득가는 넣지 마세요. 국세청 기준은 거주자별 총평균법입니다.</p>' +
-        '<button type="button" class="helper-toggle">📐 총평균 취득가액 계산 도우미</button>' +
-        '<div class="helper">' +
+        '<p class="hint h-buy">산 금액 전체가 아니라 <b>이번에 판 수량만큼</b>의 취득가액입니다. 아직 보유 중인 코인의 취득가는 넣지 마세요. 국세청 기준은 거주자별 총평균법입니다.</p>' +
+        '<button type="button" class="helper-toggle coin-only">📐 총평균 취득가액 계산 도우미</button>' +
+        '<div class="helper coin-only">' +
           '<label class="f">보유 전체 매수금액 합계 (수수료 포함 가능)</label>' +
           '<div class="in"><input class="h-cost num" type="text" inputmode="numeric" placeholder="예: 100,000,000"><span>원</span></div>' +
           '<label class="f">보유 전체 수량</label>' +
@@ -571,9 +571,23 @@
           '<p class="hint helper-out"></p>' +
           '<p class="hint">총평균 단가 = 전체 매수금액 ÷ 전체 수량. 여러 번 나눠 샀다면 전부 합산한 금액과 수량을 넣으세요. 단순화된 도우미이며 연중 추가 매수가 있으면 평균이 달라질 수 있습니다.</p>' +
         '</div>' +
-        '<label class="f">취득·양도 부대비용 합계 (선택)</label>' +
+        '<button type="button" class="helper-toggle fx-toggle stock-only">💱 환율 환산 도우미 (외화 → 원화)</button>' +
+        '<div class="helper fx stock-only">' +
+          '<label class="f">양도가액 (외화)</label>' +
+          '<div class="in"><input class="fx-sell dec" type="text" inputmode="decimal" placeholder="예: 10000"><span>외화</span></div>' +
+          '<label class="f">양도 결제일 기준환율</label>' +
+          '<div class="in"><input class="fx-sell-rate dec" type="text" inputmode="decimal" placeholder="예: 1380.5"><span>원</span></div>' +
+          '<label class="f">취득가액 (외화)</label>' +
+          '<div class="in"><input class="fx-buy dec" type="text" inputmode="decimal" placeholder="예: 8000"><span>외화</span></div>' +
+          '<label class="f">취득 결제일 기준환율</label>' +
+          '<div class="in"><input class="fx-buy-rate dec" type="text" inputmode="decimal" placeholder="예: 1320.0"><span>원</span></div>' +
+          '<button type="button" class="helper-apply fx-apply">원화로 환산해서 넣기</button>' +
+          '<p class="hint fx-out"></p>' +
+          '<p class="hint">양도가액과 취득가액은 <b>각각의 결제일</b> 기준환율(서울외국환중개 매매기준율)로 환산합니다. 환율 변동에 따른 차익도 과세 대상에 포함되는 구조입니다.</p>' +
+        '</div>' +
+        '<label class="f l-fee">취득·양도 부대비용 합계 (선택)</label>' +
         '<div class="in"><input class="r-fee num" type="text" inputmode="numeric" placeholder="예: 50,000"><span>원</span></div>' +
-        '<p class="hint">매수 수수료 + 매도 수수료 등. 위 취득가액에 수수료를 이미 포함했다면 중복으로 넣지 마세요.</p>' +
+        '<p class="hint h-fee">매수 수수료 + 매도 수수료 등. 위 취득가액에 수수료를 이미 포함했다면 중복으로 넣지 마세요.</p>' +
         '<label class="chk r-old-label"><input class="r-old" type="checkbox">2027년 이전부터 보유 (의제취득가액 적용)</label>' +
         '<div class="oldbox">' +
           '<label class="f">2026년 12월 31일 기준 시가 <span class="tagx">국세청 고시 기준 · 현재 미확정</span></label>' +
@@ -610,7 +624,20 @@
       var h = row.querySelector(".helper");
       h.style.display = h.style.display === "block" ? "none" : "block";
     });
-    row.querySelector(".helper-apply").addEventListener("click", function () {
+    row.querySelector(".fx-toggle").addEventListener("click", function () {
+      var h = row.querySelector(".helper.fx");
+      h.style.display = h.style.display === "block" ? "none" : "block";
+    });
+    row.querySelector(".fx-apply").addEventListener("click", function () {
+      var sv = parseFloat(row.querySelector(".fx-sell").value) || 0, sr = parseFloat(row.querySelector(".fx-sell-rate").value) || 0;
+      var bv = parseFloat(row.querySelector(".fx-buy").value) || 0, br = parseFloat(row.querySelector(".fx-buy-rate").value) || 0;
+      var out = row.querySelector(".fx-out");
+      if (!sv || !sr || !bv || !br) { out.textContent = "네 칸을 모두 입력해 주세요."; return; }
+      var sk = Math.round(sv * sr), bk = Math.round(bv * br);
+      row.querySelector(".r-sell").value = fmt(sk); row.querySelector(".r-buy").value = fmt(bk);
+      out.innerHTML = "양도 " + fmt(sk) + "원 · 취득 " + fmt(bk) + "원 을 넣었습니다. (환차손익 " + (sk - bk - Math.round((sv - bv) * sr) >= 0 ? "+" : "") + fmt(sk - bk - Math.round((sv - bv) * sr)) + "원 포함)";
+    });
+    row.querySelector(".helper-apply:not(.fx-apply)").addEventListener("click", function () {
       var cost = parseInt((row.querySelector(".h-cost").value || "").replace(/[^0-9]/g, ""), 10) || 0;
       var qty = parseFloat(row.querySelector(".h-qty").value) || 0;
       var sold = parseFloat(row.querySelector(".h-sold").value) || 0;
@@ -638,6 +665,26 @@
     }
     var name = row.querySelector(".r-name");
     name.placeholder = mode === "coin" ? "코인 이름 (예: BTC)" : "종목 이름 (예: TSLA)";
+    var T = mode === "coin" ? {
+      lsell: "총 양도가액 (원화 매도 + 코인 간 교환·대여 대가)",
+      hsell: "코인을 USDT·다른 코인으로 바꾼 것도 양도입니다. 원화 매도뿐 아니라 교환·대여 대가를 원화로 환산해 합산하세요.",
+      lbuy: "양도한 수량에 해당하는 취득가액 (총평균법)",
+      hbuy: "산 금액 전체가 아니라 <b>이번에 판 수량만큼</b>의 취득가액입니다. 아직 보유 중인 코인의 취득가는 넣지 마세요. 국세청 기준은 거주자별 총평균법입니다.",
+      lfee: "취득·양도 부대비용 합계 (선택)",
+      hfee: "매수 수수료 + 매도 수수료 등. 위 취득가액에 수수료를 이미 포함했다면 중복으로 넣지 마세요."
+    } : {
+      lsell: "총 양도가액 (결제일 기준환율로 환산한 원화)",
+      hsell: "양도시기는 체결일이 아니라 <b>결제일</b>입니다. 12월 말 매도는 결제일이 다음 해면 다음 해 소득입니다. 국내 상장 해외 ETF(예: TIGER 미국나스닥100)는 양도세가 아닌 배당소득 과세라 이 계산기 대상이 아닙니다.",
+      lbuy: "양도한 수량에 해당하는 취득가액 (선입선출법 원칙 · 취득 결제일 환율)",
+      hbuy: "여러 번 나눠 산 종목은 <b>먼저 산 것부터 판 것</b>으로 봅니다(소득세법 시행령 162조⑤). 증권사가 제공하는 양도소득 계산 내역을 그대로 쓰는 것이 가장 안전합니다.",
+      lfee: "취득·양도 부대비용 합계 (선택)",
+      hfee: "매매 수수료, 해외 거래세(SEC fee 등) 포함. 원화로 환산해 넣으세요."
+    };
+    row.querySelector(".l-sell").textContent = T.lsell; row.querySelector(".h-sell").innerHTML = T.hsell;
+    row.querySelector(".l-buy").textContent = T.lbuy; row.querySelector(".h-buy").innerHTML = T.hbuy;
+    row.querySelector(".l-fee").textContent = T.lfee; row.querySelector(".h-fee").innerHTML = T.hfee;
+    row.querySelectorAll(".coin-only").forEach(function (el) { el.style.display = mode === "coin" ? (el.classList.contains("helper") ? "none" : "inline-block") : "none"; });
+    row.querySelectorAll(".stock-only").forEach(function (el) { el.style.display = mode === "stock" ? (el.classList.contains("helper") ? "none" : "inline-block") : "none"; });
   }
 
   function setMode(m) {
@@ -712,7 +759,11 @@
         if (flags.noproof) li.push("추계 필요경비 " + flags.noproof + "건: 상한 50%를 가정한 시뮬레이션이며, 법정 요건 충족 시에만 적용됩니다 (전문가 확인 필요)");
         li.push("코인 간 교환·대여 대가가 양도가액에 포함됐다는 전제입니다");
       } else {
-        li.push("해외주식 현행 기준: 기본공제 250만원, 세율 20% + 지방소득세 2%, 연간 손익통산");
+        li.push("해외주식 현행 양도소득세 기준(분류과세): 세율 20% + 지방소득세 2%, 연간 손익통산, 손실 이월공제 없음");
+        li.push("기본공제 250만원은 국내주식 과세분(대주주·장외 거래 등)과 합산해 연 1회 적용됩니다");
+        li.push("양도가액·취득가액은 각각의 결제일 기준환율로 환산했다는 전제이며, 환차손익이 포함됩니다");
+        li.push("취득가액은 입력값 기준입니다. 동일 종목 수회 취득 시 선입선출법이 원칙이며, 증권사 양도소득 내역 사용을 권장합니다");
+        li.push("국내 상장 해외 ETF는 배당소득 과세 대상이라 이 계산에 포함되지 않습니다");
       }
       box.innerHTML = "<b>간이 예상치 · 적용 가정</b><ul>" + li.map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul>";
     };
