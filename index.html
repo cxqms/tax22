@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>코인 세금 계산기 – 내 세금 3초 확인, 무료 | 택스22</title>
-<meta name="description" content="코인(2027년 시행)과 해외주식 양도소득세를 3초 만에 계산하세요. 기본공제 250만원, 세율 22%, 손익통산, 의제취득가액까지 자동 적용되는 무료 세금 계산기입니다.">
+<meta name="description" content="2027년 코인 세금을 3초 만에 계산하세요. 연간 순이익 한 칸이면 예상 세금이 나오고, 상세 계산에서는 손익통산·의제취득가액·평균 매수가까지 반영됩니다. 무료, 가입 없음.">
 <meta property="og:title" content="코인 세금 계산기 – 내 세금 3초 확인, 무료 | 택스22">
 <meta property="og:description" content="250만원 공제·세율 22% 자동 적용. 코인·해외주식 세금을 3초 만에 계산해보세요.">
 <meta property="og:type" content="website">
@@ -39,7 +39,7 @@
   "@type": "HowTo",
   "name": "코인 세금 계산기 사용법",
   "step": [
-    { "@type": "HowToStep", "name": "양도가액·취득가액 입력", "text": "원화 매도와 코인 간 교환·대여 대가를 합한 양도가액, 양도 수량에 해당하는 취득가액(총평균법), 부대비용을 입력합니다." },
+    { "@type": "HowToStep", "name": "순이익 입력 (간편) 또는 거래별 입력 (상세)", "text": "간편 계산은 연간 순이익 한 칸, 상세 계산은 코인별로 판 금액·산 금액·수수료를 입력합니다. 평균 매수가 도우미가 산 금액을 계산해 줍니다." },
     { "@type": "HowToStep", "name": "보유 상황 선택", "text": "2027년 이전 보유분은 의제취득가액을 적용하고, 취득가 확인이 곤란한 2027년 이후 취득분은 조건부 추계 필요경비(최대 50%)를 시뮬레이션합니다." },
     { "@type": "HowToStep", "name": "여러 코인 추가", "text": "수익과 손실 코인을 모두 입력하면 손익통산이 자동 적용됩니다." },
     { "@type": "HowToStep", "name": "결과 확인", "text": "납부할 세금과 실효세율, 세후 실수령액을 확인합니다." }
@@ -329,6 +329,55 @@
   .assume b { display: block; color: var(--ink); margin-bottom: 6px; font-size: 13px; }
   .assume ul { margin: 0; padding-left: 18px; } .assume li { margin: 3px 0; }
   .hint b { color: var(--ink); }
+
+  /* ===== 계산기 v3 ===== */
+  .cx-pane { display: block; }
+  .cx-pane[hidden] { display: none; }
+  .quick { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 12px; }
+  .quick button { font: inherit; font-size: 12px; font-weight: 700; color: var(--ink-soft); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+  .quick button:hover { border-color: var(--accent); color: var(--accent-deep); }
+  .link-btn { font: inherit; font-size: 12px; font-weight: 700; color: var(--accent-deep); background: none; border: 0; padding: 0; margin-left: 8px; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+  .helper { display: none; background: var(--accent-soft); border-radius: 12px; padding: 12px 14px 10px; margin: 4px 0 12px; }
+  .helper .seg { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .helper .seg button { font: inherit; font-size: 12px; font-weight: 700; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--accent); background: var(--surface); color: var(--accent-deep); cursor: pointer; }
+  .helper .seg button.on { background: var(--accent); color: #fff; }
+  .helper-apply { font: inherit; font-size: 13px; font-weight: 800; color: #fff; background: var(--accent); border: 0; border-radius: 10px; padding: 9px 14px; margin-top: 4px; cursor: pointer; }
+  .helper-out { margin-top: 8px; }
+  details.adv { margin-top: 6px; }
+  details.adv summary { font-size: 12.5px; font-weight: 700; color: var(--ink-soft); cursor: pointer; list-style: none; padding: 6px 0; }
+  details.adv summary::-webkit-details-marker { display: none; }
+  details.adv summary::before { content: "▸ "; } details.adv[open] summary::before { content: "▾ "; }
+  details.adv .adv-body { padding: 4px 0 2px; }
+  .tagx { display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--accent-deep); background: var(--accent-soft); border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: 1px; }
+  .hint b { color: var(--ink); }
+  .result { display: none; margin-top: 16px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); }
+  .rs-hero { padding: 18px 16px 14px; background: var(--accent-soft); }
+  .rs-hero span { display: block; font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+  .rs-hero em { font-style: normal; font-size: 10.5px; color: var(--accent-deep); margin-left: 6px; }
+  .rs-hero b { display: block; font-size: 34px; letter-spacing: -0.02em; color: var(--accent-deep); line-height: 1.15; margin-top: 4px; }
+  .rs-lines { padding: 10px 16px 4px; }
+  .rs-lines div { display: flex; justify-content: space-between; font-size: 13.5px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+  .rs-lines div:last-child { border-bottom: 0; }
+  .rs-lines b { font-weight: 700; }
+  details.rs-more { border-top: 1px solid var(--line); }
+  details.rs-more summary { padding: 11px 16px; font-size: 13px; font-weight: 700; color: var(--accent-deep); cursor: pointer; list-style: none; }
+  details.rs-more summary::-webkit-details-marker { display: none; }
+  details.rs-more summary::after { content: " ▾"; } details.rs-more[open] summary::after { content: " ▴"; }
+  .rs-detail { padding: 0 16px 14px; }
+  .rs-detail .dl { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-soft); padding: 5px 0; }
+  .rs-detail .dl b { color: var(--ink); }
+  .rs-detail .dl.coin { color: var(--ink); }
+  .enh-bar { display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--accent-soft); margin: 8px 0 4px; }
+  .enh-bar .seg-tax { background: #e0655f; } .enh-bar .seg-net { background: var(--accent); }
+  .enh-legend { display: flex; gap: 14px; font-size: 11px; color: var(--ink-faint); margin-bottom: 8px; }
+  .enh-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; font-style: normal; }
+  details.assume { margin-top: 6px; }
+  details.assume summary { font-size: 12.5px; color: var(--ink-soft); cursor: pointer; }
+  details.assume ul { margin: 6px 0 0; padding-left: 18px; font-size: 12.5px; color: var(--ink-soft); } details.assume li { margin: 3px 0; }
+  .copy-btn { font: inherit; font-size: 12.5px; font-weight: 700; color: var(--accent-deep); background: var(--surface); border: 1px solid var(--accent); border-radius: 999px; padding: 7px 14px; cursor: pointer; margin-top: 10px; }
+  .rs-cta { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 16px; background: var(--dark); color: #fff; text-decoration: none; }
+  .rs-cta b { font-size: 13.5px; } .rs-cta span { font-size: 13px; font-weight: 800; color: #7fe0c2; white-space: nowrap; }
+  .krw-hint { font-size: 11px; color: var(--ink-faint); white-space: nowrap; padding-right: 4px; }
 </style>
 </head>
 <body>
@@ -340,7 +389,8 @@
       <div class="dd">
         <button class="dd-btn on" type="button">세금 계산기 ▾</button>
         <div class="dd-menu">
-        <a href="/" class="on">코인·해외주식</a>
+        <a href="/" class="on">코인 세금</a>
+        <a href="/stock/">해외주식 양도세</a>
         <a href="/gift/">증여세</a>
         <a href="/inherit/">상속세</a>
         <a href="/finance/">금융소득종합과세</a>
@@ -368,32 +418,64 @@
 
   <div class="hero">
     <h1>코인 세금 계산기,<br><em>3초</em>면 충분합니다</h1>
-    <p>해외주식 양도소득세까지 · 기본공제 250만원 · 세율 22% · 손익통산 · 의제취득가액 자동 적용</p>
+    <p>순이익 한 칸이면 끝 · 기본공제 250만원 · 세율 22% · 손익통산 · 상세 계산은 탭 하나로</p>
   </div>
 
   <div class="calc">
     <div class="calc-head">
-      세금 계산기
-      <span id="calc-sub">코인: 2027년 시행 기준 · 해외주식: 현행 기준</span>
+      코인 세금 계산기
+      <span id="calc-sub">2027년 시행 기준 · 간이 예상치</span>
     </div>
     <div class="calc-body">
       <div class="mode">
-        <button type="button" id="mode-coin" class="on">코인 (2027~)</button>
-        <button type="button" id="mode-stock">해외주식 (현행)</button>
+        <button type="button" id="tab-simple" class="on">간편 계산</button>
+        <button type="button" id="tab-detail">상세 계산</button>
       </div>
-      <div id="rows"></div>
-      <button type="button" class="btn-add" id="add">＋ 종목 추가 (손익통산)</button>
-      <button type="button" class="btn-calc" id="calc">세금 계산하기</button>
+
+      <div class="cx-pane" id="pane-simple">
+        <label class="f" for="s-net">2027년에 코인을 팔거나 교환해서 번 연간 순이익</label>
+        <div class="in"><input id="s-net" class="num" type="text" inputmode="numeric" placeholder="예: 20,000,000"><span>원</span></div>
+        <p class="hint" style="margin-bottom:8px;">손실은 빼고 계산한 순이익입니다. 아직 팔지 않은 평가이익은 제외하세요.</p>
+        <div class="quick">
+          <button type="button" data-v="5000000">500만</button>
+          <button type="button" data-v="10000000">1,000만</button>
+          <button type="button" data-v="30000000">3,000만</button>
+          <button type="button" data-v="100000000">1억</button>
+        </div>
+        <button type="button" class="btn-calc" id="s-calc">예상 세금 확인하기</button>
+      </div>
+
+      <div class="cx-pane" id="pane-detail" hidden>
+        <div id="rows"></div>
+        <button type="button" class="btn-add" id="add">＋ 손실 난 코인도 추가하기</button>
+        <button type="button" class="btn-calc" id="calc">세금 계산하기</button>
+      </div>
+
       <div class="result" id="result">
-        <div id="r-rows"></div>
-        <div class="r-line"><span>손익통산 후 소득금액</span><b id="r-income">-</b></div>
-        <div class="r-line"><span>과세표준 (기본공제 250만원 적용)</span><b id="r-taxbase">-</b></div>
-        <div class="r-line soft"><span>소득세 20% + 지방소득세 2%</span><span id="r-split">-</span></div>
-        <div class="r-total"><b>납부할 세금 <span class="tagx">간이 예상치</span></b><b id="r-total">-</b></div>
-        <div class="assume" id="r-assume"></div>
+        <div class="rs-hero"><span>예상 세금 <em>간이 예상치</em></span><b id="r-total">-</b></div>
+        <div class="rs-lines">
+          <div><span>연간 순이익</span><b id="r-income">-</b></div>
+          <div><span>기본공제</span><b>-2,500,000원</b></div>
+          <div><span>과세 대상</span><b id="r-taxbase">-</b></div>
+        </div>
+        <details class="rs-more">
+          <summary>세부 내역 보기</summary>
+          <div class="rs-detail">
+            <div id="r-rows"></div>
+            <div class="dl"><span>소득세 20%</span><b id="r-itax">-</b></div>
+            <div class="dl"><span>지방소득세 2%</span><b id="r-ltax">-</b></div>
+            <div class="dl"><span>실효세율</span><b id="r-rate">-</b></div>
+            <div class="dl"><span>세후 실수령</span><b id="r-net">-</b></div>
+            <div class="enh-bar"><div class="seg-tax" id="r-bar-tax"></div><div class="seg-net" id="r-bar-net"></div></div>
+            <div class="enh-legend"><span><i style="background:#e0655f"></i>세금</span><span><i style="background:var(--accent)"></i>세후 실수령</span></div>
+            <details class="assume"><summary>적용한 가정 보기</summary><ul id="r-assume"></ul></details>
+            <button type="button" class="copy-btn" id="r-copy">📋 결과 복사하기</button>
+          </div>
+        </details>
+        <a class="rs-cta" href="#consult"><b>거래소가 여러 곳이거나 취득가를 모르시나요?</b><span>전문가 검토 받기 →</span></a>
       </div>
       <p class="msg" id="msg"></p>
-      <p class="disclaimer">※ 간이 예상 세액 계산기입니다. 취득가액 산정(코인 총평균법·해외주식 선입선출법)과 외화·교환거래의 원화 환산은 입력자 책임이며, 코인은 2027년 시행 예정 기준(기타소득 분리과세), 해외주식은 현행 양도소득세 기준이며, 실제 세액은 증빙·거래 유형 등에 따라 달라질 수 있습니다. 정확한 세액은 세무 전문가와 확인하세요.</p>
+      <p class="disclaimer">※ 간이 예상 세액 계산기입니다. 2027년 시행 예정 기준(기타소득 분리과세)이며, 판 코인의 매수금액 산정(총평균법)과 교환거래의 원화 환산은 입력자 책임입니다. 실제 세액은 증빙·거래 유형에 따라 달라질 수 있으니 정확한 세액은 세무 전문가와 확인하세요.</p>
     </div>
   </div>
 
@@ -410,9 +492,9 @@
   <section class="guide">
     <h2>코인 세금 계산기 사용법</h2>
     <div class="g-grid">
-      <div class="g-card"><b>1. 양도가액·취득가액 입력</b><p>원화 매도뿐 아니라 코인 간 교환·대여 대가까지 양도가액에 넣고, 취득가액은 이번에 판 수량에 해당하는 금액(총평균법)만 넣으세요. 도우미가 계산해 줍니다. 매수·매도 수수료는 부대비용으로 공제됩니다.</p></div>
-      <div class="g-card"><b>2. 보유 상황 선택</b><p>2027년 이전부터 보유한 코인은 의제취득가액(실제 취득가 vs 2026년 말 시가 중 큰 값)이 적용됩니다. 취득가 확인이 곤란한 2027년 이후 취득분은 조건부로 추계 필요경비(최대 50%) 시뮬레이션을 켤 수 있습니다.</p></div>
-      <div class="g-card"><b>3. 여러 코인은 추가</b><p>수익 코인과 손실 코인을 모두 입력하면 손익통산이 자동 적용되어 실제 낼 세금이 나옵니다.</p></div>
+      <div class="g-card"><b>1. 순이익 한 칸 (간편)</b><p>연간 순이익만 넣으면 예상 세금이 바로 나옵니다. 코인별로 정확히 보려면 상세 계산 탭에서 판 금액·산 금액·수수료를 넣으세요. 산 금액을 모르면 "얼마인지 모르겠어요"가 계산해 줍니다.</p></div>
+      <div class="g-card"><b>2. 고급 설정 (필요할 때만)</b><p>2026년 말 이전부터 보유한 코인은 연말 시가를 매수금액으로 인정받을 수 있고(의제취득가액), 취득가를 전혀 모르는 경우의 추계 시뮬레이션도 고급 설정 안에 있습니다.</p></div>
+      <div class="g-card"><b>3. 손실 난 코인도 추가</b><p>수익 코인과 손실 코인을 모두 넣으면 손익통산이 자동 적용되어 실제 낼 세금이 줄어듭니다.</p></div>
       <div class="g-card"><b>4. 결과 확인·복사</b><p>실효세율과 세후 실수령액까지 확인하고, 결과를 복사해 보관하거나 공유할 수 있습니다.</p></div>
     </div>
   </section>
@@ -422,8 +504,13 @@
     <div class="tool-grid">
       <a class="tool-card" href="/">
         <span class="ico">🪙</span>
-        <b>코인·해외주식 세금</b>
+        <b>코인 세금 (2027~)</b>
         <p>손익통산 · 의제취득가액 · 250만원 공제</p>
+      </a>
+      <a class="tool-card" href="/stock/">
+        <span class="ico">📈</span>
+        <b>해외주식 양도소득세</b>
+        <p>결제일 환율 환산 · 손익통산 · 250만원 공제</p>
       </a>
       <a class="tool-card" href="/gift/">
         <span class="ico">🎁</span>
@@ -538,288 +625,266 @@
 </footer>
 
 <script>
+/* ===== 계산기 v3 ===== */
 (function () {
-  var MODE = { coin: { old: true, noproof: true }, stock: { old: false, noproof: false } };
-  var mode = "coin";
+  var MODE = "coin";
+  var coin = MODE === "coin";
   var rowsBox = document.getElementById("rows");
   var fmt = function (n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); };
-
-  function addRow() {
-    var row = document.createElement("div");
-    row.className = "row";
-    row.innerHTML =
-      '<div class="row-head">' +
-        '<input class="r-name" type="text" placeholder="' + (mode === "coin" ? "코인 이름 (예: BTC)" : "종목 이름 (예: TSLA)") + '">' +
-        '<button type="button" class="row-del">삭제 ✕</button>' +
-      '</div>' +
-      '<label class="f l-sell">총 양도가액 (원화 매도 + 코인 간 교환·대여 대가)</label>' +
-      '<div class="in"><input class="r-sell num" type="text" inputmode="numeric" placeholder="예: 40,000,000"><span>원</span></div>' +
-      '<p class="hint h-sell">코인을 USDT·다른 코인으로 바꾼 것도 양도입니다. 원화 매도뿐 아니라 교환·대여 대가를 원화로 환산해 합산하세요.</p>' +
-      '<div class="r-buy-block">' +
-        '<label class="f l-buy">양도한 수량에 해당하는 취득가액 (총평균법)</label>' +
-        '<div class="in"><input class="r-buy num" type="text" inputmode="numeric" placeholder="예: 30,000,000"><span>원</span></div>' +
-        '<p class="hint h-buy">산 금액 전체가 아니라 <b>이번에 판 수량만큼</b>의 취득가액입니다. 아직 보유 중인 코인의 취득가는 넣지 마세요. 국세청 기준은 거주자별 총평균법입니다.</p>' +
-        '<button type="button" class="helper-toggle coin-only">📐 총평균 취득가액 계산 도우미</button>' +
-        '<div class="helper coin-only">' +
-          '<label class="f">보유 전체 매수금액 합계 (수수료 포함 가능)</label>' +
-          '<div class="in"><input class="h-cost num" type="text" inputmode="numeric" placeholder="예: 100,000,000"><span>원</span></div>' +
-          '<label class="f">보유 전체 수량</label>' +
-          '<div class="in"><input class="h-qty dec" type="text" inputmode="decimal" placeholder="예: 2"><span>개</span></div>' +
-          '<label class="f">이번에 양도한 수량</label>' +
-          '<div class="in"><input class="h-sold dec" type="text" inputmode="decimal" placeholder="예: 1"><span>개</span></div>' +
-          '<button type="button" class="helper-apply">취득가액 계산해서 넣기</button>' +
-          '<p class="hint helper-out"></p>' +
-          '<p class="hint">총평균 단가 = 전체 매수금액 ÷ 전체 수량. 여러 번 나눠 샀다면 전부 합산한 금액과 수량을 넣으세요. 단순화된 도우미이며 연중 추가 매수가 있으면 평균이 달라질 수 있습니다.</p>' +
-        '</div>' +
-        '<button type="button" class="helper-toggle fx-toggle stock-only">💱 환율 환산 도우미 (외화 → 원화)</button>' +
-        '<div class="helper fx stock-only">' +
-          '<label class="f">양도가액 (외화)</label>' +
-          '<div class="in"><input class="fx-sell dec" type="text" inputmode="decimal" placeholder="예: 10000"><span>외화</span></div>' +
-          '<label class="f">양도 결제일 기준환율</label>' +
-          '<div class="in"><input class="fx-sell-rate dec" type="text" inputmode="decimal" placeholder="예: 1380.5"><span>원</span></div>' +
-          '<label class="f">취득가액 (외화)</label>' +
-          '<div class="in"><input class="fx-buy dec" type="text" inputmode="decimal" placeholder="예: 8000"><span>외화</span></div>' +
-          '<label class="f">취득 결제일 기준환율</label>' +
-          '<div class="in"><input class="fx-buy-rate dec" type="text" inputmode="decimal" placeholder="예: 1320.0"><span>원</span></div>' +
-          '<button type="button" class="helper-apply fx-apply">원화로 환산해서 넣기</button>' +
-          '<p class="hint fx-out"></p>' +
-          '<p class="hint">양도가액과 취득가액은 <b>각각의 결제일</b> 기준환율(서울외국환중개 매매기준율)로 환산합니다. 환율 변동에 따른 차익도 과세 대상에 포함되는 구조입니다.</p>' +
-        '</div>' +
-        '<label class="f l-fee">취득·양도 부대비용 합계 (선택)</label>' +
-        '<div class="in"><input class="r-fee num" type="text" inputmode="numeric" placeholder="예: 50,000"><span>원</span></div>' +
-        '<p class="hint h-fee">매수 수수료 + 매도 수수료 등. 위 취득가액에 수수료를 이미 포함했다면 중복으로 넣지 마세요.</p>' +
-        '<label class="chk r-old-label"><input class="r-old" type="checkbox">2027년 이전부터 보유 (의제취득가액 적용)</label>' +
-        '<div class="oldbox">' +
-          '<label class="f">2026년 12월 31일 기준 시가 <span class="tagx">국세청 고시 기준 · 현재 미확정</span></label>' +
-          '<div class="in"><input class="r-eoy num" type="text" inputmode="numeric" placeholder="예: 35,000,000"><span>원</span></div>' +
-          '<p class="hint">기준은 시가고시 거래소들이 2027년 1월 1일 0시에 공시한 가격의 평균(소득세법 시행령 88조)이며 아직 확정 전입니다. 예상치로 시뮬레이션하세요. 실제 취득가와 이 시가 중 큰 금액이 취득가로 적용됩니다.</p>' +
-        '</div>' +
-      '</div>' +
-      '<label class="chk r-noproof-label"><input class="r-noproof" type="checkbox">추계 필요경비 시뮬레이션 (조건부 · 최대 50% 가정)</label>' +
-      '<p class="hint r-noproof-note" style="display:none;"><b>요건이 있는 예외 규정입니다.</b> 2027년 이후 취득분 중 실제 취득가액 확인이 곤란한 법정 사유에 해당할 때, 동종 가상자산 전체에 양도가액의 일정 비율(최대 50%, 비율은 시행령으로 정함)을 필요경비로 의제합니다. 여기서는 상한 50%를 가정해 계산하며 별도 부대비용은 인정되지 않습니다. 실제 적용 가능 여부는 전문가 확인이 필요합니다.</p>';
-
-    rowsBox.appendChild(row);
-    applyMode(row);
-
-    row.querySelectorAll(".num").forEach(function (inp) {
-      inp.addEventListener("input", function () {
-        var v = this.value.replace(/[^0-9]/g, "");
-        this.value = v ? fmt(parseInt(v, 10)) : "";
-      });
-    });
-    row.querySelector(".r-old").addEventListener("change", function () {
-      row.querySelector(".oldbox").style.display = this.checked ? "block" : "none";
-    });
-    row.querySelector(".r-noproof").addEventListener("change", function () {
-      row.querySelector(".r-buy-block").style.display = this.checked ? "none" : "block";
-      row.querySelector(".r-noproof-note").style.display = this.checked ? "block" : "none";
-    });
-    row.querySelector(".row-del").addEventListener("click", function () {
-      if (rowsBox.querySelectorAll(".row").length > 1) row.remove();
-    });
-    row.querySelectorAll(".dec").forEach(function (inp) {
-      inp.addEventListener("input", function () { this.value = this.value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1"); });
-    });
-    row.querySelector(".helper-toggle").addEventListener("click", function () {
-      var h = row.querySelector(".helper");
-      h.style.display = h.style.display === "block" ? "none" : "block";
-    });
-    row.querySelector(".fx-toggle").addEventListener("click", function () {
-      var h = row.querySelector(".helper.fx");
-      h.style.display = h.style.display === "block" ? "none" : "block";
-    });
-    row.querySelector(".fx-apply").addEventListener("click", function () {
-      var sv = parseFloat(row.querySelector(".fx-sell").value) || 0, sr = parseFloat(row.querySelector(".fx-sell-rate").value) || 0;
-      var bv = parseFloat(row.querySelector(".fx-buy").value) || 0, br = parseFloat(row.querySelector(".fx-buy-rate").value) || 0;
-      var out = row.querySelector(".fx-out");
-      if (!sv || !sr || !bv || !br) { out.textContent = "네 칸을 모두 입력해 주세요."; return; }
-      var sk = Math.round(sv * sr), bk = Math.round(bv * br);
-      row.querySelector(".r-sell").value = fmt(sk); row.querySelector(".r-buy").value = fmt(bk);
-      out.innerHTML = "양도 " + fmt(sk) + "원 · 취득 " + fmt(bk) + "원 을 넣었습니다. (환차손익 " + (sk - bk - Math.round((sv - bv) * sr) >= 0 ? "+" : "") + fmt(sk - bk - Math.round((sv - bv) * sr)) + "원 포함)";
-    });
-    row.querySelector(".helper-apply:not(.fx-apply)").addEventListener("click", function () {
-      var cost = parseInt((row.querySelector(".h-cost").value || "").replace(/[^0-9]/g, ""), 10) || 0;
-      var qty = parseFloat(row.querySelector(".h-qty").value) || 0;
-      var sold = parseFloat(row.querySelector(".h-sold").value) || 0;
-      var out = row.querySelector(".helper-out");
-      if (!cost || !qty || !sold) { out.textContent = "세 칸을 모두 입력해 주세요."; return; }
-      if (sold > qty) { out.textContent = "양도 수량이 보유 수량보다 많습니다."; return; }
-      var avg = cost / qty, basis = Math.round(avg * sold);
-      row.querySelector(".r-buy").value = fmt(basis);
-      out.innerHTML = "총평균 단가 " + fmt(avg) + "원 × " + sold + "개 = <b>" + fmt(basis) + "원</b> 을 취득가액 칸에 넣었습니다.";
-    });
+  var num = function (v) { return parseInt(String(v || "").replace(/[^0-9]/g, ""), 10) || 0; };
+  var dec = function (v) { return parseFloat(String(v || "").replace(/[^0-9.]/g, "")) || 0; };
+  function krw(v) {
+    if (v < 10000) return "";
+    var man = Math.round(v / 10000), eok = Math.floor(man / 10000), jo = Math.floor(eok / 10000), rest;
+    if (jo > 0) { rest = eok % 10000; return fmt(jo) + "조" + (rest ? " " + fmt(rest) + "억" : ""); }
+    if (eok > 0) { rest = man % 10000; return fmt(eok) + "억" + (rest ? " " + fmt(rest) + "만" : ""); }
+    return fmt(man) + "만";
   }
-
-  function applyMode(row) {
-    var cfg = MODE[mode];
-    row.querySelector(".r-old-label").style.display = cfg.old ? "flex" : "none";
-    row.querySelector(".r-noproof-label").style.display = cfg.noproof ? "flex" : "none";
-    if (!cfg.old) {
-      row.querySelector(".r-old").checked = false;
-      row.querySelector(".oldbox").style.display = "none";
+  /* 숫자 입력: 콤마 + 한글 환산 (위임) */
+  document.addEventListener("input", function (e) {
+    var inp = e.target; if (!inp.matches) return;
+    if (inp.matches("input.num")) {
+      var v = inp.value.replace(/[^0-9]/g, ""); inp.value = v ? fmt(parseInt(v, 10)) : "";
+      var box = inp.closest(".in"); if (!box) return;
+      var h = box.querySelector(".krw-hint");
+      if (!h) { h = document.createElement("span"); h.className = "krw-hint"; box.insertBefore(h, inp.nextSibling); }
+      h.textContent = krw(num(inp.value));
+    } else if (inp.matches("input.dec")) {
+      inp.value = inp.value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
     }
-    if (!cfg.noproof) {
-      row.querySelector(".r-noproof").checked = false;
-      row.querySelector(".r-buy-block").style.display = "block";
-      row.querySelector(".r-noproof-note").style.display = "none";
-    }
-    var name = row.querySelector(".r-name");
-    name.placeholder = mode === "coin" ? "코인 이름 (예: BTC)" : "종목 이름 (예: TSLA)";
-    var T = mode === "coin" ? {
-      lsell: "총 양도가액 (원화 매도 + 코인 간 교환·대여 대가)",
-      hsell: "코인을 USDT·다른 코인으로 바꾼 것도 양도입니다. 원화 매도뿐 아니라 교환·대여 대가를 원화로 환산해 합산하세요.",
-      lbuy: "양도한 수량에 해당하는 취득가액 (총평균법)",
-      hbuy: "산 금액 전체가 아니라 <b>이번에 판 수량만큼</b>의 취득가액입니다. 아직 보유 중인 코인의 취득가는 넣지 마세요. 국세청 기준은 거주자별 총평균법입니다.",
-      lfee: "취득·양도 부대비용 합계 (선택)",
-      hfee: "매수 수수료 + 매도 수수료 등. 위 취득가액에 수수료를 이미 포함했다면 중복으로 넣지 마세요."
-    } : {
-      lsell: "총 양도가액 (결제일 기준환율로 환산한 원화)",
-      hsell: "양도시기는 체결일이 아니라 <b>결제일</b>입니다. 12월 말 매도는 결제일이 다음 해면 다음 해 소득입니다. 국내 상장 해외 ETF(예: TIGER 미국나스닥100)는 양도세가 아닌 배당소득 과세라 이 계산기 대상이 아닙니다.",
-      lbuy: "양도한 수량에 해당하는 취득가액 (선입선출법 원칙 · 취득 결제일 환율)",
-      hbuy: "여러 번 나눠 산 종목은 <b>먼저 산 것부터 판 것</b>으로 봅니다(소득세법 시행령 162조⑤). 증권사가 제공하는 양도소득 계산 내역을 그대로 쓰는 것이 가장 안전합니다.",
-      lfee: "취득·양도 부대비용 합계 (선택)",
-      hfee: "매매 수수료, 해외 거래세(SEC fee 등) 포함. 원화로 환산해 넣으세요."
-    };
-    row.querySelector(".l-sell").textContent = T.lsell; row.querySelector(".h-sell").innerHTML = T.hsell;
-    row.querySelector(".l-buy").textContent = T.lbuy; row.querySelector(".h-buy").innerHTML = T.hbuy;
-    row.querySelector(".l-fee").textContent = T.lfee; row.querySelector(".h-fee").innerHTML = T.hfee;
-    row.querySelectorAll(".coin-only").forEach(function (el) { el.style.display = mode === "coin" ? (el.classList.contains("helper") ? "none" : "inline-block") : "none"; });
-    row.querySelectorAll(".stock-only").forEach(function (el) { el.style.display = mode === "stock" ? (el.classList.contains("helper") ? "none" : "inline-block") : "none"; });
-  }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" || !e.target.matches || !e.target.matches("input.num, input.dec")) return;
+    e.preventDefault();
+    var simple = !document.getElementById("pane-simple").hidden;
+    document.getElementById(simple ? "s-calc" : "calc").click();
+  });
 
-  function setMode(m) {
-    mode = m;
-    document.getElementById("mode-coin").className = m === "coin" ? "on" : "";
-    document.getElementById("mode-stock").className = m === "stock" ? "on" : "";
-    rowsBox.querySelectorAll(".row").forEach(applyMode);
+  /* 탭 */
+  function showTab(t) {
+    document.getElementById("pane-simple").hidden = t !== "simple";
+    document.getElementById("pane-detail").hidden = t !== "detail";
+    document.getElementById("tab-simple").className = t === "simple" ? "on" : "";
+    document.getElementById("tab-detail").className = t === "detail" ? "on" : "";
     document.getElementById("result").style.display = "none";
     document.getElementById("msg").style.display = "none";
+    if (t === "detail" && !rowsBox.children.length) addRow();
   }
-  document.getElementById("mode-coin").addEventListener("click", function () { setMode("coin"); });
-  document.getElementById("mode-stock").addEventListener("click", function () { setMode("stock"); });
+  document.getElementById("tab-simple").addEventListener("click", function () { showTab("simple"); });
+  document.getElementById("tab-detail").addEventListener("click", function () { showTab("detail"); });
 
-  addRow();
+  /* 간편 */
+  document.querySelectorAll(".quick button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var inp = document.getElementById("s-net"); inp.value = fmt(num(b.dataset.v));
+      inp.dispatchEvent(new Event("input", { bubbles: true }));
+      document.getElementById("s-calc").click();
+    });
+  });
+  document.getElementById("s-calc").addEventListener("click", function () {
+    var net = num(document.getElementById("s-net").value);
+    if (!net) { say("연간 순이익을 입력해 주세요. 손실이면 세금이 없습니다."); return; }
+    render(net, [], { simple: true });
+  });
+
+  /* 상세 행 */
+  function addRow() {
+    var row = document.createElement("div"); row.className = "row";
+    if (coin) {
+      row.innerHTML =
+        '<div class="row-head"><input class="r-name" type="text" placeholder="코인 이름 (예: BTC)"><button type="button" class="row-del">삭제 ✕</button></div>' +
+        '<label class="f">① 팔거나 교환해서 받은 금액</label>' +
+        '<div class="in"><input class="r-sell num" type="text" inputmode="numeric" placeholder="예: 70,000,000"><span>원</span></div>' +
+        '<p class="hint" style="margin:-4px 0 10px;">USDT 등 다른 코인으로 바꾼 것도 포함됩니다 (원화 환산 금액).</p>' +
+        '<div class="r-buy-block">' +
+          '<label class="f">② 판 코인을 사는 데 든 금액 <button type="button" class="link-btn r-help">얼마인지 모르겠어요</button></label>' +
+          '<div class="in"><input class="r-buy num" type="text" inputmode="numeric" placeholder="예: 50,000,000"><span>원</span></div>' +
+          '<p class="hint" style="margin:-4px 0 10px;">이번에 판 수량만큼의 매수금액입니다. 아직 들고 있는 코인은 빼세요.</p>' +
+          '<div class="helper">' +
+            '<div class="seg"><button type="button" data-h="avg" class="on">평균 매수가를 알고 있어요</button><button type="button" data-h="calc">여러 번 나눠 사서 계산이 필요해요</button></div>' +
+            '<div class="h-avg">' +
+              '<label class="f">평균 매수가 (1개당)</label><div class="in"><input class="h-avgp num" type="text" inputmode="numeric" placeholder="예: 50,000,000"><span>원</span></div>' +
+              '<label class="f">이번에 판 수량</label><div class="in"><input class="h-sold1 dec" type="text" inputmode="decimal" placeholder="예: 1"><span>개</span></div>' +
+            '</div>' +
+            '<div class="h-calc" hidden>' +
+              '<label class="f">전체 매수금액 합계</label><div class="in"><input class="h-cost num" type="text" inputmode="numeric" placeholder="예: 100,000,000"><span>원</span></div>' +
+              '<label class="f">전체 매수 수량</label><div class="in"><input class="h-qty dec" type="text" inputmode="decimal" placeholder="예: 2"><span>개</span></div>' +
+              '<label class="f">이번에 판 수량</label><div class="in"><input class="h-sold2 dec" type="text" inputmode="decimal" placeholder="예: 1"><span>개</span></div>' +
+            '</div>' +
+            '<button type="button" class="helper-apply">계산해서 넣기</button>' +
+            '<p class="hint helper-out"></p>' +
+            '<p class="hint">국세청 기준은 여러 번 산 코인의 평균 매수가(총평균법)입니다. 연중 추가 매수가 있으면 평균이 달라질 수 있습니다.</p>' +
+          '</div>' +
+          '<label class="f">③ 매수·매도 수수료 (선택)</label>' +
+          '<div class="in"><input class="r-fee num" type="text" inputmode="numeric" placeholder="예: 50,000"><span>원</span></div>' +
+        '</div>' +
+        '<details class="adv"><summary>고급 설정</summary><div class="adv-body">' +
+          '<label class="chk"><input class="r-old" type="checkbox">2026년 말 이전부터 보유한 코인</label>' +
+          '<div class="oldbox">' +
+            '<label class="f">2026년 12월 31일 시가 <span class="tagx">국세청 고시 전 · 예상치</span></label>' +
+            '<div class="in"><input class="r-eoy num" type="text" inputmode="numeric" placeholder="예: 60,000,000"><span>원</span></div>' +
+            '<p class="hint">실제 매수금액과 연말 시가 중 큰 금액이 매수금액으로 적용됩니다(의제취득가액). 기준은 시가고시 거래소들의 2027년 1월 1일 0시 공시가 평균이며 아직 확정 전입니다.</p>' +
+          '</div>' +
+          '<label class="chk"><input class="r-noproof" type="checkbox">취득가를 전혀 모르는 경우 (추계 시뮬레이션)</label>' +
+          '<p class="hint r-noproof-note" hidden>2027년 이후 산 코인 중 취득가 확인이 곤란한 법정 요건에 해당할 때만, 받은 금액의 최대 50%를 비용으로 보는 예외(추계 필요경비)입니다. 여기서는 50%를 가정하며 수수료는 따로 빼지 않습니다. 적용 가능 여부는 전문가 확인이 필요합니다.</p>' +
+        '</div></details>';
+    } else {
+      row.innerHTML =
+        '<div class="row-head"><input class="r-name" type="text" placeholder="종목 이름 (예: TSLA)"><button type="button" class="row-del">삭제 ✕</button></div>' +
+        '<label class="f">① 판 금액 (원화) <button type="button" class="link-btn r-help">달러로 입력할게요</button></label>' +
+        '<div class="in"><input class="r-sell num" type="text" inputmode="numeric" placeholder="예: 13,800,000"><span>원</span></div>' +
+        '<p class="hint" style="margin:-4px 0 10px;">결제일 환율로 환산한 금액입니다. 12월 말 매도는 결제일이 다음 해면 다음 해 소득입니다.</p>' +
+        '<div class="helper">' +
+          '<label class="f">판 금액 (외화)</label><div class="in"><input class="fx-sell dec" type="text" inputmode="decimal" placeholder="예: 10000"><span>외화</span></div>' +
+          '<label class="f">판 날의 결제일 환율</label><div class="in"><input class="fx-sell-rate dec" type="text" inputmode="decimal" placeholder="예: 1380"><span>원</span></div>' +
+          '<label class="f">산 금액 (외화)</label><div class="in"><input class="fx-buy dec" type="text" inputmode="decimal" placeholder="예: 8000"><span>외화</span></div>' +
+          '<label class="f">산 날의 결제일 환율</label><div class="in"><input class="fx-buy-rate dec" type="text" inputmode="decimal" placeholder="예: 1320"><span>원</span></div>' +
+          '<button type="button" class="helper-apply">원화로 환산해서 넣기</button>' +
+          '<p class="hint helper-out"></p>' +
+          '<p class="hint">판 금액과 산 금액은 각각의 결제일 기준환율(매매기준율)로 환산합니다. 환율 변동 차익도 과세에 포함됩니다.</p>' +
+        '</div>' +
+        '<div class="r-buy-block">' +
+          '<label class="f">② 판 주식을 사는 데 든 금액 (원화)</label>' +
+          '<div class="in"><input class="r-buy num" type="text" inputmode="numeric" placeholder="예: 10,560,000"><span>원</span></div>' +
+          '<p class="hint" style="margin:-4px 0 10px;">여러 번 나눠 샀다면 먼저 산 것부터 판 것으로 봅니다(선입선출). 증권사 양도소득 내역을 쓰면 가장 정확합니다.</p>' +
+          '<label class="f">③ 매수·매도 수수료 (선택)</label>' +
+          '<div class="in"><input class="r-fee num" type="text" inputmode="numeric" placeholder="예: 30,000"><span>원</span></div>' +
+        '</div>';
+    }
+    rowsBox.appendChild(row);
+
+    row.querySelector(".row-del").addEventListener("click", function () { if (rowsBox.querySelectorAll(".row").length > 1) row.remove(); });
+    var help = row.querySelector(".r-help"), helper = row.querySelector(".helper");
+    help.addEventListener("click", function () { helper.style.display = helper.style.display === "block" ? "none" : "block"; });
+
+    if (coin) {
+      row.querySelectorAll(".seg button").forEach(function (b) {
+        b.addEventListener("click", function () {
+          row.querySelectorAll(".seg button").forEach(function (x) { x.className = ""; }); b.className = "on";
+          row.querySelector(".h-avg").hidden = b.dataset.h !== "avg";
+          row.querySelector(".h-calc").hidden = b.dataset.h !== "calc";
+        });
+      });
+      row.querySelector(".helper-apply").addEventListener("click", function () {
+        var out = row.querySelector(".helper-out"), basis, msg;
+        if (!row.querySelector(".h-avg").hidden) {
+          var ap = num(row.querySelector(".h-avgp").value), q1 = dec(row.querySelector(".h-sold1").value);
+          if (!ap || !q1) { out.textContent = "평균 매수가와 판 수량을 입력해 주세요."; return; }
+          basis = Math.round(ap * q1); msg = fmt(ap) + "원 × " + q1 + "개 = ";
+        } else {
+          var cost = num(row.querySelector(".h-cost").value), qty = dec(row.querySelector(".h-qty").value), q2 = dec(row.querySelector(".h-sold2").value);
+          if (!cost || !qty || !q2) { out.textContent = "세 칸을 모두 입력해 주세요."; return; }
+          if (q2 > qty) { out.textContent = "판 수량이 전체 수량보다 많습니다."; return; }
+          basis = Math.round(cost / qty * q2); msg = "평균 " + fmt(cost / qty) + "원 × " + q2 + "개 = ";
+        }
+        var buy = row.querySelector(".r-buy"); buy.value = fmt(basis); buy.dispatchEvent(new Event("input", { bubbles: true }));
+        out.innerHTML = msg + "<b>" + fmt(basis) + "원</b> 을 ②에 넣었습니다.";
+        setTimeout(function () { helper.style.display = "none"; }, 900);
+      });
+      row.querySelector(".r-old").addEventListener("change", function () { row.querySelector(".oldbox").style.display = this.checked ? "block" : "none"; });
+      row.querySelector(".r-noproof").addEventListener("change", function () {
+        row.querySelector(".r-buy-block").style.display = this.checked ? "none" : "block";
+        row.querySelector(".r-noproof-note").hidden = !this.checked;
+      });
+    } else {
+      row.querySelector(".helper-apply").addEventListener("click", function () {
+        var sv = dec(row.querySelector(".fx-sell").value), sr = dec(row.querySelector(".fx-sell-rate").value);
+        var bv = dec(row.querySelector(".fx-buy").value), br = dec(row.querySelector(".fx-buy-rate").value);
+        var out = row.querySelector(".helper-out");
+        if (!sv || !sr || !bv || !br) { out.textContent = "네 칸을 모두 입력해 주세요."; return; }
+        var sk = Math.round(sv * sr), bk = Math.round(bv * br);
+        var s1 = row.querySelector(".r-sell"), b1 = row.querySelector(".r-buy");
+        s1.value = fmt(sk); b1.value = fmt(bk);
+        s1.dispatchEvent(new Event("input", { bubbles: true })); b1.dispatchEvent(new Event("input", { bubbles: true }));
+        var fxgain = sk - bk - Math.round((sv - bv) * sr);
+        out.innerHTML = "판 금액 " + fmt(sk) + "원 · 산 금액 " + fmt(bk) + "원 을 넣었습니다. (환차손익 " + (fxgain >= 0 ? "+" : "") + fmt(fxgain) + "원 포함)";
+        setTimeout(function () { helper.style.display = "none"; }, 1200);
+      });
+    }
+  }
   document.getElementById("add").addEventListener("click", addRow);
 
+  /* 상세 계산 */
   document.getElementById("calc").addEventListener("click", function () {
-    var result = document.getElementById("result");
-    var msg = document.getElementById("msg");
-    var rrows = document.getElementById("r-rows");
-    result.style.display = "none"; msg.style.display = "none"; rrows.innerHTML = "";
-
-    var num = function (row, cls) {
-      var el = row.querySelector(cls);
-      var v = el ? el.value.replace(/[^0-9]/g, "") : "";
-      return v ? parseInt(v, 10) : 0;
-    };
-
-    var total = 0, valid = 0, summaries = [], flags = { old: 0, noproof: 0 };
+    var total = 0, valid = 0, items = [], flags = { old: 0, noproof: 0 };
     var rows = rowsBox.querySelectorAll(".row");
-
     for (var i = 0; i < rows.length; i++) {
-      var row = rows[i];
-      var sell = num(row, ".r-sell");
+      var row = rows[i], sell = num(row.querySelector(".r-sell").value);
       if (!sell) continue;
-      var name = (row.querySelector(".r-name").value || (mode === "coin" ? "코인 " : "종목 ") + (i + 1)).trim();
-      var income;
-      if (MODE[mode].noproof && row.querySelector(".r-noproof").checked) {
+      var name = (row.querySelector(".r-name").value || (coin ? "코인 " : "종목 ") + (i + 1)).trim(), income;
+      if (coin && row.querySelector(".r-noproof").checked) {
         income = sell - sell * 0.5; flags.noproof++;
       } else {
-        var buy = num(row, ".r-buy");
-        if (!buy) { msg.textContent = '"' + name + '" 의 양도 수량에 해당하는 취득가액을 입력해 주세요. (도우미로 계산할 수 있습니다)'; msg.style.display = "block"; return; }
+        var buy = num(row.querySelector(".r-buy").value);
+        if (!buy) { say('"' + name + '" 의 ② 사는 데 든 금액을 입력해 주세요.' + (coin ? ' 모르면 "얼마인지 모르겠어요"를 눌러보세요.' : '')); return; }
         var base = buy;
-        if (MODE[mode].old && row.querySelector(".r-old").checked) {
-          var eoy = num(row, ".r-eoy");
-          if (!eoy) { msg.textContent = '"' + name + '" 의 2026년 12월 31일 기준 시가를 입력해 주세요.'; msg.style.display = "block"; return; }
+        if (coin && row.querySelector(".r-old").checked) {
+          var eoy = num(row.querySelector(".r-eoy").value);
+          if (!eoy) { say('"' + name + '" 의 2026년 12월 31일 시가를 입력해 주세요.'); return; }
           base = Math.max(buy, eoy); flags.old++;
         }
-        income = sell - base - num(row, ".r-fee");
+        income = sell - base - num(row.querySelector(".r-fee").value);
       }
-      total += income; valid++;
-      summaries.push({ name: name, income: income });
+      total += income; valid++; items.push({ name: name, income: income });
     }
+    if (!valid) { say("최소 한 개의 ① 판 금액을 입력해 주세요."); return; }
+    render(total, items, { simple: false, flags: flags });
+  });
 
-    if (!valid) { msg.textContent = "최소 한 개 종목의 매도금액을 입력해 주세요."; msg.style.display = "block"; return; }
+  function say(t) { var m = document.getElementById("msg"); m.textContent = t; m.style.display = "block"; document.getElementById("result").style.display = "none"; }
+  function setR(id, v) { document.getElementById(id).textContent = v; }
 
-    summaries.forEach(function (s) {
-      var line = document.createElement("div");
-      line.className = "r-line soft";
-      line.innerHTML = "<span>" + s.name + " 손익</span><span style='color:" + (s.income >= 0 ? "#17181c" : "#d92b3a") + ";font-weight:700;'>" + (s.income >= 0 ? "+" : "") + fmt(s.income) + "원</span>";
-      rrows.appendChild(line);
+  function render(total, items, opt) {
+    var msg = document.getElementById("msg"), result = document.getElementById("result");
+    msg.style.display = "none";
+    var rr = document.getElementById("r-rows"); rr.innerHTML = "";
+    items.forEach(function (it) {
+      var d = document.createElement("div"); d.className = "dl coin";
+      d.innerHTML = "<span>" + it.name + " 손익</span><b style='color:" + (it.income >= 0 ? "var(--ink)" : "#d92b3a") + "'>" + (it.income >= 0 ? "+" : "") + fmt(it.income) + "원</b>";
+      rr.appendChild(d);
     });
+    var taxbase = Math.max(0, total - 2500000), itax = taxbase * 0.20, ltax = taxbase * 0.02, tax = itax + ltax;
+    setR("r-total", fmt(tax) + "원"); setR("r-income", fmt(total) + "원"); setR("r-taxbase", fmt(taxbase) + "원");
+    setR("r-itax", fmt(itax) + "원"); setR("r-ltax", fmt(ltax) + "원");
+    var rate = total > 0 ? tax / total * 100 : 0;
+    setR("r-rate", rate.toFixed(2) + "%"); setR("r-net", fmt(total - tax) + "원");
+    document.getElementById("r-bar-tax").style.width = Math.min(100, rate) + "%";
+    document.getElementById("r-bar-net").style.width = (100 - Math.min(100, rate)) + "%";
+    if (total <= 0) { msg.textContent = "연간 손익 " + fmt(total) + "원: 납부할 세금이 없습니다. (손실은 다음 해로 이월되지 않습니다)"; msg.style.display = "block"; }
+    else if (taxbase === 0) { msg.textContent = "순이익 " + fmt(total) + "원: 기본공제 250만원 이내라서 납부할 세금이 없습니다."; msg.style.display = "block"; }
 
-    var setR = function (id, v) { document.getElementById(id).textContent = v; };
-    var renderAssume = function () {
-      var box = document.getElementById("r-assume"); if (!box) return;
-      var li = [];
-      if (mode === "coin") {
-        li.push("2027년 시행 예정 기준: 기타소득 분리과세, 연간 손익통산, 기본공제 250만원, 세율 20% + 지방소득세 2%");
-        li.push("취득가액은 입력값 기준입니다. 국세청 기준 산정법은 거주자별 총평균법이며, 양도한 수량에 해당하는 금액만 반영해야 합니다");
-        if (flags.old) li.push("의제취득가액 적용 " + flags.old + "건: 2026년 12월 31일 시가는 국세청 고시 전 예상치입니다");
-        if (flags.noproof) li.push("추계 필요경비 " + flags.noproof + "건: 상한 50%를 가정한 시뮬레이션이며, 법정 요건 충족 시에만 적용됩니다 (전문가 확인 필요)");
-        li.push("코인 간 교환·대여 대가가 양도가액에 포함됐다는 전제입니다");
-      } else {
-        li.push("해외주식 현행 양도소득세 기준(분류과세): 세율 20% + 지방소득세 2%, 연간 손익통산, 손실 이월공제 없음");
-        li.push("기본공제 250만원은 국내주식 과세분(대주주·장외 거래 등)과 합산해 연 1회 적용됩니다");
-        li.push("양도가액·취득가액은 각각의 결제일 기준환율로 환산했다는 전제이며, 환차손익이 포함됩니다");
-        li.push("취득가액은 입력값 기준입니다. 동일 종목 수회 취득 시 선입선출법이 원칙이며, 증권사 양도소득 내역 사용을 권장합니다");
-        li.push("국내 상장 해외 ETF는 배당소득 과세 대상이라 이 계산에 포함되지 않습니다");
+    var li = [];
+    if (coin) {
+      li.push("2027년 시행 예정 기준: 기타소득 분리과세, 연간 손익통산, 기본공제 250만원, 세율 20% + 지방소득세 2%, 다음 해 5월 신고");
+      if (opt.simple) li.push("입력한 순이익이 이미 매수금액·수수료를 뺀 실현손익이라는 전제입니다");
+      else {
+        li.push("② 매수금액은 입력값 기준입니다. 국세청 기준은 여러 번 산 코인의 평균 매수가(총평균법)이며, 판 수량에 해당하는 금액만 반영합니다");
+        if (opt.flags.old) li.push("2026년 말 이전 보유 " + opt.flags.old + "건: 연말 시가는 국세청 고시 전 예상치입니다(의제취득가액)");
+        if (opt.flags.noproof) li.push("취득가 불명 " + opt.flags.noproof + "건: 받은 금액의 50%를 비용으로 가정한 시뮬레이션이며, 법정 요건 충족 시에만 적용됩니다");
+        li.push("코인 간 교환·대여 대가가 ①에 포함됐다는 전제입니다");
       }
-      box.innerHTML = "<b>간이 예상치 · 적용 가정</b><ul>" + li.map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul>";
-    };
-    renderAssume();
-
-    if (total <= 0) {
-      msg.textContent = "손익통산 결과 " + fmt(total) + "원: 납부할 세금이 없습니다.";
-      msg.style.display = "block";
-      setR("r-income", fmt(total) + "원"); setR("r-taxbase", "0원");
-      setR("r-split", "0원 + 0원"); setR("r-total", "0원");
-      result.style.display = "block";
-      return;
+      li.push("손실은 다음 해로 이월되지 않습니다");
+    } else {
+      li.push("현행 해외주식 양도소득세(분류과세): 세율 20% + 지방소득세 2%, 연간 손익통산, 손실 이월 없음, 다음 해 5월 신고");
+      li.push("기본공제 250만원은 국내주식 과세분(대주주·장외 등)과 합산해 연 1회 적용됩니다");
+      li.push("판 금액·산 금액은 각각의 결제일 기준환율로 환산했다는 전제이며, 환차손익이 포함됩니다");
+      if (!opt.simple) li.push("산 금액은 입력값 기준입니다. 여러 번 산 종목은 선입선출법이 원칙이며, 증권사 양도소득 내역 사용을 권장합니다");
+      li.push("국내 상장 해외 ETF는 배당소득 과세 대상이라 포함되지 않습니다");
     }
-
-    var taxbase = Math.max(0, total - 2500000);
-    var incomeTax = taxbase * 0.20, localTax = taxbase * 0.02;
-    setR("r-income", fmt(total) + "원");
-    setR("r-taxbase", fmt(taxbase) + "원");
-    setR("r-split", fmt(incomeTax) + "원 + " + fmt(localTax) + "원");
-    setR("r-total", fmt(incomeTax + localTax) + "원");
+    document.getElementById("r-assume").innerHTML = li.map(function (t) { return "<li>" + t + "</li>"; }).join("");
     result.style.display = "block";
+    result.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
-    if (taxbase === 0) {
-      msg.textContent = "소득 " + fmt(total) + "원: 기본공제 250만원 이내라서 납부할 세금이 없습니다.";
-      msg.style.display = "block";
-    }
+  document.getElementById("r-copy").addEventListener("click", function () {
+    var b = this, lines = ["[택스22 " + (coin ? "코인 세금" : "해외주식 양도세") + " 계산 결과]"];
+    lines.push("예상 세금 " + document.getElementById("r-total").textContent);
+    lines.push("연간 순이익 " + document.getElementById("r-income").textContent + " / 기본공제 2,500,000원 / 과세 대상 " + document.getElementById("r-taxbase").textContent);
+    lines.push("소득세 " + document.getElementById("r-itax").textContent + " + 지방소득세 " + document.getElementById("r-ltax").textContent + " / 실효세율 " + document.getElementById("r-rate").textContent);
+    lines.push("", "직접 계산해보기: https://tax22.kr" + location.pathname);
+    navigator.clipboard.writeText(lines.join("\n")).then(function () { b.textContent = "✅ 복사 완료"; setTimeout(function () { b.textContent = "📋 결과 복사하기"; }, 1600); });
   });
 })();
-
-/* 상담 폼: 페이지 이동 없이 접수 완료 표시 */
-(function () {
-  var form = document.getElementById("consult-form");
-  if (!form) return;
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var btn = form.querySelector('button[type="submit"]');
-    btn.disabled = true; btn.textContent = "접수 중...";
-    fetch("https://formsubmit.co/ajax/checksoyoung@gmail.com", {
-      method: "POST",
-      body: new FormData(form),
-      headers: { "Accept": "application/json" }
-    })
-      .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
-      .then(function () {
-        form.innerHTML = '<div class="sent"><b>✅ 정상 접수되었습니다</b><p>내용 확인 후 입력하신 이메일로 회신드리겠습니다.</p></div>';
-      })
-      .catch(function () {
-        btn.disabled = false; btn.textContent = "상담 신청하기";
-        alert("전송에 실패했습니다. 잠시 후 다시 시도해 주세요.");
-      });
-  });
-})();
-
-if ("serviceWorker" in navigator && location.protocol === "https:") {
-  navigator.serviceWorker.register("/sw.js");
-}
 </script>
 <script>
 (function () {
@@ -830,88 +895,6 @@ if ("serviceWorker" in navigator && location.protocol === "https:") {
     dd.classList.toggle("open");
   });
   document.addEventListener("click", function () { dd.classList.remove("open"); });
-})();
-</script>
-<script>
-/* UX 인핸스먼트: 한글 환산 + 실효세율 바 + 결과 복사 + 엔터 계산 */
-(function () {
-  var CFG = {"btn": "calc", "result": "result", "tax": "r-total", "base": "el:r-income", "netLabel": "세후 실수령", "rateLabel": "실효세율"};
-  function num(t) { return parseInt(String(t || "").replace(/[^0-9]/g, ""), 10) || 0; }
-  function fmt(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
-  function krw(v) {
-    if (v < 10000) return "";
-    var man = Math.round(v / 10000), eok = Math.floor(man / 10000), jo = Math.floor(eok / 10000);
-    var rest;
-    if (jo > 0) { rest = eok % 10000; return fmt(jo) + "조" + (rest ? " " + fmt(rest) + "억" : ""); }
-    if (eok > 0) { rest = man % 10000; return fmt(eok) + "억" + (rest ? " " + fmt(rest) + "만" : ""); }
-    return fmt(man) + "만";
-  }
-  /* 한글 환산 힌트 (동적 행 포함, 위임) */
-  document.addEventListener("input", function (e) {
-    var inp = e.target;
-    if (!inp.matches || !inp.matches('input[inputmode="numeric"]')) return;
-    var box = inp.closest(".in");
-    if (!box) return;
-    var hint = box.querySelector(".krw-hint");
-    if (!hint) {
-      hint = document.createElement("span");
-      hint.className = "krw-hint";
-      box.insertBefore(hint, inp.nextSibling);
-    }
-    hint.textContent = krw(num(inp.value));
-  });
-  /* 엔터로 계산 */
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Enter" && e.target.matches && e.target.matches('input[inputmode="numeric"]')) {
-      e.preventDefault();
-      var b = document.getElementById(CFG.btn);
-      if (b) b.click();
-    }
-  });
-  /* 결과 인핸스먼트 (원래 핸들러 뒤에 실행) */
-  var btn = document.getElementById(CFG.btn);
-  if (!btn) return;
-  btn.addEventListener("click", function () {
-    setTimeout(function () {
-      var result = document.getElementById(CFG.result);
-      if (!result || result.style.display === "none") return;
-      var tax = num(document.getElementById(CFG.tax).textContent);
-      var base = CFG.base.indexOf("in:") === 0
-        ? num(document.getElementById(CFG.base.slice(3)).value)
-        : num(document.getElementById(CFG.base.slice(3)).textContent);
-      if (base <= 0) return;
-      var rate = Math.min(100, tax / base * 100);
-      var enh = result.querySelector(".enh");
-      if (!enh) { enh = document.createElement("div"); enh.className = "enh"; result.appendChild(enh); }
-      var html = "";
-      if (CFG.refund) {
-        html += '<div class="enh-row"><span>' + CFG.rateLabel + '</span><b>' + rate.toFixed(1) + '%</b></div>' +
-                '<div class="enh-bar"><div class="seg-net" style="width:' + rate + '%"></div></div>' +
-                '<div class="enh-legend"><span><i style="background:var(--accent)"></i>돌려받는 몫</span></div>';
-      } else {
-        var net = base - tax;
-        html += '<div class="enh-row"><span>' + CFG.rateLabel + '</span><b>' + rate.toFixed(1) + '%</b></div>' +
-                '<div class="enh-row"><span>' + CFG.netLabel + '</span><b>' + fmt(net) + '원</b></div>' +
-                '<div class="enh-bar"><div class="seg-tax" style="width:' + rate + '%"></div><div class="seg-net" style="width:' + (100 - rate) + '%"></div></div>' +
-                '<div class="enh-legend"><span><i style="background:#e0655f"></i>세금</span><span><i style="background:var(--accent)"></i>' + CFG.netLabel + '</span></div>';
-      }
-      html += '<button type="button" class="copy-btn">📋 결과 복사하기</button>';
-      enh.innerHTML = html;
-      enh.querySelector(".copy-btn").addEventListener("click", function () {
-        var lines = ["[택스22 계산 결과]"];
-        result.querySelectorAll(".r-line, .r-total").forEach(function (r) {
-          var t = r.textContent.replace(/\s+/g, " ").trim();
-          if (t) lines.push(t);
-        });
-        lines.push("", "직접 계산해보기: https://tax22.kr" + location.pathname);
-        var b2 = this;
-        navigator.clipboard.writeText(lines.join("\n")).then(function () {
-          b2.textContent = "✅ 복사 완료";
-          setTimeout(function () { b2.textContent = "📋 결과 복사하기"; }, 1600);
-        });
-      });
-    }, 0);
-  });
 })();
 </script>
 <script>

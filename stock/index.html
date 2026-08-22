@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>해외주식 양도소득세 계산기 – 결제일 환율까지 3초 | 택스22</title>
+<meta name="description" content="해외주식 양도소득세를 3초 만에 계산하세요. 연간 순이익 한 칸이면 예상 세금이 나오고, 상세 계산에서는 결제일 환율 환산·손익통산·250만원 공제까지 반영됩니다. 무료, 가입 없음.">
+<meta property="og:title" content="해외주식 양도소득세 계산기 | 택스22">
+<meta property="og:description" content="결제일 환율 환산·손익통산·250만원 공제. 연간 순이익 한 칸으로 3초 계산.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tax22.kr/stock/">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://tax22.kr/img/thumb-og.jpg">
+<link rel="canonical" href="https://tax22.kr/stock/">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "해외주식 양도소득세는 어떻게 계산하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "연간 양도차익에서 기본공제 250만원을 뺀 금액에 22%(소득세 20% + 지방소득세 2%)가 부과됩니다. 판 금액과 산 금액은 각각 결제일 기준환율로 원화 환산하고, 같은 해의 수익과 손실은 합산됩니다. 신고는 다음 해 5월입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "해외주식 세금에서 환율은 어떻게 적용하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "판 금액은 매도 결제일, 산 금액은 매수 결제일의 기준환율(매매기준율)로 각각 환산합니다. 그래서 주가가 같아도 환율 차익이 과세 대상에 포함됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "국내에 상장된 해외 ETF도 양도소득세인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아닙니다. TIGER 미국나스닥100처럼 국내 거래소에 상장된 해외 ETF는 양도소득세가 아니라 배당소득(보유기간과세)으로 과세됩니다. 이 계산기는 해외 거래소에 직접 상장된 주식·ETF용입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "해외주식 손실은 다음 해로 이월되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "이월되지 않습니다. 같은 해 안에서만 수익과 손실을 합산할 수 있어서, 연말에 손실 종목을 정리해 수익과 상계하는 절세가 자주 쓰입니다."
+      }
+    }
+  ]
+}
+</script>
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<meta name="theme-color" content="#0bab7c">
+<meta name="google-site-verification" content="Nl7jdHo5ATTXZYxGnWgSfJglWsvSZXVfyLMofXg3yPE">
+<meta name="naver-site-verification" content="7ed55260080da175b50d6552c1ff5baaaa30d768">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="택스22">
+<style>
+  :root {
+    --bg: #f3f5f4; --surface: #fff; --ink: #14211c; --ink-soft: #4f5b56;
+    --ink-faint: #93a09a; --line: #e2e8e5; --accent: #0bab7c; --accent-deep: #068f66;
+    --accent-soft: #e6f7f0; --red: #d92b3a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.65;
+    -webkit-font-smoothing: antialiased; word-break: keep-all;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+  header {
+    background: var(--surface); border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .head-inner {
+    max-width: 720px; margin: 0 auto; padding: 0 20px; height: 58px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .logo { font-size: 20px; font-weight: 900; letter-spacing: -0.02em; }
+  .logo em { font-style: normal; color: var(--accent); }
+  .gnav { display: flex; gap: 14px; margin-right: auto; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); }
+  .gnav a.on { color: var(--accent); }
+  .head-cta {
+    font-size: 13px; font-weight: 700; color: #fff; background: var(--ink);
+    padding: 8px 16px;
+  }
+  .head-cta:hover { background: var(--accent); }
+
+  .hero { text-align: center; padding: 44px 0 8px; }
+  .hero h1 { font-size: 28px; line-height: 1.35; letter-spacing: -0.02em; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { margin-top: 10px; font-size: 15px; color: var(--ink-soft); }
+
+  /* 계산기 */
+  .calc { border: 1px solid var(--line); background: var(--surface); margin: 28px 0; }
+  .calc-head { background: var(--ink); color: #fff; padding: 14px 20px; font-size: 16px; font-weight: 800; }
+  .calc-head span { display: block; font-size: 12px; font-weight: 400; color: #b9bbc4; margin-top: 2px; }
+  .calc-body { padding: 20px; }
+
+  .mode { display: flex; margin-bottom: 18px; border: 1px solid var(--line); }
+  .mode button {
+    flex: 1; border: 0; background: var(--bg); color: var(--ink-soft);
+    font-size: 14px; font-weight: 700; padding: 11px 0; cursor: pointer; font-family: inherit;
+  }
+  .mode button.on { background: var(--accent); color: #fff; }
+
+  .row { border: 1px solid var(--line); padding: 14px; margin-bottom: 12px; background: var(--bg); }
+  .row-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .row-head input {
+    border: 0; outline: none; background: transparent; font-size: 14px; font-weight: 800;
+    min-width: 0; flex: 1; font-family: inherit;
+  }
+  .row-del { border: 0; background: transparent; color: var(--ink-faint); font-size: 12.5px; cursor: pointer; font-family: inherit; }
+  label.f { display: block; font-size: 12.5px; font-weight: 700; margin-bottom: 5px; }
+  .in { display: flex; align-items: center; border: 1px solid var(--line); margin-bottom: 10px; background: var(--surface); }
+  .in input {
+    flex: 1; border: 0; outline: none; padding: 10px 12px; font-size: 15px; min-width: 0; font-family: inherit;
+  }
+  .in span { padding: 0 12px; font-size: 13px; color: var(--ink-faint); }
+  label.chk { display: flex; align-items: center; gap: 7px; font-size: 13px; cursor: pointer; margin-top: 6px; }
+  label.chk input { width: 15px; height: 15px; accent-color: var(--accent); }
+  .hint { font-size: 11.5px; color: var(--ink-faint); margin: 5px 0 0; }
+  .oldbox { display: none; margin: 8px 0 4px; }
+
+  .btn-add {
+    width: 100%; border: 1px dashed #c9cff2; background: #f7f8ff; color: var(--accent);
+    font-size: 13.5px; font-weight: 700; padding: 10px 0; cursor: pointer; margin-bottom: 14px; font-family: inherit;
+  }
+  .btn-calc {
+    width: 100%; border: 0; background: var(--accent); color: #fff;
+    font-size: 15px; font-weight: 800; padding: 13px 0; cursor: pointer; font-family: inherit;
+  }
+  .btn-calc:hover { background: #1e3dd6; }
+
+  .result { display: none; margin-top: 16px; border: 1px solid var(--line); }
+  .r-line { display: flex; justify-content: space-between; padding: 10px 14px; font-size: 13.5px; border-bottom: 1px solid var(--line); }
+  .r-line.soft { color: var(--ink-soft); }
+  .r-total { display: flex; justify-content: space-between; padding: 13px 14px; font-size: 15px; background: var(--accent-soft); }
+  .r-total b:last-child { color: var(--accent); }
+  .msg { display: none; margin-top: 14px; padding: 12px 14px; background: var(--accent-soft); font-size: 13.5px; color: #35406e; }
+  .disclaimer { font-size: 11.5px; color: var(--ink-faint); margin-top: 14px; line-height: 1.5; }
+
+  /* 계산기 허브 */
+  .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tool-card {
+    display: block; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 18px 20px; transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .tool-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(20,33,28,.08); border-color: var(--accent); }
+  .tool-card .ico { font-size: 22px; }
+  .tool-card b { display: block; font-size: 15px; margin: 8px 0 3px; }
+  .tool-card p { font-size: 12.5px; color: var(--ink-soft); }
+  .tool-card.ghost { opacity: .55; pointer-events: none; border-style: dashed; }
+  .tool-card.ghost .badge {
+    display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--ink-faint);
+    border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: 2px;
+  }
+
+  /* 가이드 리스트 */
+  .post-list-item {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .post-list-item:hover { border-color: var(--accent); }
+  .post-list-item b { font-size: 14.5px; font-weight: 700; }
+  .post-list-item span.tag {
+    flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--accent);
+    background: var(--accent-soft); border-radius: 999px; padding: 3px 10px;
+  }
+
+  /* 가이드/FAQ */
+  section.guide { margin: 40px 0; }
+  section.guide h2 {
+    font-size: 20px; letter-spacing: -0.02em; margin-bottom: 14px;
+    padding-left: 12px; border-left: 4px solid var(--accent);
+  }
+  .g-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .g-card { background: var(--surface); border: 1px solid var(--line); padding: 16px 18px; }
+  .g-card b { display: block; font-size: 14.5px; margin-bottom: 4px; }
+  .g-card p { font-size: 13.5px; color: var(--ink-soft); }
+  .faq-item { background: var(--surface); border: 1px solid var(--line); margin-bottom: 10px; }
+  .faq-item summary {
+    padding: 14px 18px; font-size: 14.5px; font-weight: 700; cursor: pointer; list-style: none;
+  }
+  .faq-item summary::before { content: "Q. "; color: var(--accent); }
+  .faq-item p { padding: 0 18px 14px; font-size: 14px; color: var(--ink-soft); }
+
+  /* 상담 신청 */
+  .consult { background: var(--ink); color: #fff; padding: 36px 0 40px; margin-top: 48px; }
+  .consult h2 { font-size: 22px; letter-spacing: -0.02em; }
+  .consult .sub { margin: 8px 0 20px; font-size: 14px; color: #b9bbc4; }
+  .consult form { display: grid; gap: 10px; }
+  .consult input, .consult textarea {
+    border: 0; outline: none; padding: 12px 14px; font-size: 14.5px; font-family: inherit; width: 100%;
+  }
+  .consult textarea { min-height: 90px; resize: vertical; }
+  .consult button {
+    border: 0; background: var(--accent); color: #fff; font-size: 15px; font-weight: 800;
+    padding: 13px 0; cursor: pointer; font-family: inherit;
+  }
+  .consult .note { font-size: 12px; color: #9a9ca3; margin-top: 8px; }
+
+  footer { border-top: 1px solid var(--line); background: var(--surface); }
+  .foot-inner {
+    max-width: 720px; margin: 0 auto; padding: 22px 20px;
+    font-size: 12.5px; color: var(--ink-faint);
+  }
+  .foot-inner a { text-decoration: underline; text-underline-offset: 2px; }
+
+  @media (max-width: 560px) {
+    .hero h1 { font-size: 23px; }
+    .g-grid { grid-template-columns: 1fr; }
+    .gnav { gap: 10px; font-size: 12.5px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .gnav::-webkit-scrollbar { display: none; }
+    .head-cta { display: none; }
+  }
+
+  /* ---- 택스22 v2: 라운드 + 에메랄드 ---- */
+  .calc { border-radius: 18px; overflow: hidden; box-shadow: 0 6px 24px rgba(20, 33, 28, .06); border: 0; }
+  .mode { border-radius: 12px; overflow: hidden; }
+  .row { border-radius: 14px; }
+  .in { border-radius: 10px; overflow: hidden; }
+  .btn-add { border-radius: 12px; border-color: #bfe8d9; background: #effaf5; }
+  .btn-calc { border-radius: 12px; }
+  .btn-calc:hover { background: var(--accent-deep); }
+  .result { border-radius: 12px; overflow: hidden; }
+  .msg { border-radius: 10px; color: #1d5c48; }
+  .head-cta { border-radius: 999px; }
+  .g-card { border-radius: 14px; }
+  .faq-item { border-radius: 12px; }
+  .consult input, .consult textarea, .consult button, .consult select { border-radius: 10px; }
+  .consult button:hover { background: var(--accent-deep); }
+  .consult select {
+    border: 0; outline: none; padding: 12px 14px; font-size: 14.5px; font-family: inherit;
+    width: 100%; background: #fff; color: var(--ink); appearance: auto;
+  }
+  .consult select:invalid { color: #757b78; }
+  .consult .file-label {
+    display: block; background: rgba(255, 255, 255, .08); border: 1px dashed rgba(255, 255, 255, .35);
+    border-radius: 10px; padding: 12px 14px; font-size: 13.5px; color: #cdd6d2; cursor: pointer;
+  }
+  .consult .file-label span { display: block; margin-bottom: 8px; }
+  .consult .file-label input[type="file"] { color: #cdd6d2; font-size: 13px; width: 100%; }
+  .consult .agree-label {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 13px; color: #cdd6d2; cursor: pointer; line-height: 1.55;
+  }
+  .consult .agree-label input { width: 15px; height: 15px; margin-top: 3px; accent-color: var(--accent); flex-shrink: 0; }
+  .consult .agree-label a { color: #7fe0c2; }
+  .consult .sent {
+    background: rgba(255, 255, 255, .08); border: 1px solid rgba(127, 224, 194, .4);
+    border-radius: 12px; padding: 28px 20px; text-align: center;
+  }
+  .consult .sent b { display: block; font-size: 17px; margin-bottom: 6px; color: #7fe0c2; }
+  .consult .sent p { font-size: 13.5px; color: #cdd6d2; }
+  section.guide h2 { border-left: 0; padding-left: 0; }
+  section.guide h2::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-right: 10px; }
+
+  /* 드롭다운 내비 */
+  .dd { position: relative; }
+  .dd-btn {
+    border: 0; background: none; font-family: inherit; font-size: 13.5px; font-weight: 600;
+    color: var(--ink-soft); cursor: pointer; padding: 0; white-space: nowrap;
+  }
+  .dd-btn:hover, .dd-btn.on, .dd.open .dd-btn { color: var(--accent); }
+  .dd-menu {
+    display: none; position: absolute; top: calc(100% + 16px); left: -12px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(20,33,28,.14); padding: 8px; min-width: 176px; z-index: 60;
+  }
+  .dd.open .dd-menu { display: block; }
+  .dd-menu a { display: block; padding: 9px 12px; border-radius: 8px; font-size: 13.5px; color: var(--ink-soft); }
+  .dd-menu a:hover { background: var(--accent-soft); color: var(--accent-deep); }
+  .dd-menu a.on { color: var(--accent); font-weight: 700; }
+  @media (max-width: 560px) {
+    .dd-menu { position: fixed; left: 16px; right: 16px; top: 62px; }
+  }
+
+  /* UX 인핸스먼트 */
+  .krw-hint { font-size: 11px; color: var(--ink-faint); white-space: nowrap; padding-right: 4px; }
+  .enh { padding: 12px 14px 14px; border-top: 1px solid var(--line); background: var(--surface); }
+  .enh-row { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 4px; }
+  .enh-row b { color: var(--ink); }
+  .enh-bar { display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--accent-soft); margin: 7px 0 4px; }
+  .enh-bar .seg-tax { background: #e0655f; }
+  .enh-bar .seg-net { background: var(--accent); }
+  .enh-legend { display: flex; gap: 14px; font-size: 11px; color: var(--ink-faint); }
+  .enh-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; font-style: normal; }
+  .copy-btn {
+    margin-top: 12px; width: 100%; border: 1px solid var(--line); background: var(--surface);
+    border-radius: 10px; padding: 10px 0; font-family: inherit; font-size: 13px; font-weight: 700;
+    color: var(--ink-soft); cursor: pointer;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+  /* 상단 시세 티커 */
+  .ticker { background: var(--surface); border-bottom: 1px solid var(--line); font-size: 12px; color: var(--ink-soft); }
+  .ticker-inner { max-width: 720px; margin: 0 auto; padding: 6px 20px; display: flex; gap: 14px; align-items: center; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  .ticker-inner::-webkit-scrollbar { display: none; }
+  .ticker b { color: var(--ink); font-weight: 700; }
+  .ticker .up { color: #c2410c; font-weight: 700; } .ticker .dn { color: var(--accent-deep); font-weight: 700; }
+  .ticker .src { color: var(--ink-faint); margin-left: auto; }
+  .tagx { display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--accent-deep); background: var(--accent-soft); border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: 1px; }
+  .helper-toggle { font: inherit; font-size: 12.5px; font-weight: 700; color: var(--accent-deep); background: none; border: 1px dashed var(--accent); border-radius: 10px; padding: 7px 12px; margin: 8px 0 4px; cursor: pointer; }
+  .helper { display: none; background: var(--accent-soft); border-radius: 12px; padding: 12px 14px 10px; margin: 6px 0 10px; }
+  .helper-apply { font: inherit; font-size: 13px; font-weight: 800; color: #fff; background: var(--accent); border: 0; border-radius: 10px; padding: 9px 14px; margin-top: 8px; cursor: pointer; }
+  .assume { margin-top: 14px; padding: 12px 14px; background: var(--bg); border-radius: 12px; font-size: 12.5px; color: var(--ink-soft); }
+  .assume b { display: block; color: var(--ink); margin-bottom: 6px; font-size: 13px; }
+  .assume ul { margin: 0; padding-left: 18px; } .assume li { margin: 3px 0; }
+  .hint b { color: var(--ink); }
+
+  /* ===== 계산기 v3 ===== */
+  .cx-pane { display: block; }
+  .cx-pane[hidden] { display: none; }
+  .quick { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 12px; }
+  .quick button { font: inherit; font-size: 12px; font-weight: 700; color: var(--ink-soft); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+  .quick button:hover { border-color: var(--accent); color: var(--accent-deep); }
+  .link-btn { font: inherit; font-size: 12px; font-weight: 700; color: var(--accent-deep); background: none; border: 0; padding: 0; margin-left: 8px; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+  .helper { display: none; background: var(--accent-soft); border-radius: 12px; padding: 12px 14px 10px; margin: 4px 0 12px; }
+  .helper .seg { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .helper .seg button { font: inherit; font-size: 12px; font-weight: 700; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--accent); background: var(--surface); color: var(--accent-deep); cursor: pointer; }
+  .helper .seg button.on { background: var(--accent); color: #fff; }
+  .helper-apply { font: inherit; font-size: 13px; font-weight: 800; color: #fff; background: var(--accent); border: 0; border-radius: 10px; padding: 9px 14px; margin-top: 4px; cursor: pointer; }
+  .helper-out { margin-top: 8px; }
+  details.adv { margin-top: 6px; }
+  details.adv summary { font-size: 12.5px; font-weight: 700; color: var(--ink-soft); cursor: pointer; list-style: none; padding: 6px 0; }
+  details.adv summary::-webkit-details-marker { display: none; }
+  details.adv summary::before { content: "▸ "; } details.adv[open] summary::before { content: "▾ "; }
+  details.adv .adv-body { padding: 4px 0 2px; }
+  .tagx { display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--accent-deep); background: var(--accent-soft); border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: 1px; }
+  .hint b { color: var(--ink); }
+  .result { display: none; margin-top: 16px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); }
+  .rs-hero { padding: 18px 16px 14px; background: var(--accent-soft); }
+  .rs-hero span { display: block; font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+  .rs-hero em { font-style: normal; font-size: 10.5px; color: var(--accent-deep); margin-left: 6px; }
+  .rs-hero b { display: block; font-size: 34px; letter-spacing: -0.02em; color: var(--accent-deep); line-height: 1.15; margin-top: 4px; }
+  .rs-lines { padding: 10px 16px 4px; }
+  .rs-lines div { display: flex; justify-content: space-between; font-size: 13.5px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+  .rs-lines div:last-child { border-bottom: 0; }
+  .rs-lines b { font-weight: 700; }
+  details.rs-more { border-top: 1px solid var(--line); }
+  details.rs-more summary { padding: 11px 16px; font-size: 13px; font-weight: 700; color: var(--accent-deep); cursor: pointer; list-style: none; }
+  details.rs-more summary::-webkit-details-marker { display: none; }
+  details.rs-more summary::after { content: " ▾"; } details.rs-more[open] summary::after { content: " ▴"; }
+  .rs-detail { padding: 0 16px 14px; }
+  .rs-detail .dl { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-soft); padding: 5px 0; }
+  .rs-detail .dl b { color: var(--ink); }
+  .rs-detail .dl.coin { color: var(--ink); }
+  .enh-bar { display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--accent-soft); margin: 8px 0 4px; }
+  .enh-bar .seg-tax { background: #e0655f; } .enh-bar .seg-net { background: var(--accent); }
+  .enh-legend { display: flex; gap: 14px; font-size: 11px; color: var(--ink-faint); margin-bottom: 8px; }
+  .enh-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; font-style: normal; }
+  details.assume { margin-top: 6px; }
+  details.assume summary { font-size: 12.5px; color: var(--ink-soft); cursor: pointer; }
+  details.assume ul { margin: 6px 0 0; padding-left: 18px; font-size: 12.5px; color: var(--ink-soft); } details.assume li { margin: 3px 0; }
+  .copy-btn { font: inherit; font-size: 12.5px; font-weight: 700; color: var(--accent-deep); background: var(--surface); border: 1px solid var(--accent); border-radius: 999px; padding: 7px 14px; cursor: pointer; margin-top: 10px; }
+  .rs-cta { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 16px; background: var(--dark); color: #fff; text-decoration: none; }
+  .rs-cta b { font-size: 13.5px; } .rs-cta span { font-size: 13px; font-weight: 800; color: #7fe0c2; white-space: nowrap; }
+  .krw-hint { font-size: 11px; color: var(--ink-faint); white-space: nowrap; padding-right: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <a class="logo" href="/">택스<em>22</em></a>
+    <nav class="gnav">
+      <div class="dd">
+        <button class="dd-btn on" type="button">세금 계산기 ▾</button>
+        <div class="dd-menu">
+        <a href="/">코인 세금</a>
+        <a href="/stock/" class="on">해외주식 양도세</a>
+        <a href="/gift/">증여세</a>
+        <a href="/inherit/">상속세</a>
+        <a href="/finance/">금융소득종합과세</a>
+        <a href="/pension/">연금저축·IRP</a>
+        </div>
+      </div>
+      <a href="/snapshot/">지갑 스냅샷</a>
+      <a href="/blog/">블로그</a>
+    </nav>
+    <a class="head-cta" href="#consult">전문가 상담</a>
+  </div>
+</header>
+<div class="ticker" id="ticker" hidden>
+  <div class="ticker-inner">
+    <span>BTC <b id="tk-btc">-</b></span>
+    <span>ETH <b id="tk-eth">-</b></span>
+    <span>USDT <b id="tk-usdt">-</b></span>
+    <span>김프 <span id="tk-kimp">-</span></span>
+    <span class="src" id="tk-src">업비트 기준</span>
+  </div>
+</div>
+
+
+<div class="wrap">
+
+  <div class="hero">
+    <h1>해외주식 양도소득세,<br><em>3초</em>면 충분합니다</h1>
+    <p>순이익 한 칸이면 끝 · 결제일 환율 환산 · 기본공제 250만원 · 세율 22% · 손익통산</p>
+  </div>
+
+  <div class="calc">
+    <div class="calc-head">
+      해외주식 양도소득세 계산기
+      <span id="calc-sub">현행 기준 · 간이 예상치</span>
+    </div>
+    <div class="calc-body">
+      <div class="mode">
+        <button type="button" id="tab-simple" class="on">간편 계산</button>
+        <button type="button" id="tab-detail">상세 계산</button>
+      </div>
+
+      <div class="cx-pane" id="pane-simple">
+        <label class="f" for="s-net">올해 해외주식을 팔아서 번 연간 순이익 (원화)</label>
+        <div class="in"><input id="s-net" class="num" type="text" inputmode="numeric" placeholder="예: 20,000,000"><span>원</span></div>
+        <p class="hint" style="margin-bottom:8px;">손실을 뺀 순이익입니다. 판 금액과 산 금액은 각각 결제일 환율로 환산한 원화 기준이고, 아직 팔지 않은 평가이익은 제외하세요.</p>
+        <div class="quick">
+          <button type="button" data-v="5000000">500만</button>
+          <button type="button" data-v="10000000">1,000만</button>
+          <button type="button" data-v="30000000">3,000만</button>
+          <button type="button" data-v="100000000">1억</button>
+        </div>
+        <button type="button" class="btn-calc" id="s-calc">예상 세금 확인하기</button>
+      </div>
+
+      <div class="cx-pane" id="pane-detail" hidden>
+        <div id="rows"></div>
+        <button type="button" class="btn-add" id="add">＋ 손실 난 종목도 추가하기</button>
+        <button type="button" class="btn-calc" id="calc">세금 계산하기</button>
+      </div>
+
+      <div class="result" id="result">
+        <div class="rs-hero"><span>예상 세금 <em>간이 예상치</em></span><b id="r-total">-</b></div>
+        <div class="rs-lines">
+          <div><span>연간 순이익</span><b id="r-income">-</b></div>
+          <div><span>기본공제</span><b>-2,500,000원</b></div>
+          <div><span>과세 대상</span><b id="r-taxbase">-</b></div>
+        </div>
+        <details class="rs-more">
+          <summary>세부 내역 보기</summary>
+          <div class="rs-detail">
+            <div id="r-rows"></div>
+            <div class="dl"><span>소득세 20%</span><b id="r-itax">-</b></div>
+            <div class="dl"><span>지방소득세 2%</span><b id="r-ltax">-</b></div>
+            <div class="dl"><span>실효세율</span><b id="r-rate">-</b></div>
+            <div class="dl"><span>세후 실수령</span><b id="r-net">-</b></div>
+            <div class="enh-bar"><div class="seg-tax" id="r-bar-tax"></div><div class="seg-net" id="r-bar-net"></div></div>
+            <div class="enh-legend"><span><i style="background:#e0655f"></i>세금</span><span><i style="background:var(--accent)"></i>세후 실수령</span></div>
+            <details class="assume"><summary>적용한 가정 보기</summary><ul id="r-assume"></ul></details>
+            <button type="button" class="copy-btn" id="r-copy">📋 결과 복사하기</button>
+          </div>
+        </details>
+        <a class="rs-cta" href="#consult"><b>여러 증권사를 쓰거나 환율 계산이 복잡하신가요?</b><span>전문가 검토 받기 →</span></a>
+      </div>
+      <p class="msg" id="msg"></p>
+      <p class="disclaimer">※ 간이 예상 세액 계산기입니다. 현행 해외주식 양도소득세 기준(분류과세)이며, 결제일 환율 환산과 취득가액 산정(선입선출법 원칙)은 입력자 책임입니다. 국내 상장 해외 ETF는 대상이 아닙니다. 정확한 세액은 세무 전문가와 확인하세요.</p>
+    </div>
+  </div>
+
+  <section class="guide">
+    <h2>30초 요약</h2>
+    <div class="g-grid">
+      <div class="g-card"><b>세율 22%</b><p>소득세 20% + 지방소득세 2%. 다른 소득과 합산되지 않는 분류과세입니다.</p></div>
+      <div class="g-card"><b>기본공제 250만원</b><p>연간 양도차익 250만원까지는 세금이 없습니다. 국내주식 과세분과 합산해 연 1회 적용됩니다.</p></div>
+      <div class="g-card"><b>결제일 환율</b><p>판 금액·산 금액을 각각 결제일 기준환율로 환산합니다. 환차익도 과세에 포함됩니다.</p></div>
+      <div class="g-card"><b>손익통산 · 이월 없음</b><p>같은 해 수익과 손실은 합산되지만 손실은 다음 해로 넘어가지 않습니다. 연말 손실 정리가 절세 포인트입니다.</p></div>
+    </div>
+  </section>
+
+  <section class="guide">
+    <h2>자주 묻는 질문</h2>
+    <details class="faq-item"><summary>환율은 어떻게 적용하나요?</summary><p>판 금액은 매도 결제일, 산 금액은 매수 결제일의 기준환율(매매기준율)로 각각 환산합니다. 상세 계산의 "달러로 입력할게요"를 누르면 자동 환산됩니다.</p></details>
+    <details class="faq-item"><summary>국내 상장 해외 ETF도 여기서 계산하나요?</summary><p>아닙니다. TIGER 미국나스닥100처럼 국내 거래소에 상장된 ETF는 배당소득(보유기간과세)으로 과세되어 이 계산기 대상이 아닙니다. 해외 거래소에 직접 상장된 주식·ETF만 해당합니다.</p></details>
+    <details class="faq-item"><summary>여러 번 나눠 산 주식의 취득가는?</summary><p>먼저 산 것부터 판 것으로 보는 선입선출법이 원칙입니다(소득세법 시행령 162조). 증권사가 제공하는 양도소득 계산 내역을 그대로 쓰는 것이 가장 안전합니다.</p></details>
+    <details class="faq-item"><summary>12월 말에 팔면 올해 소득인가요?</summary><p>양도시기는 체결일이 아니라 결제일입니다. 결제일이 다음 해로 넘어가면 다음 해 소득이 되니 연말 손실 정리는 결제일을 확인하고 하세요.</p></details>
+    <details class="faq-item"><summary>신고는 어떻게 하나요?</summary><p>원천징수가 아니라 다음 해 5월에 본인이 직접 신고·납부합니다. 대부분의 증권사가 무료 신고 대행을 제공하니 4월에 신청하세요.</p></details>
+  </section>
+
+  <section class="guide">
+    <h2>다른 계산기</h2>
+    <div class="tool-grid">
+      <a class="tool-card" href="/"><span class="ico">🪙</span><b>코인 세금 (2027~)</b><p>손익통산 · 의제취득가액 · 250만원 공제</p></a>
+      <a class="tool-card" href="/finance/"><span class="ico">🏦</span><b>금융소득종합과세</b><p>배당·이자 2천만원 초과 시 추가 세금</p></a>
+      <a class="tool-card" href="/gift/"><span class="ico">🎁</span><b>증여세</b><p>관계별 공제 · 10년 합산</p></a>
+      <a class="tool-card" href="/pension/"><span class="ico">🧓</span><b>연금저축·IRP</b><p>세액공제 환급액</p></a>
+    </div>
+  </section>
+
+<div class="consult" id="consult">
+  <div class="wrap">
+    <h2>세금·법률 문제, 전문가에게</h2>
+    <p class="sub">상담 분야에 따라 세무사 또는 변호사에게 연결해 드립니다. 신청은 무료입니다.</p>
+    <form id="consult-form" action="https://formsubmit.co/checksoyoung@gmail.com" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_subject" value="[택스22] 세무사 상담 신청">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="이름" placeholder="이름 (닉네임도 괜찮아요)" required>
+      <input type="email" name="이메일" placeholder="회신받을 이메일" required>
+      <input type="tel" name="연락처" placeholder="연락처 (선택: 전화 상담 원할 때만)">
+      <select name="상담분야" required>
+        <option value="" disabled selected>상담 분야를 선택하세요</option>
+        <option>코인 세금 (2027 과세 대비)</option>
+        <option>해외거래소 · CARF · 해외금융계좌 신고</option>
+        <option>해외주식 양도소득세</option>
+        <option>취득가 증빙 · 자금 출처 소명</option>
+        <option>증여 · 상속 절세</option>
+        <option>투자 사기 피해 (리딩방·코인 사기 등)</option>
+        <option>기타</option>
+      </select>
+      <select name="자산규모">
+        <option value="" disabled selected>대략적인 투자 규모 (선택)</option>
+        <option>5천만원 미만</option>
+        <option>5천만원 ~ 3억원</option>
+        <option>3억원 ~ 10억원</option>
+        <option>10억원 이상</option>
+      </select>
+      <textarea name="상담내용" placeholder="상담이 필요한 내용을 간단히 적어주세요. (예: 바이낸스 수익 신고를 어떻게 해야 할지 모르겠어요)" required></textarea>
+      <label class="file-label">
+        <span>📎 스크린샷 첨부 (선택): 거래내역·손익 화면 캡처 등</span>
+        <input type="file" name="첨부" accept="image/*">
+      </label>
+      <label class="agree-label">
+        <input type="checkbox" required>
+        <span><a href="/privacy/" target="_blank" rel="noopener">개인정보 수집·이용</a> 및 상담 연결을 위한 <a href="/privacy/#privacy" target="_blank" rel="noopener">전문가(세무사·변호사 등) 제3자 제공</a>에 동의합니다. (필수)</span>
+      </label>
+      <button type="submit">상담 신청하기</button>
+    </form>
+    <p class="note">신청 내용과 첨부 파일은 상담 연결 목적으로만 사용됩니다. 첨부는 이미지 파일 10MB 이하를 권장합니다.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <p style="font-weight:700;color:var(--ink-soft);">택스22 — 투자자의 세금·법률 문제 해결 포털</p>
+    <p style="margin-top:8px;">계산기: <a href="/">코인·주식</a> · <a href="/gift/">증여세</a> · <a href="/inherit/">상속세</a> · <a href="/finance/">금융소득</a> · <a href="/pension/">연금·IRP</a> · <a href="/snapshot/">지갑 스냅샷</a> &nbsp;|&nbsp; 가이드: <a href="/blog/scam/">사기 대응</a> · <a href="/blog/">블로그</a></p>
+    <p style="margin-top:8px;"><a href="/privacy/">개인정보처리방침</a> · <a href="/privacy/#terms">이용약관</a> · <a href="/partners/">파트너 광고 안내</a> · <a href="/widget/">계산기 퍼가기</a> · 문의: contact@tax22.kr</p>
+    <p style="margin-top:8px;">본 사이트는 일반 정보를 제공하며 세무 대리 또는 법률 자문 서비스가 아닙니다. 계산 결과는 참고용이며, 실제 세액·법적 판단은 전문가와 확인하시기 바랍니다.</p>
+    <p style="margin-top:4px;">© 2026 택스22 (tax22.kr) All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+/* ===== 계산기 v3 ===== */
+(function () {
+  var MODE = "stock";
+  var coin = MODE === "coin";
+  var rowsBox = document.getElementById("rows");
+  var fmt = function (n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); };
+  var num = function (v) { return parseInt(String(v || "").replace(/[^0-9]/g, ""), 10) || 0; };
+  var dec = function (v) { return parseFloat(String(v || "").replace(/[^0-9.]/g, "")) || 0; };
+  function krw(v) {
+    if (v < 10000) return "";
+    var man = Math.round(v / 10000), eok = Math.floor(man / 10000), jo = Math.floor(eok / 10000), rest;
+    if (jo > 0) { rest = eok % 10000; return fmt(jo) + "조" + (rest ? " " + fmt(rest) + "억" : ""); }
+    if (eok > 0) { rest = man % 10000; return fmt(eok) + "억" + (rest ? " " + fmt(rest) + "만" : ""); }
+    return fmt(man) + "만";
+  }
+  /* 숫자 입력: 콤마 + 한글 환산 (위임) */
+  document.addEventListener("input", function (e) {
+    var inp = e.target; if (!inp.matches) return;
+    if (inp.matches("input.num")) {
+      var v = inp.value.replace(/[^0-9]/g, ""); inp.value = v ? fmt(parseInt(v, 10)) : "";
+      var box = inp.closest(".in"); if (!box) return;
+      var h = box.querySelector(".krw-hint");
+      if (!h) { h = document.createElement("span"); h.className = "krw-hint"; box.insertBefore(h, inp.nextSibling); }
+      h.textContent = krw(num(inp.value));
+    } else if (inp.matches("input.dec")) {
+      inp.value = inp.value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
+    }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" || !e.target.matches || !e.target.matches("input.num, input.dec")) return;
+    e.preventDefault();
+    var simple = !document.getElementById("pane-simple").hidden;
+    document.getElementById(simple ? "s-calc" : "calc").click();
+  });
+
+  /* 탭 */
+  function showTab(t) {
+    document.getElementById("pane-simple").hidden = t !== "simple";
+    document.getElementById("pane-detail").hidden = t !== "detail";
+    document.getElementById("tab-simple").className = t === "simple" ? "on" : "";
+    document.getElementById("tab-detail").className = t === "detail" ? "on" : "";
+    document.getElementById("result").style.display = "none";
+    document.getElementById("msg").style.display = "none";
+    if (t === "detail" && !rowsBox.children.length) addRow();
+  }
+  document.getElementById("tab-simple").addEventListener("click", function () { showTab("simple"); });
+  document.getElementById("tab-detail").addEventListener("click", function () { showTab("detail"); });
+
+  /* 간편 */
+  document.querySelectorAll(".quick button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var inp = document.getElementById("s-net"); inp.value = fmt(num(b.dataset.v));
+      inp.dispatchEvent(new Event("input", { bubbles: true }));
+      document.getElementById("s-calc").click();
+    });
+  });
+  document.getElementById("s-calc").addEventListener("click", function () {
+    var net = num(document.getElementById("s-net").value);
+    if (!net) { say("연간 순이익을 입력해 주세요. 손실이면 세금이 없습니다."); return; }
+    render(net, [], { simple: true });
+  });
+
+  /* 상세 행 */
+  function addRow() {
+    var row = document.createElement("div"); row.className = "row";
+    if (coin) {
+      row.innerHTML =
+        '<div class="row-head"><input class="r-name" type="text" placeholder="코인 이름 (예: BTC)"><button type="button" class="row-del">삭제 ✕</button></div>' +
+        '<label class="f">① 팔거나 교환해서 받은 금액</label>' +
+        '<div class="in"><input class="r-sell num" type="text" inputmode="numeric" placeholder="예: 70,000,000"><span>원</span></div>' +
+        '<p class="hint" style="margin:-4px 0 10px;">USDT 등 다른 코인으로 바꾼 것도 포함됩니다 (원화 환산 금액).</p>' +
+        '<div class="r-buy-block">' +
+          '<label class="f">② 판 코인을 사는 데 든 금액 <button type="button" class="link-btn r-help">얼마인지 모르겠어요</button></label>' +
+          '<div class="in"><input class="r-buy num" type="text" inputmode="numeric" placeholder="예: 50,000,000"><span>원</span></div>' +
+          '<p class="hint" style="margin:-4px 0 10px;">이번에 판 수량만큼의 매수금액입니다. 아직 들고 있는 코인은 빼세요.</p>' +
+          '<div class="helper">' +
+            '<div class="seg"><button type="button" data-h="avg" class="on">평균 매수가를 알고 있어요</button><button type="button" data-h="calc">여러 번 나눠 사서 계산이 필요해요</button></div>' +
+            '<div class="h-avg">' +
+              '<label class="f">평균 매수가 (1개당)</label><div class="in"><input class="h-avgp num" type="text" inputmode="numeric" placeholder="예: 50,000,000"><span>원</span></div>' +
+              '<label class="f">이번에 판 수량</label><div class="in"><input class="h-sold1 dec" type="text" inputmode="decimal" placeholder="예: 1"><span>개</span></div>' +
+            '</div>' +
+            '<div class="h-calc" hidden>' +
+              '<label class="f">전체 매수금액 합계</label><div class="in"><input class="h-cost num" type="text" inputmode="numeric" placeholder="예: 100,000,000"><span>원</span></div>' +
+              '<label class="f">전체 매수 수량</label><div class="in"><input class="h-qty dec" type="text" inputmode="decimal" placeholder="예: 2"><span>개</span></div>' +
+              '<label class="f">이번에 판 수량</label><div class="in"><input class="h-sold2 dec" type="text" inputmode="decimal" placeholder="예: 1"><span>개</span></div>' +
+            '</div>' +
+            '<button type="button" class="helper-apply">계산해서 넣기</button>' +
+            '<p class="hint helper-out"></p>' +
+            '<p class="hint">국세청 기준은 여러 번 산 코인의 평균 매수가(총평균법)입니다. 연중 추가 매수가 있으면 평균이 달라질 수 있습니다.</p>' +
+          '</div>' +
+          '<label class="f">③ 매수·매도 수수료 (선택)</label>' +
+          '<div class="in"><input class="r-fee num" type="text" inputmode="numeric" placeholder="예: 50,000"><span>원</span></div>' +
+        '</div>' +
+        '<details class="adv"><summary>고급 설정</summary><div class="adv-body">' +
+          '<label class="chk"><input class="r-old" type="checkbox">2026년 말 이전부터 보유한 코인</label>' +
+          '<div class="oldbox">' +
+            '<label class="f">2026년 12월 31일 시가 <span class="tagx">국세청 고시 전 · 예상치</span></label>' +
+            '<div class="in"><input class="r-eoy num" type="text" inputmode="numeric" placeholder="예: 60,000,000"><span>원</span></div>' +
+            '<p class="hint">실제 매수금액과 연말 시가 중 큰 금액이 매수금액으로 적용됩니다(의제취득가액). 기준은 시가고시 거래소들의 2027년 1월 1일 0시 공시가 평균이며 아직 확정 전입니다.</p>' +
+          '</div>' +
+          '<label class="chk"><input class="r-noproof" type="checkbox">취득가를 전혀 모르는 경우 (추계 시뮬레이션)</label>' +
+          '<p class="hint r-noproof-note" hidden>2027년 이후 산 코인 중 취득가 확인이 곤란한 법정 요건에 해당할 때만, 받은 금액의 최대 50%를 비용으로 보는 예외(추계 필요경비)입니다. 여기서는 50%를 가정하며 수수료는 따로 빼지 않습니다. 적용 가능 여부는 전문가 확인이 필요합니다.</p>' +
+        '</div></details>';
+    } else {
+      row.innerHTML =
+        '<div class="row-head"><input class="r-name" type="text" placeholder="종목 이름 (예: TSLA)"><button type="button" class="row-del">삭제 ✕</button></div>' +
+        '<label class="f">① 판 금액 (원화) <button type="button" class="link-btn r-help">달러로 입력할게요</button></label>' +
+        '<div class="in"><input class="r-sell num" type="text" inputmode="numeric" placeholder="예: 13,800,000"><span>원</span></div>' +
+        '<p class="hint" style="margin:-4px 0 10px;">결제일 환율로 환산한 금액입니다. 12월 말 매도는 결제일이 다음 해면 다음 해 소득입니다.</p>' +
+        '<div class="helper">' +
+          '<label class="f">판 금액 (외화)</label><div class="in"><input class="fx-sell dec" type="text" inputmode="decimal" placeholder="예: 10000"><span>외화</span></div>' +
+          '<label class="f">판 날의 결제일 환율</label><div class="in"><input class="fx-sell-rate dec" type="text" inputmode="decimal" placeholder="예: 1380"><span>원</span></div>' +
+          '<label class="f">산 금액 (외화)</label><div class="in"><input class="fx-buy dec" type="text" inputmode="decimal" placeholder="예: 8000"><span>외화</span></div>' +
+          '<label class="f">산 날의 결제일 환율</label><div class="in"><input class="fx-buy-rate dec" type="text" inputmode="decimal" placeholder="예: 1320"><span>원</span></div>' +
+          '<button type="button" class="helper-apply">원화로 환산해서 넣기</button>' +
+          '<p class="hint helper-out"></p>' +
+          '<p class="hint">판 금액과 산 금액은 각각의 결제일 기준환율(매매기준율)로 환산합니다. 환율 변동 차익도 과세에 포함됩니다.</p>' +
+        '</div>' +
+        '<div class="r-buy-block">' +
+          '<label class="f">② 판 주식을 사는 데 든 금액 (원화)</label>' +
+          '<div class="in"><input class="r-buy num" type="text" inputmode="numeric" placeholder="예: 10,560,000"><span>원</span></div>' +
+          '<p class="hint" style="margin:-4px 0 10px;">여러 번 나눠 샀다면 먼저 산 것부터 판 것으로 봅니다(선입선출). 증권사 양도소득 내역을 쓰면 가장 정확합니다.</p>' +
+          '<label class="f">③ 매수·매도 수수료 (선택)</label>' +
+          '<div class="in"><input class="r-fee num" type="text" inputmode="numeric" placeholder="예: 30,000"><span>원</span></div>' +
+        '</div>';
+    }
+    rowsBox.appendChild(row);
+
+    row.querySelector(".row-del").addEventListener("click", function () { if (rowsBox.querySelectorAll(".row").length > 1) row.remove(); });
+    var help = row.querySelector(".r-help"), helper = row.querySelector(".helper");
+    help.addEventListener("click", function () { helper.style.display = helper.style.display === "block" ? "none" : "block"; });
+
+    if (coin) {
+      row.querySelectorAll(".seg button").forEach(function (b) {
+        b.addEventListener("click", function () {
+          row.querySelectorAll(".seg button").forEach(function (x) { x.className = ""; }); b.className = "on";
+          row.querySelector(".h-avg").hidden = b.dataset.h !== "avg";
+          row.querySelector(".h-calc").hidden = b.dataset.h !== "calc";
+        });
+      });
+      row.querySelector(".helper-apply").addEventListener("click", function () {
+        var out = row.querySelector(".helper-out"), basis, msg;
+        if (!row.querySelector(".h-avg").hidden) {
+          var ap = num(row.querySelector(".h-avgp").value), q1 = dec(row.querySelector(".h-sold1").value);
+          if (!ap || !q1) { out.textContent = "평균 매수가와 판 수량을 입력해 주세요."; return; }
+          basis = Math.round(ap * q1); msg = fmt(ap) + "원 × " + q1 + "개 = ";
+        } else {
+          var cost = num(row.querySelector(".h-cost").value), qty = dec(row.querySelector(".h-qty").value), q2 = dec(row.querySelector(".h-sold2").value);
+          if (!cost || !qty || !q2) { out.textContent = "세 칸을 모두 입력해 주세요."; return; }
+          if (q2 > qty) { out.textContent = "판 수량이 전체 수량보다 많습니다."; return; }
+          basis = Math.round(cost / qty * q2); msg = "평균 " + fmt(cost / qty) + "원 × " + q2 + "개 = ";
+        }
+        var buy = row.querySelector(".r-buy"); buy.value = fmt(basis); buy.dispatchEvent(new Event("input", { bubbles: true }));
+        out.innerHTML = msg + "<b>" + fmt(basis) + "원</b> 을 ②에 넣었습니다.";
+        setTimeout(function () { helper.style.display = "none"; }, 900);
+      });
+      row.querySelector(".r-old").addEventListener("change", function () { row.querySelector(".oldbox").style.display = this.checked ? "block" : "none"; });
+      row.querySelector(".r-noproof").addEventListener("change", function () {
+        row.querySelector(".r-buy-block").style.display = this.checked ? "none" : "block";
+        row.querySelector(".r-noproof-note").hidden = !this.checked;
+      });
+    } else {
+      row.querySelector(".helper-apply").addEventListener("click", function () {
+        var sv = dec(row.querySelector(".fx-sell").value), sr = dec(row.querySelector(".fx-sell-rate").value);
+        var bv = dec(row.querySelector(".fx-buy").value), br = dec(row.querySelector(".fx-buy-rate").value);
+        var out = row.querySelector(".helper-out");
+        if (!sv || !sr || !bv || !br) { out.textContent = "네 칸을 모두 입력해 주세요."; return; }
+        var sk = Math.round(sv * sr), bk = Math.round(bv * br);
+        var s1 = row.querySelector(".r-sell"), b1 = row.querySelector(".r-buy");
+        s1.value = fmt(sk); b1.value = fmt(bk);
+        s1.dispatchEvent(new Event("input", { bubbles: true })); b1.dispatchEvent(new Event("input", { bubbles: true }));
+        var fxgain = sk - bk - Math.round((sv - bv) * sr);
+        out.innerHTML = "판 금액 " + fmt(sk) + "원 · 산 금액 " + fmt(bk) + "원 을 넣었습니다. (환차손익 " + (fxgain >= 0 ? "+" : "") + fmt(fxgain) + "원 포함)";
+        setTimeout(function () { helper.style.display = "none"; }, 1200);
+      });
+    }
+  }
+  document.getElementById("add").addEventListener("click", addRow);
+
+  /* 상세 계산 */
+  document.getElementById("calc").addEventListener("click", function () {
+    var total = 0, valid = 0, items = [], flags = { old: 0, noproof: 0 };
+    var rows = rowsBox.querySelectorAll(".row");
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i], sell = num(row.querySelector(".r-sell").value);
+      if (!sell) continue;
+      var name = (row.querySelector(".r-name").value || (coin ? "코인 " : "종목 ") + (i + 1)).trim(), income;
+      if (coin && row.querySelector(".r-noproof").checked) {
+        income = sell - sell * 0.5; flags.noproof++;
+      } else {
+        var buy = num(row.querySelector(".r-buy").value);
+        if (!buy) { say('"' + name + '" 의 ② 사는 데 든 금액을 입력해 주세요.' + (coin ? ' 모르면 "얼마인지 모르겠어요"를 눌러보세요.' : '')); return; }
+        var base = buy;
+        if (coin && row.querySelector(".r-old").checked) {
+          var eoy = num(row.querySelector(".r-eoy").value);
+          if (!eoy) { say('"' + name + '" 의 2026년 12월 31일 시가를 입력해 주세요.'); return; }
+          base = Math.max(buy, eoy); flags.old++;
+        }
+        income = sell - base - num(row.querySelector(".r-fee").value);
+      }
+      total += income; valid++; items.push({ name: name, income: income });
+    }
+    if (!valid) { say("최소 한 개의 ① 판 금액을 입력해 주세요."); return; }
+    render(total, items, { simple: false, flags: flags });
+  });
+
+  function say(t) { var m = document.getElementById("msg"); m.textContent = t; m.style.display = "block"; document.getElementById("result").style.display = "none"; }
+  function setR(id, v) { document.getElementById(id).textContent = v; }
+
+  function render(total, items, opt) {
+    var msg = document.getElementById("msg"), result = document.getElementById("result");
+    msg.style.display = "none";
+    var rr = document.getElementById("r-rows"); rr.innerHTML = "";
+    items.forEach(function (it) {
+      var d = document.createElement("div"); d.className = "dl coin";
+      d.innerHTML = "<span>" + it.name + " 손익</span><b style='color:" + (it.income >= 0 ? "var(--ink)" : "#d92b3a") + "'>" + (it.income >= 0 ? "+" : "") + fmt(it.income) + "원</b>";
+      rr.appendChild(d);
+    });
+    var taxbase = Math.max(0, total - 2500000), itax = taxbase * 0.20, ltax = taxbase * 0.02, tax = itax + ltax;
+    setR("r-total", fmt(tax) + "원"); setR("r-income", fmt(total) + "원"); setR("r-taxbase", fmt(taxbase) + "원");
+    setR("r-itax", fmt(itax) + "원"); setR("r-ltax", fmt(ltax) + "원");
+    var rate = total > 0 ? tax / total * 100 : 0;
+    setR("r-rate", rate.toFixed(2) + "%"); setR("r-net", fmt(total - tax) + "원");
+    document.getElementById("r-bar-tax").style.width = Math.min(100, rate) + "%";
+    document.getElementById("r-bar-net").style.width = (100 - Math.min(100, rate)) + "%";
+    if (total <= 0) { msg.textContent = "연간 손익 " + fmt(total) + "원: 납부할 세금이 없습니다. (손실은 다음 해로 이월되지 않습니다)"; msg.style.display = "block"; }
+    else if (taxbase === 0) { msg.textContent = "순이익 " + fmt(total) + "원: 기본공제 250만원 이내라서 납부할 세금이 없습니다."; msg.style.display = "block"; }
+
+    var li = [];
+    if (coin) {
+      li.push("2027년 시행 예정 기준: 기타소득 분리과세, 연간 손익통산, 기본공제 250만원, 세율 20% + 지방소득세 2%, 다음 해 5월 신고");
+      if (opt.simple) li.push("입력한 순이익이 이미 매수금액·수수료를 뺀 실현손익이라는 전제입니다");
+      else {
+        li.push("② 매수금액은 입력값 기준입니다. 국세청 기준은 여러 번 산 코인의 평균 매수가(총평균법)이며, 판 수량에 해당하는 금액만 반영합니다");
+        if (opt.flags.old) li.push("2026년 말 이전 보유 " + opt.flags.old + "건: 연말 시가는 국세청 고시 전 예상치입니다(의제취득가액)");
+        if (opt.flags.noproof) li.push("취득가 불명 " + opt.flags.noproof + "건: 받은 금액의 50%를 비용으로 가정한 시뮬레이션이며, 법정 요건 충족 시에만 적용됩니다");
+        li.push("코인 간 교환·대여 대가가 ①에 포함됐다는 전제입니다");
+      }
+      li.push("손실은 다음 해로 이월되지 않습니다");
+    } else {
+      li.push("현행 해외주식 양도소득세(분류과세): 세율 20% + 지방소득세 2%, 연간 손익통산, 손실 이월 없음, 다음 해 5월 신고");
+      li.push("기본공제 250만원은 국내주식 과세분(대주주·장외 등)과 합산해 연 1회 적용됩니다");
+      li.push("판 금액·산 금액은 각각의 결제일 기준환율로 환산했다는 전제이며, 환차손익이 포함됩니다");
+      if (!opt.simple) li.push("산 금액은 입력값 기준입니다. 여러 번 산 종목은 선입선출법이 원칙이며, 증권사 양도소득 내역 사용을 권장합니다");
+      li.push("국내 상장 해외 ETF는 배당소득 과세 대상이라 포함되지 않습니다");
+    }
+    document.getElementById("r-assume").innerHTML = li.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+    result.style.display = "block";
+    result.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  document.getElementById("r-copy").addEventListener("click", function () {
+    var b = this, lines = ["[택스22 " + (coin ? "코인 세금" : "해외주식 양도세") + " 계산 결과]"];
+    lines.push("예상 세금 " + document.getElementById("r-total").textContent);
+    lines.push("연간 순이익 " + document.getElementById("r-income").textContent + " / 기본공제 2,500,000원 / 과세 대상 " + document.getElementById("r-taxbase").textContent);
+    lines.push("소득세 " + document.getElementById("r-itax").textContent + " + 지방소득세 " + document.getElementById("r-ltax").textContent + " / 실효세율 " + document.getElementById("r-rate").textContent);
+    lines.push("", "직접 계산해보기: https://tax22.kr" + location.pathname);
+    navigator.clipboard.writeText(lines.join("\n")).then(function () { b.textContent = "✅ 복사 완료"; setTimeout(function () { b.textContent = "📋 결과 복사하기"; }, 1600); });
+  });
+})();
+</script>
+<script>
+(function () {
+  var dd = document.querySelector(".dd");
+  if (!dd) return;
+  dd.querySelector(".dd-btn").addEventListener("click", function (e) {
+    e.stopPropagation();
+    dd.classList.toggle("open");
+  });
+  document.addEventListener("click", function () { dd.classList.remove("open"); });
+})();
+</script>
+<script>
+/* 상단 시세 티커: 업비트(국내) + CoinGecko(글로벌) → 김프 */
+(function () {
+  function fmt(n) { return Math.round(n).toLocaleString("ko-KR") + "원"; }
+  function set(id, v) { var el = document.getElementById(id); if (el) el.innerHTML = v; }
+  fetch("https://api.upbit.com/v1/ticker?markets=KRW-BTC,KRW-ETH,KRW-USDT")
+    .then(function (r) { return r.json(); })
+    .then(function (t) {
+      var m = {}; t.forEach(function (x) { m[x.market] = x.trade_price; });
+      if (!m["KRW-BTC"]) return;
+      set("tk-btc", fmt(m["KRW-BTC"])); set("tk-eth", fmt(m["KRW-ETH"])); set("tk-usdt", fmt(m["KRW-USDT"]));
+      var now = new Date();
+      set("tk-src", "업비트 " + now.toLocaleTimeString("ko-KR", { timeZone: "Asia/Seoul", hour: "2-digit", minute: "2-digit" }) + " 기준");
+      document.getElementById("ticker").hidden = false;
+      return fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=krw")
+        .then(function (r) { return r.json(); })
+        .then(function (g) {
+          if (!g.bitcoin || !g.bitcoin.krw) return;
+          var k = (m["KRW-BTC"] / g.bitcoin.krw - 1) * 100;
+          set("tk-kimp", "<span class='" + (k > 0 ? "up" : "dn") + "'>" + (k > 0 ? "+" : "") + k.toFixed(2) + "%</span>");
+        }).catch(function () {});
+    }).catch(function () {});
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ed375af45534d76b112dee2960a17b6"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
