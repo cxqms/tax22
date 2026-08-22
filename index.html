@@ -6,7 +6,7 @@
 <title>코인 세금 계산기 – 내 세금 3초 확인, 무료 | 택스22</title>
 <meta name="description" content="2027년 코인 세금을 3초 만에 계산하세요. 연간 순이익 한 칸이면 예상 세금이 나오고, 상세 계산에서는 손익통산·의제취득가액·평균 매수가까지 반영됩니다. 무료, 가입 없음.">
 <meta property="og:title" content="코인 세금 계산기 – 내 세금 3초 확인, 무료 | 택스22">
-<meta property="og:description" content="250만원 공제·세율 22% 자동 적용. 코인·해외주식 세금을 3초 만에 계산해보세요.">
+<meta property="og:description" content="순이익 한 칸이면 끝. 250만원 공제·세율 22% 자동 적용, 2027년 코인 세금을 3초 만에 계산해보세요.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tax22.kr">
 <meta property="og:locale" content="ko_KR">
@@ -30,7 +30,7 @@
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Web",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" },
-  "description": "코인·해외주식 양도소득세 계산기. 기본공제 250만원, 세율 22%, 손익통산, 의제취득가액 자동 적용."
+  "description": "2027년 코인 세금 계산기. 기본공제 250만원, 세율 22%, 손익통산, 의제취득가액 자동 적용."
 }
 </script>
 <script type="application/ld+json">
@@ -55,11 +55,6 @@
       "@type": "Question",
       "name": "코인 세금은 언제부터 내나요?",
       "acceptedAnswer": { "@type": "Answer", "text": "2027년 1월 1일 거래분부터 과세됩니다. 연간 수익 250만원을 초과하는 부분에 22%(소득세 20% + 지방소득세 2%)가 부과되며, 첫 신고는 2028년 5월입니다." }
-    },
-    {
-      "@type": "Question",
-      "name": "해외주식 양도소득세는 어떻게 계산하나요?",
-      "acceptedAnswer": { "@type": "Answer", "text": "연간 양도차익에서 기본공제 250만원을 뺀 금액에 22%가 부과됩니다. 양도가액과 취득가액은 각각 결제일 기준환율로 원화 환산하고, 같은 해의 수익과 손실은 합산(손익통산)됩니다. 신고는 다음 해 5월입니다." }
     },
     {
       "@type": "Question",
@@ -299,6 +294,7 @@
   }
 
   /* UX 인핸스먼트 */
+  #rows .row:first-child .row-del { display: none; }
   .krw-hint { font-size: 11px; color: var(--ink-faint); white-space: nowrap; padding-right: 4px; }
   .enh { padding: 12px 14px 14px; border-top: 1px solid var(--line); background: var(--surface); }
   .enh-row { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 4px; }
@@ -443,11 +439,12 @@
           <button type="button" data-v="100000000">1억</button>
         </div>
         <button type="button" class="btn-calc" id="s-calc">예상 세금 확인하기</button>
+        <p class="hint" style="text-align:center;margin-top:10px;"><button type="button" class="link-btn" id="go-detail" style="margin:0;">순이익을 모르겠다면 상세 계산으로 구해보세요 →</button></p>
       </div>
 
       <div class="cx-pane" id="pane-detail" hidden>
         <div id="rows"></div>
-        <button type="button" class="btn-add" id="add">＋ 손실 난 코인도 추가하기</button>
+        <button type="button" class="btn-add" id="add">＋ 다른 코인 추가하기 (손실 포함)</button>
         <button type="button" class="btn-calc" id="calc">세금 계산하기</button>
       </div>
 
@@ -482,7 +479,7 @@
   <section class="guide">
     <h2>30초 요약</h2>
     <div class="g-grid">
-      <div class="g-card"><b>세율 22%</b><p>코인(2027~)과 해외주식 모두 소득세 20% + 지방소득세 2%. 다른 소득과 합산되지 않습니다(코인은 분리과세, 해외주식은 분류과세).</p></div>
+      <div class="g-card"><b>세율 22%</b><p>소득세 20% + 지방소득세 2%로 총 22%입니다. 다른 소득과 합산되지 않는 분리과세입니다.</p></div>
       <div class="g-card"><b>기본공제 250만원</b><p>연간 수익 250만원까지는 세금이 없습니다. 초과분에만 22%가 붙습니다.</p></div>
       <div class="g-card"><b>손익통산</b><p>같은 해의 수익과 손실은 합산됩니다. 손실 거래도 빠짐없이 계산에 넣어야 세금이 줄어듭니다.</p></div>
       <div class="g-card"><b>직접 신고</b><p>원천징수가 아닙니다. 다음 해 5월에 본인이 직접 신고·납부해야 합니다.</p></div>
@@ -630,6 +627,7 @@
   var MODE = "coin";
   var coin = MODE === "coin";
   var rowsBox = document.getElementById("rows");
+  function track(ev) { try { if (window.gtag) gtag("event", ev, { calc: MODE }); else if (window.dataLayer) dataLayer.push({ event: ev, calc: MODE }); } catch (e) {} }
   var fmt = function (n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); };
   var num = function (v) { return parseInt(String(v || "").replace(/[^0-9]/g, ""), 10) || 0; };
   var dec = function (v) { return parseFloat(String(v || "").replace(/[^0-9.]/g, "")) || 0; };
@@ -671,7 +669,8 @@
     if (t === "detail" && !rowsBox.children.length) addRow();
   }
   document.getElementById("tab-simple").addEventListener("click", function () { showTab("simple"); });
-  document.getElementById("tab-detail").addEventListener("click", function () { showTab("detail"); });
+  document.getElementById("tab-detail").addEventListener("click", function () { showTab("detail"); track("detail_tab"); });
+  document.getElementById("go-detail").addEventListener("click", function () { showTab("detail"); track("detail_tab"); });
 
   /* 간편 */
   document.querySelectorAll(".quick button").forEach(function (b) {
@@ -684,7 +683,7 @@
   document.getElementById("s-calc").addEventListener("click", function () {
     var net = num(document.getElementById("s-net").value);
     if (!net) { say("연간 순이익을 입력해 주세요. 손실이면 세금이 없습니다."); return; }
-    render(net, [], { simple: true });
+    render(net, [], { simple: true }); track("simple_calc");
   });
 
   /* 상세 행 */
@@ -707,23 +706,23 @@
               '<label class="f">이번에 판 수량</label><div class="in"><input class="h-sold1 dec" type="text" inputmode="decimal" placeholder="예: 1"><span>개</span></div>' +
             '</div>' +
             '<div class="h-calc" hidden>' +
-              '<label class="f">전체 매수금액 합계</label><div class="in"><input class="h-cost num" type="text" inputmode="numeric" placeholder="예: 100,000,000"><span>원</span></div>' +
-              '<label class="f">전체 매수 수량</label><div class="in"><input class="h-qty dec" type="text" inputmode="decimal" placeholder="예: 2"><span>개</span></div>' +
+              '<label class="f">같은 코인의 전체 매수금액 합계</label><div class="in"><input class="h-cost num" type="text" inputmode="numeric" placeholder="예: 100,000,000"><span>원</span></div>' +
+              '<label class="f">같은 코인의 전체 매수 수량</label><div class="in"><input class="h-qty dec" type="text" inputmode="decimal" placeholder="예: 2"><span>개</span></div>' +
               '<label class="f">이번에 판 수량</label><div class="in"><input class="h-sold2 dec" type="text" inputmode="decimal" placeholder="예: 1"><span>개</span></div>' +
             '</div>' +
             '<button type="button" class="helper-apply">계산해서 넣기</button>' +
             '<p class="hint helper-out"></p>' +
-            '<p class="hint">국세청 기준은 여러 번 산 코인의 평균 매수가(총평균법)입니다. 연중 추가 매수가 있으면 평균이 달라질 수 있습니다.</p>' +
+            '<p class="hint">국내·해외 거래소와 개인지갑 거래를 포함해 같은 코인의 취득내역을 합산하세요. 국세청 기준은 평균 매수가(총평균법)이며 연중 추가 매수가 있으면 평균이 달라질 수 있습니다.</p>' +
           '</div>' +
           '<label class="f">③ 매수·매도 수수료 (선택)</label>' +
           '<div class="in"><input class="r-fee num" type="text" inputmode="numeric" placeholder="예: 50,000"><span>원</span></div>' +
         '</div>' +
         '<details class="adv"><summary>고급 설정</summary><div class="adv-body">' +
-          '<label class="chk"><input class="r-old" type="checkbox">2026년 말 이전부터 보유한 코인</label>' +
+          '<label class="chk"><input class="r-old" type="checkbox">2026년 12월 31일 현재 보유하고 있던 코인</label>' +
           '<div class="oldbox">' +
-            '<label class="f">2026년 12월 31일 시가 <span class="tagx">국세청 고시 전 · 예상치</span></label>' +
-            '<div class="in"><input class="r-eoy num" type="text" inputmode="numeric" placeholder="예: 60,000,000"><span>원</span></div>' +
-            '<p class="hint">실제 매수금액과 연말 시가 중 큰 금액이 매수금액으로 적용됩니다(의제취득가액). 기준은 시가고시 거래소들의 2027년 1월 1일 0시 공시가 평균이며 아직 확정 전입니다.</p>' +
+            '<label class="f">이번에 판 수량의 2026년 말 평가액 합계 <span class="tagx">국세청 고시 전 · 예상치</span></label>' +
+            '<div class="in"><input class="r-eoy num" type="text" inputmode="numeric" placeholder="예: 200,000,000"><span>원</span></div>' +
+            '<p class="hint"><b>1개당 가격이 아니라</b> 2026년 말 공식 시가 × 이번에 판 수량을 넣으세요. 예: BTC 2개 × 1억원 = 2억원. 실제 매수금액(②)과 이 금액 중 큰 쪽이 매수금액으로 적용됩니다(의제취득가액). 공식 시가는 시가고시 거래소들의 2027년 1월 1일 0시 공시가 평균이며 아직 확정 전입니다.</p>' +
           '</div>' +
           '<label class="chk"><input class="r-noproof" type="checkbox">취득가를 전혀 모르는 경우 (추계 시뮬레이션)</label>' +
           '<p class="hint r-noproof-note" hidden>2027년 이후 산 코인 중 취득가 확인이 곤란한 법정 요건에 해당할 때만, 받은 금액의 최대 50%를 비용으로 보는 예외(추계 필요경비)입니다. 여기서는 50%를 가정하며 수수료는 따로 빼지 않습니다. 적용 가능 여부는 전문가 확인이 필요합니다.</p>' +
@@ -820,7 +819,7 @@
         var base = buy;
         if (coin && row.querySelector(".r-old").checked) {
           var eoy = num(row.querySelector(".r-eoy").value);
-          if (!eoy) { say('"' + name + '" 의 2026년 12월 31일 시가를 입력해 주세요.'); return; }
+          if (!eoy) { say('"' + name + '" 의 2026년 말 평가액 합계(시가 × 판 수량)를 입력해 주세요.'); return; }
           base = Math.max(buy, eoy); flags.old++;
         }
         income = sell - base - num(row.querySelector(".r-fee").value);
@@ -828,7 +827,7 @@
       total += income; valid++; items.push({ name: name, income: income });
     }
     if (!valid) { say("최소 한 개의 ① 판 금액을 입력해 주세요."); return; }
-    render(total, items, { simple: false, flags: flags });
+    render(total, items, { simple: false, flags: flags }); track("detail_calc");
   });
 
   function say(t) { var m = document.getElementById("msg"); m.textContent = t; m.style.display = "block"; document.getElementById("result").style.display = "none"; }
@@ -859,7 +858,7 @@
       if (opt.simple) li.push("입력한 순이익이 이미 매수금액·수수료를 뺀 실현손익이라는 전제입니다");
       else {
         li.push("② 매수금액은 입력값 기준입니다. 국세청 기준은 여러 번 산 코인의 평균 매수가(총평균법)이며, 판 수량에 해당하는 금액만 반영합니다");
-        if (opt.flags.old) li.push("2026년 말 이전 보유 " + opt.flags.old + "건: 연말 시가는 국세청 고시 전 예상치입니다(의제취득가액)");
+        if (opt.flags.old) li.push("2026년 12월 31일 보유분 " + opt.flags.old + "건: 연말 시가는 국세청 고시 전 예상치입니다(의제취득가액)");
         if (opt.flags.noproof) li.push("취득가 불명 " + opt.flags.noproof + "건: 받은 금액의 50%를 비용으로 가정한 시뮬레이션이며, 법정 요건 충족 시에만 적용됩니다");
         li.push("코인 간 교환·대여 대가가 ①에 포함됐다는 전제입니다");
       }
@@ -876,6 +875,7 @@
     result.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  document.querySelector(".rs-cta").addEventListener("click", function () { track("consult_click"); });
   document.getElementById("r-copy").addEventListener("click", function () {
     var b = this, lines = ["[택스22 " + (coin ? "코인 세금" : "해외주식 양도세") + " 계산 결과]"];
     lines.push("예상 세금 " + document.getElementById("r-total").textContent);

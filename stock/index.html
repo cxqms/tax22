@@ -286,6 +286,7 @@
   }
 
   /* UX 인핸스먼트 */
+  #rows .row:first-child .row-del { display: none; }
   .krw-hint { font-size: 11px; color: var(--ink-faint); white-space: nowrap; padding-right: 4px; }
   .enh { padding: 12px 14px 14px; border-top: 1px solid var(--line); background: var(--surface); }
   .enh-row { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 4px; }
@@ -430,11 +431,12 @@
           <button type="button" data-v="100000000">1억</button>
         </div>
         <button type="button" class="btn-calc" id="s-calc">예상 세금 확인하기</button>
+        <p class="hint" style="text-align:center;margin-top:10px;"><button type="button" class="link-btn" id="go-detail" style="margin:0;">순이익을 모르겠다면 상세 계산으로 구해보세요 →</button></p>
       </div>
 
       <div class="cx-pane" id="pane-detail" hidden>
         <div id="rows"></div>
-        <button type="button" class="btn-add" id="add">＋ 손실 난 종목도 추가하기</button>
+        <button type="button" class="btn-add" id="add">＋ 다른 종목 추가하기 (손실 포함)</button>
         <button type="button" class="btn-calc" id="calc">세금 계산하기</button>
       </div>
 
@@ -553,6 +555,7 @@
   var MODE = "stock";
   var coin = MODE === "coin";
   var rowsBox = document.getElementById("rows");
+  function track(ev) { try { if (window.gtag) gtag("event", ev, { calc: MODE }); else if (window.dataLayer) dataLayer.push({ event: ev, calc: MODE }); } catch (e) {} }
   var fmt = function (n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); };
   var num = function (v) { return parseInt(String(v || "").replace(/[^0-9]/g, ""), 10) || 0; };
   var dec = function (v) { return parseFloat(String(v || "").replace(/[^0-9.]/g, "")) || 0; };
@@ -594,7 +597,8 @@
     if (t === "detail" && !rowsBox.children.length) addRow();
   }
   document.getElementById("tab-simple").addEventListener("click", function () { showTab("simple"); });
-  document.getElementById("tab-detail").addEventListener("click", function () { showTab("detail"); });
+  document.getElementById("tab-detail").addEventListener("click", function () { showTab("detail"); track("detail_tab"); });
+  document.getElementById("go-detail").addEventListener("click", function () { showTab("detail"); track("detail_tab"); });
 
   /* 간편 */
   document.querySelectorAll(".quick button").forEach(function (b) {
@@ -607,7 +611,7 @@
   document.getElementById("s-calc").addEventListener("click", function () {
     var net = num(document.getElementById("s-net").value);
     if (!net) { say("연간 순이익을 입력해 주세요. 손실이면 세금이 없습니다."); return; }
-    render(net, [], { simple: true });
+    render(net, [], { simple: true }); track("simple_calc");
   });
 
   /* 상세 행 */
@@ -751,7 +755,7 @@
       total += income; valid++; items.push({ name: name, income: income });
     }
     if (!valid) { say("최소 한 개의 ① 판 금액을 입력해 주세요."); return; }
-    render(total, items, { simple: false, flags: flags });
+    render(total, items, { simple: false, flags: flags }); track("detail_calc");
   });
 
   function say(t) { var m = document.getElementById("msg"); m.textContent = t; m.style.display = "block"; document.getElementById("result").style.display = "none"; }
@@ -799,6 +803,7 @@
     result.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  document.querySelector(".rs-cta").addEventListener("click", function () { track("consult_click"); });
   document.getElementById("r-copy").addEventListener("click", function () {
     var b = this, lines = ["[택스22 " + (coin ? "코인 세금" : "해외주식 양도세") + " 계산 결과]"];
     lines.push("예상 세금 " + document.getElementById("r-total").textContent);
