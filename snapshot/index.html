@@ -271,7 +271,7 @@
       </table>
       <div class="total-line"><span>합계 평가액</span><span id="report-total">-</span></div>
       <p class="report-note">
-        · 시세 출처: CoinGecko (조회 시각 기준) · 잔액 출처: 각 체인 공개 노드/블록 탐색기<br>
+        · 시세 출처: <span id="price-src">CoinGecko</span> (조회 시각 기준) · 잔액 출처: 각 체인 공개 노드/블록 탐색기<br>
         · 본 리포트는 조회 시점의 온체인 보유 현황 참고자료이며, 법적 효력을 보증하지 않습니다. 거래소 보유분은 포함되지 않으니 거래소 잔고 화면을 별도로 캡처해 두세요.<br>
         · 생성: 택스22 (tax22.kr) — 무료 도구
       </p>
@@ -446,6 +446,22 @@
     return r.json();
   }
 
+  /* 업비트 공개 시세 백업: CoinGecko 실패·속도제한·누락 심볼을 KRW 마켓으로 보완 */
+  async function fetchUpbitPrices(symbols) {
+    var out = {};
+    if (!symbols.length) return out;
+    try {
+      var all = await (await fetch("https://api.upbit.com/v1/market/all")).json();
+      var have = {};
+      all.forEach(function (m) { if (m.market.indexOf("KRW-") === 0) have[m.market.slice(4)] = true; });
+      var markets = symbols.filter(function (sy) { return have[sy]; }).map(function (sy) { return "KRW-" + sy; });
+      if (!markets.length) return out;
+      var t = await (await fetch("https://api.upbit.com/v1/ticker?markets=" + markets.join(","))).json();
+      t.forEach(function (x) { out[x.market.slice(4)] = x.trade_price; });
+    } catch (e) { /* 업비트 실패도 무시 */ }
+    return out;
+  }
+
   document.getElementById("run").addEventListener("click", async function () {
     var btn = this;
     var msg = document.getElementById("msg");
@@ -478,6 +494,15 @@
     assets.forEach(function (g) { g.items.forEach(function (it) { if (it.gecko && geckoIds.indexOf(it.gecko) < 0) geckoIds.push(it.gecko); }); });
     var prices = {};
     try { prices = await fetchPrices(geckoIds); } catch (e) {}
+    /* 시세가 비어 있는 심볼은 업비트로 보완 */
+    var missing = [];
+    assets.forEach(function (g) { g.items.forEach(function (it) {
+      var ok = it.gecko && prices[it.gecko] && prices[it.gecko].krw;
+      var sy = String(it.symbol || "").toUpperCase();
+      if (!ok && /^[A-Z0-9]{2,10}$/.test(sy) && missing.indexOf(sy) < 0) missing.push(sy);
+    }); });
+    var upbit = await fetchUpbitPrices(missing);
+    var usedUpbit = false;
 
     var rows = "", total = 0, hasAny = false;
     assets.forEach(function (g) {
@@ -485,6 +510,7 @@
         if (it.qty <= 0) return;
         hasAny = true;
         var price = it.gecko && prices[it.gecko] ? prices[it.gecko].krw : null;
+        if (!price && upbit[String(it.symbol || "").toUpperCase()]) { price = upbit[String(it.symbol || "").toUpperCase()]; usedUpbit = true; }
         var value = price ? it.qty * price : null;
         if (value) total += value;
         rows += "<tr><td>" + it.chain + "</td><td>" + it.symbol + "</td><td class='num'>" + fmtQty(it.qty) + "</td><td class='num'>" + (price ? fmt(price) + "원" : "-") + "</td><td class='num'>" + (value ? fmt(value) + "원" : "-") + "</td></tr>";
@@ -509,6 +535,7 @@
       "<b>조회 시각:</b> " + kst + " (KST)<br><b>조회 지갑:</b><br>" +
       assets.map(function (g) { return "<code>" + g.addr + "</code>"; }).join("<br>");
     document.getElementById("report-rows").innerHTML = rows;
+    var ps = document.getElementById("price-src"); if (ps) ps.textContent = usedUpbit ? (Object.keys(prices).length ? "CoinGecko + 업비트" : "업비트") : "CoinGecko";
     document.getElementById("report-total").textContent = fmt(total) + "원" + (rows.indexOf("'-'") > -1 ? " (시세 미확인 자산 제외)" : "");
     document.getElementById("report").style.display = "block";
     document.getElementById("report").scrollIntoView({ behavior: "smooth" });
