@@ -692,13 +692,12 @@
     if (coin) {
       row.innerHTML =
         '<div class="row-head"><input class="r-name" type="text" placeholder="코인 이름 (예: BTC)"><button type="button" class="row-del">삭제 ✕</button></div>' +
-        '<label class="f">① 팔거나 교환해서 받은 금액</label>' +
+        '<label class="f">① 판 금액</label>' +
         '<div class="in"><input class="r-sell num" type="text" inputmode="numeric" placeholder="예: 70,000,000"><span>원</span></div>' +
-        '<p class="hint" style="margin:-4px 0 10px;">USDT 등 다른 코인으로 바꾼 것도 포함됩니다 (원화 환산 금액).</p>' +
-        '<div class="r-buy-block">' +
-          '<label class="f">② 판 코인을 사는 데 든 금액 <button type="button" class="link-btn r-help">얼마인지 모르겠어요</button></label>' +
+                '<div class="r-buy-block">' +
+          '<label class="f">② 산 금액 <button type="button" class="link-btn r-help">모르면 자동 계산</button></label>' +
           '<div class="in"><input class="r-buy num" type="text" inputmode="numeric" placeholder="예: 50,000,000"><span>원</span></div>' +
-          '<p class="hint" style="margin:-4px 0 10px;">이번에 판 수량만큼의 매수금액입니다. 아직 들고 있는 코인은 빼세요.</p>' +
+          '<p class="hint" style="margin:-4px 0 10px;">②는 이번에 판 수량만큼만. 다른 코인으로 바꾼 것도 ①에 포함됩니다.</p>' +
           '<div class="helper">' +
             '<div class="seg"><button type="button" data-h="avg" class="on">평균 매수가를 알고 있어요</button><button type="button" data-h="calc">여러 번 나눠 사서 계산이 필요해요</button></div>' +
             '<div class="h-avg">' +
@@ -714,10 +713,10 @@
             '<p class="hint helper-out"></p>' +
             '<p class="hint">국내·해외 거래소와 개인지갑 거래를 포함해 같은 코인의 취득내역을 합산하세요. 국세청 기준은 평균 매수가(총평균법)이며 연중 추가 매수가 있으면 평균이 달라질 수 있습니다.</p>' +
           '</div>' +
-          '<label class="f">③ 매수·매도 수수료 (선택)</label>' +
+          '</div>' +
+        '<details class="adv"><summary>수수료 · 2026년 보유 · 취득가 불명 (선택)</summary><div class="adv-body">' +
+          '<label class="f">매수·매도 수수료</label>' +
           '<div class="in"><input class="r-fee num" type="text" inputmode="numeric" placeholder="예: 50,000"><span>원</span></div>' +
-        '</div>' +
-        '<details class="adv"><summary>고급 설정</summary><div class="adv-body">' +
           '<label class="chk"><input class="r-old" type="checkbox">2026년 12월 31일 현재 보유하고 있던 코인</label>' +
           '<div class="oldbox">' +
             '<label class="f">이번에 판 수량의 2026년 말 평가액 합계 <span class="tagx">국세청 고시 전 · 예상치</span></label>' +
@@ -730,10 +729,9 @@
     } else {
       row.innerHTML =
         '<div class="row-head"><input class="r-name" type="text" placeholder="종목 이름 (예: TSLA)"><button type="button" class="row-del">삭제 ✕</button></div>' +
-        '<label class="f">① 판 금액 (원화) <button type="button" class="link-btn r-help">달러로 입력할게요</button></label>' +
+        '<label class="f">① 판 금액 <button type="button" class="link-btn r-help">달러로 입력할게요</button></label>' +
         '<div class="in"><input class="r-sell num" type="text" inputmode="numeric" placeholder="예: 13,800,000"><span>원</span></div>' +
-        '<p class="hint" style="margin:-4px 0 10px;">결제일 환율로 환산한 금액입니다. 12월 말 매도는 결제일이 다음 해면 다음 해 소득입니다.</p>' +
-        '<div class="helper">' +
+                '<div class="helper">' +
           '<label class="f">판 금액 (외화)</label><div class="in"><input class="fx-sell dec" type="text" inputmode="decimal" placeholder="예: 10000"><span>외화</span></div>' +
           '<label class="f">판 날의 결제일 환율</label><div class="in"><input class="fx-sell-rate dec" type="text" inputmode="decimal" placeholder="예: 1380"><span>원</span></div>' +
           '<label class="f">산 금액 (외화)</label><div class="in"><input class="fx-buy dec" type="text" inputmode="decimal" placeholder="예: 8000"><span>외화</span></div>' +
@@ -743,12 +741,15 @@
           '<p class="hint">판 금액과 산 금액은 각각의 결제일 기준환율(매매기준율)로 환산합니다. 환율 변동 차익도 과세에 포함됩니다.</p>' +
         '</div>' +
         '<div class="r-buy-block">' +
-          '<label class="f">② 판 주식을 사는 데 든 금액 (원화)</label>' +
+          '<label class="f">② 산 금액</label>' +
           '<div class="in"><input class="r-buy num" type="text" inputmode="numeric" placeholder="예: 10,560,000"><span>원</span></div>' +
-          '<p class="hint" style="margin:-4px 0 10px;">여러 번 나눠 샀다면 먼저 산 것부터 판 것으로 봅니다(선입선출). 증권사 양도소득 내역을 쓰면 가장 정확합니다.</p>' +
-          '<label class="f">③ 매수·매도 수수료 (선택)</label>' +
+          '<p class="hint" style="margin:-4px 0 10px;">①·②는 각각 결제일 환율로 환산한 원화 금액입니다.</p>' +
+          '</div>' +
+        '<details class="adv"><summary>수수료 · 세부 기준 (선택)</summary><div class="adv-body">' +
+          '<label class="f">매수·매도 수수료</label>' +
           '<div class="in"><input class="r-fee num" type="text" inputmode="numeric" placeholder="예: 30,000"><span>원</span></div>' +
-        '</div>';
+          '<p class="hint">여러 번 나눠 산 종목은 먼저 산 것부터 판 것으로 봅니다(선입선출). 12월 말 매도는 결제일이 다음 해면 다음 해 소득입니다. 증권사 양도소득 내역을 쓰면 가장 정확합니다.</p>' +
+        '</div></details>';
     }
     rowsBox.appendChild(row);
 
@@ -815,7 +816,7 @@
         income = sell - sell * 0.5; flags.noproof++;
       } else {
         var buy = num(row.querySelector(".r-buy").value);
-        if (!buy) { say('"' + name + '" 의 ② 사는 데 든 금액을 입력해 주세요.' + (coin ? ' 모르면 "얼마인지 모르겠어요"를 눌러보세요.' : '')); return; }
+        if (!buy) { say('"' + name + '" 의 ② 산 금액을 입력해 주세요.' + (coin ? ' 모르면 "모르면 자동 계산"을 눌러보세요.' : '')); return; }
         var base = buy;
         if (coin && row.querySelector(".r-old").checked) {
           var eoy = num(row.querySelector(".r-eoy").value);
