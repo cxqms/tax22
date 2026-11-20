@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>글로벌 절세 가이드 – 거주지가 세금을 결정합니다 | 택스22</title>
+<meta name="description" content="코인 과세 유예로 번 2년, 글로벌 플랜을 설계할 시간입니다. 싱가포르·UAE 등 나라별 세금·거주권 가이드와 한국 비거주자 전환의 핵심을 정리했습니다.">
+<meta property="og:title" content="글로벌 절세 가이드 – 거주지가 세금을 결정합니다 | 택스22">
+<meta property="og:description" content="싱가포르·UAE 나라별 가이드, 비거주자 전환, CARF 시대의 합법 절세 전략.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tax22.kr/global/">
+<meta property="og:image" content="https://tax22.kr/img/thumb-global.jpg">
+<link rel="canonical" href="https://tax22.kr/global/">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<meta name="theme-color" content="#0bab7c">
+<style>
+  :root { --bg:#f3f5f4; --surface:#fff; --ink:#14211c; --ink-soft:#4f5b56; --ink-faint:#93a09a; --line:#e2e8e5; --accent:#0bab7c; --accent-deep:#068f66; --accent-soft:#e6f7f0; --dark:#10201a; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",sans-serif; background:var(--bg); color:var(--ink); line-height:1.65; -webkit-font-smoothing:antialiased; word-break:keep-all; }
+  a { color:inherit; text-decoration:none; }
+  .wrap { max-width:720px; margin:0 auto; padding:0 20px; }
+  header { background:var(--surface); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+  .head-inner { max-width:720px; margin:0 auto; padding:0 20px; height:58px; display:flex; align-items:center; gap:18px; }
+  .logo { font-size:20px; font-weight:900; letter-spacing:-0.02em; }
+  .logo em { font-style:normal; color:var(--accent); }
+  .gnav { display:flex; gap:16px; margin-right:auto; font-size:14px; font-weight:700; color:var(--ink-soft); flex-wrap:nowrap; }
+  .gnav a.on { color:var(--accent-deep); }
+  .head-cta { font-size:13px; font-weight:700; color:#fff; background:var(--accent); padding:8px 16px; border-radius:999px; white-space:nowrap; }
+  .dd { position:relative; }
+  .dd-btn { font:inherit; font-weight:700; color:var(--ink-soft); background:none; border:0; cursor:pointer; }
+  .dd-btn.on { color:var(--accent-deep); }
+  .dd-menu { display:none; position:absolute; top:28px; left:-10px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:6px; min-width:170px; box-shadow:0 10px 30px rgba(20,33,28,.12); }
+  .dd.open .dd-menu { display:block; }
+  .dd-menu a { display:block; padding:9px 12px; border-radius:8px; font-size:13.5px; }
+  .dd-menu a:hover { background:var(--accent-soft); color:var(--accent-deep); }
+  .hero { background:var(--dark); color:#fff; text-align:center; padding:52px 20px 46px; }
+  .hero .badge { display:inline-block; font-size:12px; font-weight:700; color:#7fe0c2; border:1px solid rgba(127,224,194,.4); border-radius:999px; padding:4px 14px; margin-bottom:16px; }
+  .hero h1 { font-size:28px; line-height:1.4; letter-spacing:-0.02em; }
+  .hero h1 em { font-style:normal; color:#7fe0c2; }
+  .hero p { margin:12px auto 0; font-size:14.5px; color:#b9bbc4; max-width:540px; }
+  section { margin:44px 0; }
+  section h2 { font-size:21px; letter-spacing:-0.02em; margin-bottom:6px; }
+  section .sub { font-size:14px; color:var(--ink-soft); margin-bottom:18px; }
+  .g-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  .g-card { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; }
+  .g-card .ico { font-size:22px; }
+  .g-card b { display:block; font-size:15px; margin:8px 0 3px; }
+  .g-card p { font-size:12.5px; color:var(--ink-soft); }
+  .country { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .c-card { display:block; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:20px 22px; transition:transform .12s ease, box-shadow .12s ease; }
+  .c-card:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(20,33,28,.08); border-color:var(--accent); }
+  .c-card .flag { font-size:28px; }
+  .c-card b { display:block; font-size:16.5px; margin:8px 0 4px; }
+  .c-card .tagline { font-size:13px; color:var(--accent-deep); font-weight:700; }
+  .c-card p { font-size:13px; color:var(--ink-soft); margin-top:6px; }
+  .c-card.ghost { opacity:.55; pointer-events:none; border-style:dashed; }
+  .c-card.ghost .soon { display:inline-block; font-size:11px; font-weight:700; color:var(--ink-faint); border:1px solid var(--line); border-radius:999px; padding:2px 10px; margin-top:8px; }
+  .legal { background:var(--accent-soft); border-left:4px solid var(--accent); border-radius:0 12px 12px 0; padding:16px 20px; font-size:13.5px; color:#1d3f33; }
+  .tg { background:var(--dark); color:#fff; border-radius:18px; padding:30px 26px; text-align:center; }
+  .tg b { font-size:19px; display:block; }
+  .tg p { font-size:13.5px; color:#b9bbc4; margin:10px auto 16px; max-width:460px; }
+  .tg form { display:flex; gap:8px; max-width:420px; margin:0 auto; }
+  .tg input { flex:1; font:inherit; font-size:14px; padding:12px 14px; border-radius:12px; border:0; min-width:0; }
+  .tg button { font:inherit; font-size:14px; font-weight:800; color:#10201a; background:#7fe0c2; border:0; border-radius:12px; padding:12px 18px; cursor:pointer; white-space:nowrap; }
+  .tg .done { display:none; font-size:14.5px; font-weight:700; color:#7fe0c2; }
+  .tg .note { font-size:11.5px; color:#8b958f; margin-top:10px; }
+  footer { border-top:1px solid var(--line); margin-top:50px; padding:28px 0 40px; font-size:12.5px; color:var(--ink-faint); }
+  .foot-inner { max-width:720px; margin:0 auto; padding:0 20px; }
+  footer a { color:var(--ink-soft); }
+  .ticker { background:var(--surface); border-bottom:1px solid var(--line); font-size:12px; color:var(--ink-soft); }
+  .ticker-inner { max-width:720px; margin:0 auto; padding:6px 20px; display:flex; gap:14px; align-items:center; overflow-x:auto; white-space:nowrap; scrollbar-width:none; }
+  .ticker-inner::-webkit-scrollbar { display:none; }
+  .ticker b { color:var(--ink); font-weight:700; }
+  .ticker .up { color:#c2410c; font-weight:700; } .ticker .dn { color:var(--accent-deep); font-weight:700; }
+  .ticker .src { color:var(--ink-faint); margin-left:auto; }
+  @media (max-width:560px) { .g-grid { grid-template-columns:1fr; } .country { grid-template-columns:1fr; } .hero h1 { font-size:24px; } .gnav { gap:11px; font-size:13px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <a class="logo" href="/">택스<em>22</em></a>
+    <nav class="gnav">
+      <div class="dd">
+        <button class="dd-btn" type="button">세금 계산기 ▾</button>
+        <div class="dd-menu">
+        <a href="/">코인 세금</a>
+        <a href="/stock/">해외주식 양도세</a>
+        <a href="/gift/">증여세</a>
+        <a href="/inherit/">상속세</a>
+        <a href="/finance/">금융소득종합과세</a>
+        <a href="/pension/">연금저축·IRP</a>
+        </div>
+      </div>
+      <a href="/snapshot/">지갑 스냅샷</a>
+      <a href="/global/" class="on">글로벌</a>
+      <a href="/blog/">블로그</a>
+    </nav>
+    <a class="head-cta" href="/#consult">전문가 상담</a>
+  </div>
+</header>
+<div class="ticker" id="ticker" hidden>
+  <div class="ticker-inner">
+    <span>BTC <b id="tk-btc">-</b></span>
+    <span>ETH <b id="tk-eth">-</b></span>
+    <span>USDT <b id="tk-usdt">-</b></span>
+    <span>김프 <span id="tk-kimp">-</span></span>
+    <span class="src" id="tk-src">업비트 기준</span>
+  </div>
+</div>
+
+<div class="hero">
+  <span class="badge">글로벌 절세 가이드</span>
+  <h1><em>거주지</em>가 세금을 결정합니다</h1>
+  <p>과세 유예로 번 2년은 글로벌 플랜을 설계할 시간입니다. 숨기는 시대는 CARF와 함께 끝났고, 합법적으로 거주지를 옮긴 사람만 다른 세제를 적용받습니다.</p>
+</div>
+
+<div class="wrap">
+
+<section>
+  <h2>시작 전에 알아야 할 3가지</h2>
+  <div class="g-grid">
+    <div class="g-card"><span class="ico">🏠</span><b>한국 세금은 "거주자"에게</b><p>국적이 아니라 거주자 여부가 기준입니다. 체류 183일만이 아니라 가족·자산의 생활 근거지를 종합해 판정합니다. 어설픈 비거주자 주장이 가장 비쌉니다.</p></div>
+    <div class="g-card"><span class="ico">🌐</span><b>숨는 시대는 끝났습니다</b><p>싱가포르도 UAE도 CARF에 참여합니다. 2027~2028년부터 해외 거래 내역이 국가 간에 교환됩니다. 전략은 은닉이 아니라 거주지 이전입니다.</p></div>
+    <div class="g-card"><span class="ico">⚖️</span><b>세금만으로 결정하면 후회합니다</b><p>생활비, 가족, 커리어, 기후까지 계산에 넣어야 합니다. 대체로 억 단위 반복 수익일 때부터 이주의 손익이 맞기 시작합니다.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>나라별 가이드</h2>
+  <p class="sub">개인 투자자 기준 세금 구조, 거주권 경로, 한국 쪽 정리, 비용 현실까지.</p>
+  <div class="country">
+    <a class="c-card" href="/global/sg/">
+      <span class="flag">🇸🇬</span>
+      <b>싱가포르</b>
+      <span class="tagline">양도소득세 없음 · 아시아 금융 허브</span>
+      <p>개인 차익 비과세. 관문은 세금이 아니라 비자입니다. 사업적 트레이딩 판정 주의.</p>
+    </a>
+    <a class="c-card" href="/global/uae/">
+      <span class="flag">🇦🇪</span>
+      <b>UAE (두바이)</b>
+      <span class="tagline">개인소득세 0% · 코인 허브</span>
+      <p>개인 투자 수익 비과세, 거주비자 문이 상대적으로 넓음. 법인세 9% 경계 확인.</p>
+    </a>
+    <div class="c-card ghost">
+      <span class="flag">🇵🇹</span>
+      <b>포르투갈</b>
+      <span class="tagline">1년 보유 시 비과세</span>
+      <p>단기 매매는 28% 과세. 유럽 거점.</p>
+      <span class="soon">준비 중</span>
+    </div>
+    <div class="c-card ghost">
+      <span class="flag">🇲🇾</span>
+      <b>말레이시아</b>
+      <span class="tagline">양도차익 비과세 · 저비용</span>
+      <p>MM2H 비자. 생활비 대비 효율.</p>
+      <span class="soon">준비 중</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>한국 쪽 숙제가 절반입니다</h2>
+  <p class="sub">어느 나라로 가든 공통으로 걸리는 것들. 먼저 읽고 가세요.</p>
+  <div class="g-grid">
+    <a class="g-card" href="/blog/qna-emigrate/" style="display:block;"><span class="ico">✈️</span><b>코인 들고 이민 가면 세금은?</b><p>비거주자 전환, 원천징수, 조세조약 면제의 기본 구조.</p></a>
+    <a class="g-card" href="/blog/carf/" style="display:block;"><span class="ico">🔍</span><b>CARF 총정리</b><p>해외거래소 정보가 국세청에 들어오는 일정과 범위.</p></a>
+    <a class="g-card" href="/blog/qna-late-report/" style="display:block;"><span class="ico">⏰</span><b>해외계좌 5억 신고</b><p>이미 신고 대상이었다면 기한후신고부터.</p></a>
+  </div>
+</section>
+
+<section>
+  <div class="legal"><b>ℹ️ 이 섹션의 원칙</b><br>택스22 글로벌은 공개된 제도 정보를 정리해 제공하며, 개별 세무·법률·이민 자문이 아닙니다. 모든 내용은 합법적인 거주지 이전과 신고를 전제로 하며, 자산 은닉·차명·신고 회피는 다루지 않습니다. 개별 설계는 국제조세 전문 세무사·변호사와 진행하세요. <a href="/#consult" style="color:var(--accent-deep);font-weight:700;">전문가 상담 신청 →</a></div>
+</section>
+
+<section>
+  <div class="tg">
+    <b>🔒 글로벌 절세 프라이빗 방 (오픈 준비 중)</b>
+    <p>나라별 최신 제도 변화, 유예·CARF 업데이트, 이주 설계 사례를 공유하는 비공개 방을 준비하고 있습니다. 이메일을 남기면 오픈 시 초대장을 보내드립니다.</p>
+    <form id="tg-form">
+      <input type="email" name="email" placeholder="이메일 주소" required>
+      <input type="hidden" name="_subject" value="[택스22 글로벌] 프라이빗 방 초대 신청">
+      <input type="hidden" name="_template" value="table">
+      <button type="submit">초대장 받기</button>
+    </form>
+    <p class="done" id="tg-done">✅ 신청됐습니다. 오픈하면 초대장을 보내드릴게요.</p>
+    <p class="note">초대장 발송 외 용도로 사용하지 않습니다. <a href="/privacy/" style="color:#8b958f;text-decoration:underline;">개인정보처리방침</a></p>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <p style="font-weight:700;color:var(--ink-soft);">택스22 — 투자자의 세금·법률 문제 해결 포털</p>
+    <p style="margin-top:8px;"><a href="/">홈</a> · <a href="/global/">글로벌</a> · <a href="/blog/">블로그</a> · <a href="/partners/">파트너 광고 안내</a> · <a href="/widget/">계산기 퍼가기</a> · <a href="/privacy/">개인정보처리방침</a> · 문의: contact@tax22.kr</p>
+    <p style="margin-top:4px;">© 2026 택스22 (tax22.kr) All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var dd = document.querySelector(".dd");
+  if (dd) {
+    dd.querySelector(".dd-btn").addEventListener("click", function (e) { e.stopPropagation(); dd.classList.toggle("open"); });
+    document.addEventListener("click", function () { dd.classList.remove("open"); });
+  }
+  var f = document.getElementById("tg-form");
+  f.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var btn = f.querySelector("button"); btn.disabled = true; btn.textContent = "접수 중...";
+    fetch("https://formsubmit.co/ajax/checksoyoung@gmail.com", { method: "POST", body: new FormData(f), headers: { "Accept": "application/json" } })
+      .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+      .then(function () { f.style.display = "none"; document.getElementById("tg-done").style.display = "block"; })
+      .catch(function () { btn.disabled = false; btn.textContent = "초대장 받기"; alert("전송에 실패했습니다. contact@tax22.kr 로 메일 주셔도 됩니다."); });
+  });
+})();
+</script>
+<script>
+(function () {
+  function fmt(n) { return Math.round(n).toLocaleString("ko-KR") + "원"; }
+  function set(id, v) { var el = document.getElementById(id); if (el) el.innerHTML = v; }
+  fetch("https://api.upbit.com/v1/ticker?markets=KRW-BTC,KRW-ETH,KRW-USDT")
+    .then(function (r) { return r.json(); })
+    .then(function (t) {
+      var m = {}; t.forEach(function (x) { m[x.market] = x.trade_price; });
+      if (!m["KRW-BTC"]) return;
+      set("tk-btc", fmt(m["KRW-BTC"])); set("tk-eth", fmt(m["KRW-ETH"])); set("tk-usdt", fmt(m["KRW-USDT"]));
+      set("tk-src", "업비트 " + new Date().toLocaleTimeString("ko-KR", { timeZone: "Asia/Seoul", hour: "2-digit", minute: "2-digit" }) + " 기준");
+      document.getElementById("ticker").hidden = false;
+      return fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=krw")
+        .then(function (r) { return r.json(); })
+        .then(function (g) {
+          if (!g.bitcoin || !g.bitcoin.krw) return;
+          var k = (m["KRW-BTC"] / g.bitcoin.krw - 1) * 100;
+          set("tk-kimp", "<span class='" + (k > 0 ? "up" : "dn") + "'>" + (k > 0 ? "+" : "") + k.toFixed(2) + "%</span>");
+        }).catch(function () {});
+    }).catch(function () {});
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4ed375af45534d76b112dee2960a17b6"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
